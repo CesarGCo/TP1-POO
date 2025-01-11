@@ -11,13 +11,13 @@ import javax.imageio.ImageIO;
 public class ButtonMenu {
 	protected int x;
 	protected int y;
-	protected boolean isEnabled;
+	protected boolean enabled;
 	protected Image image;
 
 	public ButtonMenu(int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.isEnabled = false;
+		this.enabled = false;
 		try {
 			this.image = ImageIO.read(new File("Assets/Menu/seta.png"));
 		} catch (IOException e) {
@@ -25,14 +25,17 @@ public class ButtonMenu {
 		}
 	}
 
+	public boolean isEnabled() {
+		return enabled;
+	}
 
 	public void update() {
-		this.isEnabled = !isEnabled;
+		this.enabled = !enabled;
 	}
 
 
 	public void draw(Graphics g) {
-		if(isEnabled) {
+		if(enabled) {
 			g.drawImage(image, x, y, null);
 		} else {
 			g.setColor(Color.black);
