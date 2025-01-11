@@ -1,16 +1,19 @@
 package com.gamestudio.state;
 
 import java.awt.image.BufferedImage;
-
-import com.gamestudio.interfaces.Screen;
+import com.gamestudio.manager.ScreenManager;
 
 public abstract class State {
-    private Screen screen;
+    private ScreenManager screenManager;
     
-    public State(Screen screen) {
-       this.screen = screen;
+    public State(ScreenManager screenManager) {
+       this.screenManager = screenManager;
     }
     
+    public ScreenManager getScreenManager() {
+        return screenManager;
+    }
+
     public abstract void update();
 
     public abstract void render();

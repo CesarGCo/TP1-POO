@@ -6,8 +6,18 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
 
-public abstract class Screen extends JPanel implements Runnable, KeyListener{
+import com.gamestudio.state.State;
 
+public abstract class Screen extends JPanel implements Runnable, KeyListener{
+    private State state;
+
+    public Screen(State state) {
+        this.state = state;
+    }
+
+    public State getState() {
+        return state;
+    }
     @Override
     public abstract void paint(Graphics g);
 

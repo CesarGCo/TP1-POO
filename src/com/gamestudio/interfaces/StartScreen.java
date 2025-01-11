@@ -2,25 +2,22 @@ package com.gamestudio.interfaces;
 
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
-
-import com.gamestudio.state.MenuState;
+import com.gamestudio.state.State;
 
 public class StartScreen extends Screen {
-    
-    private MenuState menuState;
 
-    public StartScreen() {
-        this.menuState = new MenuState(this);
+    public StartScreen(State state) {
+        super(state);
     }
     
     @Override
     public void paint(Graphics g) {
-        g.drawImage(menuState.getBufferedImage(), 0, 0, null);
+        g.drawImage(getState().getBufferedImage(), 0, 0, null);
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        menuState.setPressedButton(e.getKeyCode());
+        getState().setPressedButton(e.getKeyCode());
     }
 
     @Override
@@ -35,7 +32,7 @@ public class StartScreen extends Screen {
 
     @Override
     public void run() {
-        menuState.render();
+        getState().render();
         repaint();
     }
 }

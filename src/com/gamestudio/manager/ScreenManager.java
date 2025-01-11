@@ -4,7 +4,6 @@ package com.gamestudio.manager;
 import javax.swing.JPanel;
 import java.awt.CardLayout;
 import com.gamestudio.interfaces.StartScreen;
-import com.gamestudio.interfaces.teste;
 import com.gamestudio.state.MenuState;
 
 public class ScreenManager {
@@ -17,7 +16,7 @@ public class ScreenManager {
         cardLayout = new CardLayout();
         panels = new JPanel(cardLayout);
 
-        startScreen = new StartScreen(new MenuState(startScreen, this));
+        startScreen = new StartScreen(new MenuState(this));
         panels.add(startScreen, "Menu");
 
         currentScreen = "Menu";

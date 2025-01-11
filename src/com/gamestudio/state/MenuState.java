@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 
 import com.gamestudio.elements.ButtonMenu;
 import com.gamestudio.interfaces.GameFrame;
-import com.gamestudio.interfaces.Screen;
+import com.gamestudio.manager.ScreenManager;
 
 public class MenuState extends State {
     private Image backgroundImage;
@@ -19,8 +19,8 @@ public class MenuState extends State {
     private ButtonMenu[] buttons;
     private int buttonEnabled;
 
-    public MenuState(Screen screen) {
-        super(screen);
+    public MenuState(ScreenManager screenManager) {
+        super(screenManager);
         this.buttonEnabled = 0;
         this.bufferedImage = new BufferedImage(GameFrame.width, GameFrame.height, BufferedImage.TYPE_INT_ARGB);
 
@@ -66,7 +66,6 @@ public class MenuState extends State {
             
         } else if(keyCode == KeyEvent.VK_ENTER) {
             if(buttons[0].isEnabled()) {
-                
             } else {
                 System.exit(0);
             }
