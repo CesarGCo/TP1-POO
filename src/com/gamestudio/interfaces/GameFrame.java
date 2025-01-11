@@ -26,6 +26,7 @@ public class GameFrame extends JFrame implements Runnable{
         panels = new JPanel(cardLayout);
         panels.add(startScreen, "Menu");
 
+        addKeyListener(startScreen);
         this.add(panels);
         this.setBounds(
                 (desktopSolution.width - width) / 2,
