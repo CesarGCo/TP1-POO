@@ -1,6 +1,7 @@
 package com.gamestudio.manager;
 
 import com.gamestudio.interfaces.Screen;
+import com.gamestudio.state.GameOverState;
 import com.gamestudio.state.GameState;
 import com.gamestudio.state.MenuState;
 
@@ -11,12 +12,13 @@ public class StateManager {
     private Screen screen;
     private GameState gameState;
     private MenuState menuState;
+    private GameOverState gameOverState;
     private int currentState;
 
     public StateManager() {
         this.gameState = new GameState(this);
         this.menuState = new MenuState(this);
-        
+        this.gameOverState = new GameOverState(this);
         this.screen = new Screen(menuState);
 
         this.currentState = MENU;
@@ -49,7 +51,7 @@ public class StateManager {
                 break;
 
             case GAMEOVER:
-                //screen.setState(gameOverState);
+                screen.setState(gameOverState);
                 break;
 
             default:
