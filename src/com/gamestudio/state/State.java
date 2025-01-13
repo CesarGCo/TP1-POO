@@ -1,8 +1,6 @@
 package com.gamestudio.state;
 
 import java.awt.image.BufferedImage;
-
-import com.gamestudio.interfaces.Screen;
 import com.gamestudio.manager.StateManager;
 
 public abstract class State {

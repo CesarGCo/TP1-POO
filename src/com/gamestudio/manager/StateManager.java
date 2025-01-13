@@ -5,6 +5,9 @@ import com.gamestudio.state.GameState;
 import com.gamestudio.state.MenuState;
 
 public class StateManager {
+    public static final int MENU = 0;
+    public static final int GAME = 1;
+    public static final int GAMEOVER = 2;
     private Screen screen;
     private GameState gameState;
     private MenuState menuState;
@@ -15,6 +18,8 @@ public class StateManager {
         this.menuState = new MenuState(this);
         
         this.screen = new Screen(menuState);
+
+        this.currentState = MENU;
     }
 
     public GameState getGameState() {
@@ -29,26 +34,29 @@ public class StateManager {
         return screen;
     }
 
+    public int getCurrentState() {
+        return currentState;
+    }
+
     public void setCurrentState(int currentState) {
         switch (currentState) {
-            case 0:
+            case MENU:
                 screen.setState(menuState);
                 break;
 
-            case 1:
+            case GAME:
                 screen.setState(gameState);
                 break;
 
-            case 2:
+            case GAMEOVER:
                 //screen.setState(gameOverState);
                 break;
 
             default:
                 break;
         }
+        this.currentState = currentState;
     }
 
-    public void setCurrentState(String currentScreen) {
-    }
 }
 
