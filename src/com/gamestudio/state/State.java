@@ -1,24 +1,30 @@
 package com.gamestudio.state;
 
 import java.awt.image.BufferedImage;
-import com.gamestudio.manager.ScreenManager;
+
+import com.gamestudio.interfaces.Screen;
+import com.gamestudio.manager.StateManager;
 
 public abstract class State {
-    private ScreenManager screenManager;
-    
-    public State(ScreenManager screenManager) {
-       this.screenManager = screenManager;
+    private StateManager stateManager;
+    private BufferedImage bufferedImage;
+
+    public State(StateManager stateManager, BufferedImage bufferedImage) {
+       this.stateManager = stateManager;
+       this.bufferedImage = bufferedImage;
     }
     
-    public ScreenManager getScreenManager() {
-        return screenManager;
+    public StateManager getStateManager() {
+        return stateManager;
+    }
+
+    public BufferedImage getBufferedImage() {
+        return bufferedImage;
     }
 
     public abstract void update();
 
     public abstract void render();
-
-    public abstract BufferedImage getBufferedImage();
     
     public abstract void setPressedButton(int code);
     
