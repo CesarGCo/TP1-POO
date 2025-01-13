@@ -4,24 +4,25 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.Toolkit;
 import java.awt.Dimension;
-import com.gamestudio.manager.ScreenManager;
+import com.gamestudio.manager.StateManager;
 
-public class GameFrame extends JFrame implements Runnable {
+public class GameFrame extends JFrame {
     public static final int width = 1000;
     public static final int height = 600;
-    private ScreenManager screenManager;
+    private StateManager stateManager; 
+
 
     public GameFrame() {
         super("Mega man");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Toolkit toolkit = this.getToolkit();
         Dimension desktopSolution = toolkit.getScreenSize();
+        
+        this.stateManager = new StateManager();
 
-
-        screenManager = new ScreenManager();
-        this.add(screenManager.getPanels());
-        addKeyListener(screenManager.getStartScreen());
-
+        addKeyListener(stateManager.getScreen());
+        add(stateManager.getScreen());
+        
         this.setBounds(
             (desktopSolution.width - width) / 2,
             (desktopSolution.height - height) / 2,
@@ -31,38 +32,8 @@ public class GameFrame extends JFrame implements Runnable {
     }
 
     public void open() {
-        super.setVisible(true);
-        new Thread(this).start();
-    }
-
-    @Override
-    public void run() {
-        long previousTime = System.nanoTime();
-        long currentTime;
-        long sleepTime;
-        long framePeriod = 1000000000 / 30; // 60 FPS
-
-        while (true) {
-            // Atualizar a tela atual
-            JPanel activePanel = (JPanel) screenManager.getPanels().getComponent(0);
-            if (activePanel instanceof Runnable runnable) {
-                runnable.run();
-            }
-
-            screenManager.show();
-
-            // Controle de FPS
-            currentTime = System.nanoTime();
-            sleepTime = framePeriod - (currentTime - previousTime);
-            if (sleepTime > 0) {
-                try {
-                    Thread.sleep(sleepTime / 1000000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            previousTime = System.nanoTime();
-        }
+        stateManager.getScreen().startGame();
+        this.setVisible(true);
     }
 
     public static void main(String arg[]) {
