@@ -1,6 +1,7 @@
 package com.gamestudio.elements;
 
 import com.gamestudio.state.GameState;
+import com.gamestudio.effect.Animation;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -25,7 +26,7 @@ public abstract class ParticularObject extends GameElement {
     private int damage; //Quantidade de dado que o objeto da
     private int direction; //Direita ou esquerda
     private int teamType;
-    protected Animation behurtForwardAnim;
+    protected Animation behurtAnim;
 
     public ParticularObject(int x, int y, float width, float height, float mass, int amountLife, GameState gameWorld) {
         super(x, y, gameWorld);
@@ -155,16 +156,16 @@ public abstract class ParticularObject extends GameElement {
 
             case BEHURT:
                 // O personagem tomou dano então a animação de dano ocorre
-                if (this.behurtForwardAnim == null) {
+                if (this.behurtAnim == null) {
                     this.currentState = ALIVE;
                     if (this.getAmountLife() <= 0) {
                         this.currentState = DEATH;
                     }
                 } else {
                     // Executa a animação de ferimento
-                    this.behurtForwardAnim.Update(System.nanoTime());
-                    if (this.behurtForwardAnim.isLastFrame()) {
-                        this.behurtForwardAnim.reset();
+                    this.behurtAnim.Update(System.nanoTime());
+                    if (this.behurtAnim.isLastFrame()) {
+                        this.behurtAnim.reset();
                         this.currentState = ALIVE;
                         if (this.getAmountLife() <= 0) {
                             this.currentState = DEATH;
