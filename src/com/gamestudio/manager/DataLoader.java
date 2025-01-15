@@ -17,11 +17,11 @@ public class DataLoader {
     private static int NUM_SOUNDS = 1;
 
     private static DataLoader instance = null;
-    private String frameFile = "Assets/frames.txt";
-    private String physmapfile = "Assets/phys_map.txt";
     private Hashtable<String, Clip> musics; 
     
-    /*private Hashtable<String, FrameImage> frames;
+    /*private Hashtable<String, FrameImage> megaManframes;
+    private Hashtable<String, FrameImage> woodManframes;
+    private Hashtable<String, FrameImage> menuFrames;
     private Hashtable<String, Animation> animations;*/
     
     private int[][] phys_map;
@@ -57,18 +57,19 @@ public class DataLoader {
         return instance.phys_map;
     }
     
-    public void LoadData()throws IOException{
+    public void LoadData()throws IOException {
         LoadPhysMap();
         LoadMusics();
         /* 
-        LoadFrame();
+        LoadWoodManFrames();
+        LoadMegaManFrames();
+        LoadMenuFrames();
         LoadAnimation();
-        LoadBackgroundMap();
-        LoadSounds(); */
+        */
         
     }
     
-    public void LoadMusics() throws IOException{
+    public void LoadMusics() throws IOException {
         instance.musics = new Hashtable<>();
         for(int i = 0; i < NUM_SOUNDS; i ++){
             Clip clip = null;
@@ -86,9 +87,9 @@ public class DataLoader {
         }
     }
     
-    public void LoadPhysMap() throws IOException{
+    public void LoadPhysMap() throws IOException {
         
-        FileReader fr = new FileReader(physmapfile);
+        FileReader fr = new FileReader("");
         BufferedReader br = new BufferedReader(fr);
         
         String line = null;
@@ -163,29 +164,64 @@ public class DataLoader {
         
         br.close();
     }*/
-    
-    /*public void LoadFrame() throws IOException{
+    /*
+    public void LoadWoodManFrames() throws IOException {
         
-        this.frames = new Hashtable<String, FrameImage>();
-        
-        FileReader fr = new FileReader(frameFile);
+        FileReader fr = new FileReader("Assets/woodmanframes.txt");
         BufferedReader br = new BufferedReader(fr);
 
         String line = null;
         String imageName = null;
-        String name = null;
         BufferedImage image = null;
+        FrameImage frame = new FrameImage();
 
-        while ((line = br.readLine()) != null) {
-            for(int i = 0; imageName != "0"; i++) {
-                imageName = br.readLine();
-                image = ImageIO.read(new File(line + imageName + ".png"));
-                name = imageName;
-            }
-            FrameImage frame = new FrameImage();
-            frame.setName(name);
+        line = br.readLine();
+        while ((imageName = br.readLine()) != null) {
+            image = ImageIO.read(new File(line + imageName + ".png"));
+            
+            frame.setName(imageName);
             frame.setImage(image);
-            instance.frames.put(frame.getName(), frame);
+            instance.woodManframes.put(frame.getName(), frame);
+        }
+        br.close();
+    }
+
+    public void LoadMegaManFrames() throws IOException {
+        
+        FileReader fr = new FileReader("Assets/megamanframes.txt");
+        BufferedReader br = new BufferedReader(fr);
+
+        String line = null;
+        String imageName = null;
+        BufferedImage image = null;
+        FrameImage frame = new FrameImage();
+        line = br.readLine();
+        while ((imageName = br.readLine()) != null) {
+            image = ImageIO.read(new File(line + imageName + ".png"));
+            
+            frame.setName(imageName);
+            frame.setImage(image);
+            instance.megaManframes.put(frame.getName(), frame);
+        }
+        br.close();
+    }
+
+    public void LoadMenuFrames() throws IOException {
+        
+        FileReader fr = new FileReader("Assets/menuframes.txt");
+        BufferedReader br = new BufferedReader(fr);
+
+        String line = null;
+        String imageName = null;
+        BufferedImage image = null;
+        FrameImage frame = new FrameImage();
+        line = br.readLine();
+        while ((imageName = br.readLine()) != null) {
+            image = ImageIO.read(new File(line + imageName + ".png"));
+            
+            frame.setName(imageName);
+            frame.setImage(image);
+            instance.menuframes.put(frame.getName(), frame);
         }
         br.close();
     }*/

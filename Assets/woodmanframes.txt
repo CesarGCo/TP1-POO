@@ -1,0 +1,16 @@
+Assets/Enemies/wood_man/
+beat1
+chest1
+idle1
+idle2
+intro1
+jumping1
+leaf1
+leaf2
+leaf3
+leafshield1
+leafshield2
+leafshield3
+leafshield4
+leafshield cast1
+throwing1
