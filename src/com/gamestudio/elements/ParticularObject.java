@@ -137,8 +137,8 @@ public abstract class ParticularObject extends GameElement {
         return bound;
     }
 
-    public void beHurt(int damgeEat) {
-        this.setAmountLife(this.getAmountLife() - damgeEat);
+    public void beHurt(int damageEat) {
+        this.setAmountLife(this.getAmountLife() - damageEat);
         this.currentState = BEHURT;
         this.hurtingCallback();
     }
