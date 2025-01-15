@@ -20,16 +20,16 @@ public abstract class ParticularObject extends GameElement {
     private float width;
     private float height;
     private float mass;
-    private float speedX;
-    private float speedY;
+    private int speedX;
+    private int speedY;
     private int amountLife; //Quantidade de vida do objeto
     private int damage; //Quantidade de dado que o objeto da
     private int direction; //Direita ou esquerda
     private int teamType;
     protected Animation behurtAnim;
 
-    public ParticularObject(int x, int y, float width, float height, float mass, int amountLife, GameState gameWorld) {
-        super(x, y, gameWorld);
+    public ParticularObject(int x, int y, float width, float height, float mass, int amountLife, GameState gameState) {
+        super(x, y, gameState);
         this.setWidth(width);
         this.setHeight(height);
         this.setMass(mass);
@@ -69,19 +69,19 @@ public abstract class ParticularObject extends GameElement {
         this.mass = mass;
     }
 
-    public float getSpeedX() {
+    public int getSpeedX() {
         return speedX;
     }
 
-    public void setSpeedX(float speedX) {
+    public void setSpeedX(int speedX) {
         this.speedX = speedX;
     }
 
-    public float getSpeedY() {
+    public int getSpeedY() {
         return speedY;
     }
 
-    public void setSpeedY(float speedY) {
+    public void setSpeedY(int speedY) {
         this.speedY = speedY;
     }
 
