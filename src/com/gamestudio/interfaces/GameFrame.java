@@ -20,11 +20,11 @@ public class GameFrame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Toolkit toolkit = this.getToolkit();
         Dimension desktopSolution = toolkit.getScreenSize();
-        try {
+        /*try {
             DataLoader.getInstance().LoadData();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
         this.stateManager = new StateManager();
 
         addKeyListener(stateManager.getScreen());
