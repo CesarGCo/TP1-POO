@@ -1,16 +1,16 @@
 package com.gamestudio.elements;
-import com.gamestudio.state.State;
+import com.gamestudio.state.GameState;
 
 public abstract class GameElement {
     private int posX;
 	private int posY;
 	
-	private State state;
+	private GameState gameState;
 	
-	public GameElement(int x, int y, State state){
+	public GameElement(int x, int y, GameState gameState){
 		this.posX = x;
 		this.posY = y;
-		this.state = state;
+		this.gameState = gameState;
 	}
 	
 	public void setPosX(int x){
@@ -29,8 +29,8 @@ public abstract class GameElement {
 		return posY;
 	}
 	
-	public State getState(){
-		return state;
+	public GameState getGameState(){
+		return gameState;
 	}
 	
 	public abstract void update();

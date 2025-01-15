@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-import com.gamestudio.state.State;
+import com.gamestudio.state.GameState;
 import com.gamestudio.elements.GameElement;
 import com.gamestudio.manager.DataLoader;
 
@@ -17,8 +17,8 @@ public class PhysicalMap extends GameElement {
     public int[][] phys_map;
     private int tileSize;
     
-    public PhysicalMap(int x, int y, State state) {
-        super(x, y, state);
+    public PhysicalMap(int x, int y, GameState gameState) {
+        super(x, y, gameState);
         this.tileSize = 16;
 
         phys_map = DataLoader.getInstance().getPhysicalMap();
