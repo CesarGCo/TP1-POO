@@ -3,7 +3,10 @@ package com.gamestudio.interfaces;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.Toolkit;
+import java.io.IOException;
 import java.awt.Dimension;
+
+import com.gamestudio.manager.DataLoader;
 import com.gamestudio.manager.StateManager;
 
 public class GameFrame extends JFrame {
@@ -17,11 +20,16 @@ public class GameFrame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Toolkit toolkit = this.getToolkit();
         Dimension desktopSolution = toolkit.getScreenSize();
-        
+        try {
+            DataLoader.getInstance().LoadData();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         this.stateManager = new StateManager();
 
         addKeyListener(stateManager.getScreen());
         add(stateManager.getScreen());
+        
         
         this.setBounds(
             (desktopSolution.width - width) / 2,
