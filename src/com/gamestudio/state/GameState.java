@@ -9,7 +9,7 @@ import com.gamestudio.physical.PhysicalMap;
 
 public class GameState extends State {
     
-    private PhysicalMap physicalMap;
+    public PhysicalMap physicalMap;
 
     public GameState(StateManager stateManager) {
        super(stateManager, new BufferedImage(GameFrame.width, GameFrame.height, BufferedImage.TYPE_INT_ARGB));
