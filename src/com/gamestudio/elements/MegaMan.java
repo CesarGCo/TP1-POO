@@ -30,12 +30,12 @@ public class MegaMan extends SmartRobot {
 
         setTeamType(ALLY_TEAM);
 
-        runForwardAnim = DataLoader.getInstance().getAnimation("run");
-        runBackAnim = DataLoader.getInstance().getAnimation("run");
+        runForwardAnim = DataLoader.getInstance().getAnimation("mega_man_running");
+        runBackAnim = DataLoader.getInstance().getAnimation("mega_man_running");
         runBackAnim.flipAllImage();
 
-        idleForwardAnim = DataLoader.getInstance().getAnimation("idle");
-        idleBackAnim = DataLoader.getInstance().getAnimation("idle");
+        idleForwardAnim = DataLoader.getInstance().getAnimation("mega_man_idle");
+        idleBackAnim = DataLoader.getInstance().getAnimation("mega_man_idle");
         idleBackAnim.flipAllImage();
 
         flyForwardAnim = DataLoader.getInstance().getAnimation("flyingup");
@@ -48,16 +48,16 @@ public class MegaMan extends SmartRobot {
         landingBackAnim = DataLoader.getInstance().getAnimation("landing");
         landingBackAnim.flipAllImage();
 
-        behurtForwardAnim = DataLoader.getInstance().getAnimation("hurting");
-        behurtBackAnim = DataLoader.getInstance().getAnimation("hurting");
+        behurtForwardAnim = DataLoader.getInstance().getAnimation("mega_man_hurt");
+        behurtBackAnim = DataLoader.getInstance().getAnimation("mega_man_hurt");
         behurtBackAnim.flipAllImage();
 
-        idleShootingForwardAnim = DataLoader.getInstance().getAnimation("idleshoot");
-        idleShootingBackAnim = DataLoader.getInstance().getAnimation("idleshoot");
+        idleShootingForwardAnim = DataLoader.getInstance().getAnimation("mega_man_shooting");
+        idleShootingBackAnim = DataLoader.getInstance().getAnimation("mega_man_shooting");
         idleShootingBackAnim.flipAllImage();
 
-        runShootingForwarAnim = DataLoader.getInstance().getAnimation("runshoot");
-        runShootingBackAnim = DataLoader.getInstance().getAnimation("runshoot");
+        runShootingForwarAnim = DataLoader.getInstance().getAnimation("mega_man_shotting_running");
+        runShootingBackAnim = DataLoader.getInstance().getAnimation("mega_man_shotting_running");
         runShootingBackAnim.flipAllImage();
 
         flyShootingForwardAnim = DataLoader.getInstance().getAnimation("flyingupshoot");
