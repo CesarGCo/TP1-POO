@@ -1,5 +1,0 @@
-Assets/Menu/
-arrow_game_over
-arrow_menu
-game_over
-menu
