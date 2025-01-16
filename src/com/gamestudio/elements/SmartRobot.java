@@ -8,7 +8,7 @@ public abstract class SmartRobot extends Robot {
     private boolean isJumping;
     private boolean isLanding;
 
-    public SmartRobot(int x, int y, float width, float height, float mass, int amountLife, GameState gameState) {
+    public SmartRobot(int x, int y, int width, int height, int mass, int amountLife, GameState gameState) {
         super(x, y, width, height, mass, amountLife, gameState);
         setCurrentState(ALIVE);
     }
