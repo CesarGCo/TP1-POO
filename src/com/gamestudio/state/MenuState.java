@@ -1,20 +1,17 @@
 package com.gamestudio.state;
 
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
-
+import com.gamestudio.effect.FrameImage;
 import com.gamestudio.elements.ButtonMenu;
 import com.gamestudio.interfaces.GameFrame;
+import com.gamestudio.manager.DataLoader;
 import com.gamestudio.manager.StateManager;
 
 public class MenuState extends State {
-    private Image backgroundImage;
+    private FrameImage backgroundImage;
     private ButtonMenu[] buttons;
 
     public MenuState(StateManager stateManager) {
@@ -25,19 +22,14 @@ public class MenuState extends State {
         buttons[0].update();
         buttons[1] = new ButtonMenu(220, 430);
 
-        try {
-            backgroundImage = ImageIO.read(new File("Assets/Menu/menu.jpg"));
-        } catch (IOException e) {
-            e.printStackTrace();
-            backgroundImage = null;
-        }
+        backgroundImage = DataLoader.getInstance().getFrameImage("menu");
     }
 
     public void update() {}
 
     public void render() {
         Graphics g = getBufferedImage().getGraphics();
-        g.drawImage(backgroundImage, 0, 0, GameFrame.width, GameFrame.height, null);
+        g.drawImage(backgroundImage.getImage(), 0, 0, GameFrame.width, GameFrame.height, null);
         for (ButtonMenu bt : buttons) {
             bt.draw(g);
         }
