@@ -1,28 +1,24 @@
 package com.gamestudio.manager;
 
-
-import java.applet.Applet;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.Hashtable;
 
 import javax.imageio.ImageIO;
-import javax.sound.sampled.*;;
+import javax.sound.sampled.*;
+
+import com.gamestudio.effect.Animation;
+import com.gamestudio.effect.FrameImage;;
 
 public class DataLoader {
-    private static int NUM_SOUNDS = 1;
-
     private static DataLoader instance = null;
-    private Hashtable<String, Clip> musics; 
-    
-    /*private Hashtable<String, FrameImage> megaManframes;
-    private Hashtable<String, FrameImage> woodManframes;
-    private Hashtable<String, FrameImage> menuFrames;
-    private Hashtable<String, Animation> animations;*/
+
+    private Hashtable<String, Clip> sounds; 
+    private Hashtable<String, FrameImage> frames;
+    private Hashtable<String, Animation> animations;
     
     private int[][] phys_map;
     
@@ -36,55 +32,54 @@ public class DataLoader {
     }
     
     public Clip getMusic(String name){
-        return instance.musics.get(name);
+        return instance.sounds.get(name);
     }
     
-    /*public Animation getAnimation(String name){
+    public Animation getAnimation(String name){
         
         Animation animation = new Animation(instance.animations.get(name));
         return animation;
         
-    }*/
+    }
     
-    /*public FrameImage getFrameImage(String name){
+    public FrameImage getFrameImage(String name){
 
-        FrameImage frameImage = new FrameImage(instance.frameImages.get(name));
+        FrameImage frameImage = new FrameImage(instance.frames.get(name));
         return frameImage;
 
-    }*/
+    }
     
     public int[][] getPhysicalMap(){
         return instance.phys_map;
     }
     
     public void LoadData()throws IOException {
-        LoadPhysMap();
-        LoadMusics();
-        /* 
-        LoadWoodManFrames();
-        LoadMegaManFrames();
-        LoadMenuFrames();
-        LoadAnimation();
-        */
-        
+        //LoadPhysMap();
+        LoadSounds();
+        LoadFrame();
+        //LoadAnimation();
     }
     
-    public void LoadMusics() throws IOException {
-        instance.musics = new Hashtable<>();
-        for(int i = 0; i < NUM_SOUNDS; i ++){
-            Clip clip = null;
+    public void LoadSounds() throws IOException {
+        this.sounds = new Hashtable<String, Clip>();
+        
+        FileReader fr = new FileReader("Assets/sounds.txt");
+        BufferedReader br = new BufferedReader(fr);
+        String line = br.readLine();
+        String soundName = null;
+        Clip clip = null;
+        File audioFile = null;
+        while((soundName = br.readLine()) != null) {
             try {
-                File audioFile = new File("Assets/Musics/Music-" + (i + 1) + ".wav");
-
-                AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
-
+                audioFile = new File(line + soundName + ".wav");
+                AudioSystem.getAudioInputStream(audioFile);
                 clip = AudioSystem.getClip();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        
-            instance.musics.put("Music-" + (i + 1) + ".wav", clip);
+            instance.sounds.put(soundName, clip);
         }
+        br.close();
     }
     
     public void LoadPhysMap() throws IOException {
@@ -122,22 +117,23 @@ public class DataLoader {
         
     }
     
-    /*public void LoadAnimation() throws IOException {
+    public void LoadAnimation() throws IOException {
         
         animations = new Hashtable<String, Animation>();
         
-        FileReader fr = new FileReader(animationfile);
+        FileReader fr = new FileReader("Assets/animations.txt");
         BufferedReader br = new BufferedReader(fr);
         
         String line = null;
         
         if(br.readLine()==null) {
             System.out.println("No data");
+            br.close();
             throw new IOException();
         }
         else {
             
-            fr = new FileReader(animationfile);
+            fr = new FileReader("Assets/animations.txt");
             br = new BufferedReader(fr);
             
             while((line = br.readLine()).equals(""));
@@ -163,66 +159,29 @@ public class DataLoader {
         }
         
         br.close();
-    }*/
-    /*
-    public void LoadWoodManFrames() throws IOException {
+    }
+    
+    public void LoadFrame() throws IOException{
         
-        FileReader fr = new FileReader("Assets/woodmanframes.txt");
+        this.frames = new Hashtable<String, FrameImage>();
+        
+        FileReader fr = new FileReader("Assets/frames.txt");
         BufferedReader br = new BufferedReader(fr);
-
         String line = null;
         String imageName = null;
+        String name = null;
         BufferedImage image = null;
-        FrameImage frame = new FrameImage();
-
-        line = br.readLine();
-        while ((imageName = br.readLine()) != null) {
-            image = ImageIO.read(new File(line + imageName + ".png"));
-            
-            frame.setName(imageName);
-            frame.setImage(image);
-            instance.woodManframes.put(frame.getName(), frame);
+        while ((line = br.readLine()) != null) {
+            imageName = br.readLine();
+            while(!imageName.equals("0")) {
+                image = ImageIO.read(new File(line + imageName + ".png"));
+                name = imageName;
+    
+                FrameImage frame = new FrameImage(name, image);
+                instance.frames.put(frame.getName(), frame);
+                imageName = br.readLine();
+            }
         }
         br.close();
     }
-
-    public void LoadMegaManFrames() throws IOException {
-        
-        FileReader fr = new FileReader("Assets/megamanframes.txt");
-        BufferedReader br = new BufferedReader(fr);
-
-        String line = null;
-        String imageName = null;
-        BufferedImage image = null;
-        FrameImage frame = new FrameImage();
-        line = br.readLine();
-        while ((imageName = br.readLine()) != null) {
-            image = ImageIO.read(new File(line + imageName + ".png"));
-            
-            frame.setName(imageName);
-            frame.setImage(image);
-            instance.megaManframes.put(frame.getName(), frame);
-        }
-        br.close();
-    }
-
-    public void LoadMenuFrames() throws IOException {
-        
-        FileReader fr = new FileReader("Assets/menuframes.txt");
-        BufferedReader br = new BufferedReader(fr);
-
-        String line = null;
-        String imageName = null;
-        BufferedImage image = null;
-        FrameImage frame = new FrameImage();
-        line = br.readLine();
-        while ((imageName = br.readLine()) != null) {
-            image = ImageIO.read(new File(line + imageName + ".png"));
-            
-            frame.setName(imageName);
-            frame.setImage(image);
-            instance.menuframes.put(frame.getName(), frame);
-        }
-        br.close();
-    }*/
 }
