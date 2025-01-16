@@ -50,9 +50,7 @@ public class GameState extends State {
 
         // Aplicar a escala para desenhar proporcionalmente
         g2d.scale(scaleX, scaleY);
-
-        // Desenhar o mapa ajustado pela posição da câmera
-        BufferedImage mapImage = DataLoader.getInstance().getFrameImage("new_map").getImage();
+        
         g2d.drawImage(
             mapImage,
             -camera.getPosX(), // Ajuste horizontal
