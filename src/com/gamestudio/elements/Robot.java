@@ -117,8 +117,6 @@ public abstract class Robot extends GameElement {
         this.teamType = teamType;
     }
 
-    public abstract void attack();
-
     public boolean isObjectOutOfCameraView() {
         return this.getPosX() - this.getGameState().camera.getPosX() > this.getGameState().camera.getWidthView() || this.getPosX() - this.getGameState().camera.getPosX() < -50.0F || this.getPosY() - this.getGameState().camera.getPosY() > this.getGameState().camera.getHeightView() || this.getPosY() - this.getGameState().camera.getPosY() < -50.0F;
     }
@@ -138,7 +136,7 @@ public abstract class Robot extends GameElement {
         this.hurtingCallback();
     }
 
-    public void Update() {
+    public void update() {
         switch (this.currentState) {
             case ALIVE:
                 // verifica se colidiu com projetiu de inimigo ou não
