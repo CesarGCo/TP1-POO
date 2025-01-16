@@ -6,19 +6,22 @@ import java.awt.Rectangle;
 
 public abstract class DumbRobot extends Robot {
 
-    public DumbRobot(int x, int y, float width, float height, float mass, int amountLife, GameState gameState) {
-        super(x, y, width, height, mass, amountLife, gameState);
-        this.setTeamType(ENEMY_TEAM);
+    public DumbRobot(int x, int y, float width, float height, float mass, int amountLife, GameState gameWorld) {
+        super(x, y, width, height, mass, amountLife, gameWorld);
+        setTeamType(ENEMY_TEAM);
     }
 
-    // Define a área de colisão do inimigo com outros objetos
+    public abstract void move();
+
+    @Override
+    public void update() {
+        super.update();
+        move();
+    }
+
     @Override
     public abstract Rectangle getBoundForCollisionWithEnemy();
 
-    // Desenha o inimigo na tela
     @Override
     public abstract void draw(Graphics2D g2);
-
-    // Define o movimento do inimigo
-    public abstract void move();
 }

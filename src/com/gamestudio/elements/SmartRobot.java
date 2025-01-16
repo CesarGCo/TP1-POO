@@ -4,12 +4,11 @@ import java.awt.Rectangle;
 
 import com.gamestudio.state.GameState;
 
-public abstract class Human extends ParticularObject {
-    
+public abstract class SmartRobot extends Robot {
     private boolean isJumping;
     private boolean isLanding;
 
-    public Human(int x, int y, float width, float height, float mass, int amountLife, GameState gameState) {
+    public SmartRobot(int x, int y, float width, float height, float mass, int amountLife, GameState gameState) {
         super(x, y, width, height, mass, amountLife, gameState);
         setCurrentState(ALIVE);
     }
@@ -38,15 +37,11 @@ public abstract class Human extends ParticularObject {
     
     @Override
     public void Update(){
-        
         super.Update();
         
         if(getCurrentState() == ALIVE){
-        
             if(!isLanding){
-
                 setPosX(getPosX() + getSpeedX());
-
                 if(getDirection() == RIGHT && 
                         getGameState().physicalMap.haveCollisionWithLeftWall(getBoundForCollisionWithMap())!=null){
 
