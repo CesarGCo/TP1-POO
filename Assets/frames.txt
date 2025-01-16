@@ -41,3 +41,6 @@ wood_man_leafshield4
 wood_man_leafshield_cast1
 wood_man_throwing1
 0
+Assets/Map/
+new_map
+0
