@@ -34,10 +34,12 @@ public abstract class SmartRobot extends Robot {
     public void setIsJumping(boolean isJumping) {
         this.isJumping = isJumping;
     }
+
+    public abstract void attack();
     
     @Override
-    public void Update(){
-        super.Update();
+    public void update(){
+        super.update();
         
         if(getCurrentState() == ALIVE){
             if(!isLanding){
