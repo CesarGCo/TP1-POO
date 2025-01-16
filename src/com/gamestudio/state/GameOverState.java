@@ -2,20 +2,17 @@ package com.gamestudio.state;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
-
+import com.gamestudio.effect.FrameImage;
 import com.gamestudio.elements.ButtonGameOver;
 import com.gamestudio.interfaces.GameFrame;
+import com.gamestudio.manager.DataLoader;
 import com.gamestudio.manager.StateManager;
 
 public class GameOverState extends State {
-    private Image backgroundImage;
+    private FrameImage backgroundImage;
     private ButtonGameOver[] buttons;
     
     public GameOverState(StateManager stateManager) {
@@ -26,13 +23,7 @@ public class GameOverState extends State {
        buttons[0].update();
        buttons[1] = new ButtonGameOver(358, 320);
        buttons[2] = new ButtonGameOver(358, 360);
-
-       try {
-            backgroundImage = ImageIO.read(new File("Assets/Menu/gameoverbackground.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-            backgroundImage = null;
-        }
+       backgroundImage = DataLoader.getInstance().getFrameImage("game_over");
     }
 
     public void update() {}
@@ -42,7 +33,7 @@ public class GameOverState extends State {
         g.setColor(Color.black);
         g.fillRect(0, 0, GameFrame.width, GameFrame.height);
         int width = (int) (0.7 * (GameFrame.width));
-        g.drawImage(backgroundImage, (GameFrame.width / 2) - (width / 2), 0, width, GameFrame.height, null);
+        g.drawImage(backgroundImage.getImage(), (GameFrame.width / 2) - (width / 2), 0, width, GameFrame.height, null);
         for (ButtonGameOver bt : buttons) {
             bt.draw(g);
         }
@@ -55,6 +46,8 @@ public class GameOverState extends State {
                     getStateManager().setCurrentState(StateManager.GAME);
 
                 } else if(buttons[1].isEnabled()) {
+                    buttons[0].update();
+                    buttons[1].update();
                     getStateManager().setCurrentState(StateManager.MENU);
 
                 } else if(buttons[2].isEnabled()) {
