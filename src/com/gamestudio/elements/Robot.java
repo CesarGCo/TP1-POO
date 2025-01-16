@@ -17,9 +17,9 @@ public abstract class Robot extends GameElement {
     public static final int BEHURT = 2;
 
     private int currentState = 0; //Vivo ou morto
-    private float width;
-    private float height;
-    private float mass;
+    private int width;
+    private int height;
+    private int mass;
     private int speedX;
     private int speedY;
     private int amountLife; //Quantidade de vida do objeto
@@ -28,7 +28,7 @@ public abstract class Robot extends GameElement {
     private int teamType;
     protected Animation behurtAnim;
 
-    public Robot(int x, int y, float width, float height, float mass, int amountLife, GameState gameState) {
+    public Robot(int x, int y, int width, int height, int mass, int amountLife, GameState gameState) {
         super(x, y, gameState);
         this.setWidth(width);
         this.setHeight(height);
@@ -45,27 +45,27 @@ public abstract class Robot extends GameElement {
         this.currentState = currentState;
     }
 
-    public float getWidth() {
+    public int getWidth() {
         return width;
     }
 
-    public void setWidth(float width) {
+    public void setWidth(int width) {
         this.width = width;
     }
 
-    public float getHeight() {
+    public int getHeight() {
         return height;
     }
 
-    public void setHeight(float height) {
+    public void setHeight(int height) {
         this.height = height;
     }
 
-    public float getMass() {
+    public int getMass() {
         return mass;
     }
 
-    public void setMass(float mass) {
+    public void setMass(int mass) {
         this.mass = mass;
     }
 

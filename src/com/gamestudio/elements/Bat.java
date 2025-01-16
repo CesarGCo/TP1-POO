@@ -11,7 +11,7 @@ public class Bat extends DumbRobot {
     private Animation idleAnim;
     private Animation openingWingsAnim;
     private Animation flyingAnim;
-    private float speed;
+    private int speed;
     private boolean isActive;
     private boolean isWingsOpened;
 

@@ -6,7 +6,7 @@ import java.awt.Rectangle;
 
 public abstract class DumbRobot extends Robot {
 
-    public DumbRobot(int x, int y, float width, float height, float mass, int amountLife, GameState gameWorld) {
+    public DumbRobot(int x, int y, int width, int height, int mass, int amountLife, GameState gameWorld) {
         super(x, y, width, height, mass, amountLife, gameWorld);
         setTeamType(ENEMY_TEAM);
     }
