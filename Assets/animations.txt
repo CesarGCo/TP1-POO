@@ -1,4 +1,4 @@
-24
+23
 megaman_idle
 mega_man_idle1 70000000 mega_man_idle2 70000000 mega_man_idle3 70000000
 
@@ -20,11 +20,8 @@ mega_man_shooting_running1 70000000 mega_man_shooting_running2 70000000 mega_man
 megaman_shooting_jumping
 mega_man_shooting_jumping1 70000000
 
-megaman_throwing
-megaman_throwing1 70000000
-
-megaman_throwing_jumping
-megaman_throwing_jumping1 70000000
+megaman_hurt
+mega_man_hurt 70000000
 
 robbit_jump
 robbit_jumping1 70000000 robbit_jumping2 70000000
@@ -69,4 +66,4 @@ woodman_leafshield_cast
 wood_man_leafshield_cast1 70000000
 
 woodman_throwing
-wood_man_throwing1 70000000
+wood_man_throwing1 70000000 
