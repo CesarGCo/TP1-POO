@@ -14,8 +14,8 @@ public class MegaManBullet extends Projectile {
 
     public MegaManBullet(int x, int y, GameState gameState) {
         super(x, y, 60, 30, 1, 10, gameState);
-        forwardBulletAnim = DataLoader.getInstance().getAnimation("bluefire");
-        backBulletAnim = DataLoader.getInstance().getAnimation("bluefire");
+        forwardBulletAnim = DataLoader.getInstance().getAnimation("plasma_bullet");
+        backBulletAnim = DataLoader.getInstance().getAnimation("plasma_bullet");
         backBulletAnim.flipAllImage();
     }
 
@@ -58,7 +58,5 @@ public class MegaManBullet extends Projectile {
             System.out.println("Bullet set behurt for enemy");
         }
     }
-
-    public void attack() {}
 
 }
