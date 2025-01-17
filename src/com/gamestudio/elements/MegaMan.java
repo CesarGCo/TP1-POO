@@ -13,7 +13,7 @@ public class MegaMan extends SmartRobot {
     private final Animation runForwardAnim, runBackAnim, runShootingForwarAnim, runShootingBackAnim;
     private final Animation idleForwardAnim, idleBackAnim, idleShootingForwardAnim, idleShootingBackAnim;
     private final Animation flyForwardAnim, flyBackAnim, flyShootingForwardAnim, flyShootingBackAnim;
-    private final Animation landingForwardAnim, landingBackAnim;
+    //private final Animation landingForwardAnim, landingBackAnim;
     private final Animation behurtForwardAnim, behurtBackAnim;
 
     private long lastShootingTime;
@@ -30,38 +30,38 @@ public class MegaMan extends SmartRobot {
 
         setTeamType(ALLY_TEAM);
 
-        runForwardAnim = DataLoader.getInstance().getAnimation("mega_man_running");
-        runBackAnim = DataLoader.getInstance().getAnimation("mega_man_running");
+        runForwardAnim = DataLoader.getInstance().getAnimation("megaman_running");
+        runBackAnim = DataLoader.getInstance().getAnimation("megaman_running");
         runBackAnim.flipAllImage();
 
-        idleForwardAnim = DataLoader.getInstance().getAnimation("mega_man_idle");
-        idleBackAnim = DataLoader.getInstance().getAnimation("mega_man_idle");
+        idleForwardAnim = DataLoader.getInstance().getAnimation("megaman_idle");
+        idleBackAnim = DataLoader.getInstance().getAnimation("megaman_idle");
         idleBackAnim.flipAllImage();
 
-        flyForwardAnim = DataLoader.getInstance().getAnimation("flyingup");
+        flyForwardAnim = DataLoader.getInstance().getAnimation("megaman_jump");
         flyForwardAnim.setIsRepeated(false);
-        flyBackAnim = DataLoader.getInstance().getAnimation("flyingup");
+        flyBackAnim = DataLoader.getInstance().getAnimation("megaman_jump");
         flyBackAnim.setIsRepeated(false);
         flyBackAnim.flipAllImage();
 
-        landingForwardAnim = DataLoader.getInstance().getAnimation("landing");
-        landingBackAnim = DataLoader.getInstance().getAnimation("landing");
-        landingBackAnim.flipAllImage();
+        // landingForwardAnim = DataLoader.getInstance().getAnimation("landing");
+        // landingBackAnim = DataLoader.getInstance().getAnimation("landing");
+        // landingBackAnim.flipAllImage();
 
-        behurtForwardAnim = DataLoader.getInstance().getAnimation("mega_man_hurt");
-        behurtBackAnim = DataLoader.getInstance().getAnimation("mega_man_hurt");
+        behurtForwardAnim = DataLoader.getInstance().getAnimation("megaman_hurt");
+        behurtBackAnim = DataLoader.getInstance().getAnimation("megaman_hurt");
         behurtBackAnim.flipAllImage();
 
-        idleShootingForwardAnim = DataLoader.getInstance().getAnimation("mega_man_shooting");
-        idleShootingBackAnim = DataLoader.getInstance().getAnimation("mega_man_shooting");
+        idleShootingForwardAnim = DataLoader.getInstance().getAnimation("megaman_shooting");
+        idleShootingBackAnim = DataLoader.getInstance().getAnimation("megaman_shooting");
         idleShootingBackAnim.flipAllImage();
 
-        runShootingForwarAnim = DataLoader.getInstance().getAnimation("mega_man_shotting_running");
-        runShootingBackAnim = DataLoader.getInstance().getAnimation("mega_man_shotting_running");
+        runShootingForwarAnim = DataLoader.getInstance().getAnimation("megaman_shooting_running");
+        runShootingBackAnim = DataLoader.getInstance().getAnimation("megaman_shooting_running");
         runShootingBackAnim.flipAllImage();
 
-        flyShootingForwardAnim = DataLoader.getInstance().getAnimation("flyingupshoot");
-        flyShootingBackAnim = DataLoader.getInstance().getAnimation("flyingupshoot");
+        flyShootingForwardAnim = DataLoader.getInstance().getAnimation("megaman_shooting_jumping");
+        flyShootingBackAnim = DataLoader.getInstance().getAnimation("megaman_shooting_jumping");
         flyShootingBackAnim.flipAllImage();
 
     }
@@ -76,15 +76,15 @@ public class MegaMan extends SmartRobot {
             }
         }
 
-        if (getIsLanding()) {
-            landingBackAnim.Update(System.nanoTime());
-            if (landingBackAnim.isLastFrame()) {
-                setIsLanding(false);
-                landingBackAnim.reset();
-                runForwardAnim.reset();
-                runBackAnim.reset();
-            }
-        }
+        // if (getIsLanding()) {
+        //     landingBackAnim.Update(System.nanoTime());
+        //     if (landingBackAnim.isLastFrame()) {
+        //         setIsLanding(false);
+        //         landingBackAnim.reset();
+        //         runForwardAnim.reset();
+        //         runBackAnim.reset();
+        //     }
+        // }
 
     }
 
@@ -104,7 +104,7 @@ public class MegaMan extends SmartRobot {
     public void draw(Graphics2D g2) {
         switch (getCurrentState()) {
             case ALIVE:
-                if (getIsLanding()) {
+                /*if (getIsLanding()) {
                     if (getDirection() == RIGHT) {
                         landingForwardAnim.setCurrentFrame(landingBackAnim.getCurrentFrame());
                         landingForwardAnim.draw( (getPosX() - getGameState().camera.getPosX()),
@@ -116,7 +116,7 @@ public class MegaMan extends SmartRobot {
                                 g2);
                     }
 
-                } else if (getIsJumping()) {
+                } else */if (getIsJumping()) {
 
                     if (getDirection() == RIGHT) {
                         flyForwardAnim.Update(System.nanoTime());
