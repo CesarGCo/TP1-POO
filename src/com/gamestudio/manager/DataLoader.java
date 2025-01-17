@@ -54,7 +54,7 @@ public class DataLoader {
     }
     
     public void LoadData()throws IOException {
-        //LoadPhysMap();
+        LoadPhysMap();
         LoadSounds();
         LoadFrame();
         //LoadAnimation();
@@ -84,7 +84,7 @@ public class DataLoader {
     
     public void LoadPhysMap() throws IOException {
         
-        FileReader fr = new FileReader("");
+        FileReader fr = new FileReader("Assets/phys_map.txt");
         BufferedReader br = new BufferedReader(fr);
         
         String line = null;
