@@ -57,7 +57,7 @@ public class DataLoader {
         LoadPhysMap();
         LoadSounds();
         LoadFrame();
-        //LoadAnimation();
+        LoadAnimation();
     }
     
     public void LoadSounds() throws IOException {
@@ -145,7 +145,6 @@ public class DataLoader {
                 
                 while((line = br.readLine()).equals(""));
                 animation.setName(line);
-                
                 while((line = br.readLine()).equals(""));
                 String[] str = line.split(" ");
                 
@@ -169,15 +168,12 @@ public class DataLoader {
         BufferedReader br = new BufferedReader(fr);
         String line = null;
         String imageName = null;
-        String name = null;
         BufferedImage image = null;
         while ((line = br.readLine()) != null) {
             imageName = br.readLine();
             while(!imageName.equals("0")) {
                 image = ImageIO.read(new File(line + imageName + ".png"));
-                name = imageName;
-    
-                FrameImage frame = new FrameImage(name, image);
+                FrameImage frame = new FrameImage(imageName, image);
                 instance.frames.put(frame.getName(), frame);
                 imageName = br.readLine();
             }
