@@ -1,2 +1,9 @@
-Assets/sounds/
-Music-1
+7
+
+Shoot Assets\sounds\Shoot.wav
+Boss_soundtrack Assets\sounds\Boss_soundtrack.wav
+Level_soundtrack Assets\sounds\Level_soundtrack.wav
+Mega_man_hit Assets\sounds\Mega_man_hit.wav
+Menu Assets\sounds\Menu.wav
+Music-1 Assets\sounds\Music-1.wav
+Game-over Assets\sounds\Game-over.wav
