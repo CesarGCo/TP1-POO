@@ -23,10 +23,10 @@ public class MegaMan extends SmartRobot {
     private final Clip shooting1;
 
     public MegaMan(int x, int y, GameState gameState) {
-        super(x, y, 70, 90, 0.1f, 100, gameState);
+        super(x, y, 70, 90, 1, 100, gameState);
 
-        shooting1 = DataLoader.getInstance().getMusic("bluefireshooting");
-        hurtingSound = DataLoader.getInstance().getMusic("megamanhurt");
+        shooting1 = DataLoader.getInstance().getMusic("Shoot");
+        hurtingSound = DataLoader.getInstance().getMusic("Mega_man_hit");
 
         setTeamType(ALLY_TEAM);
 
@@ -210,35 +210,34 @@ public class MegaMan extends SmartRobot {
 
     @Override
     public void attack() {
-       /* if (!isShooting) {
-            shooting1.play();
-
-            Bullet bullet = new BlueFire(getPosX(), getPosY(), getGameState());
+        if (!isShooting) {
+            //shooting1.play();
+            Projectile projectile = new MegaManBullet(getPosX(), getPosY(), getGameState());
             if (getDirection() == LEFT) {
-                bullet.setSpeedX(-10);
-                bullet.setPosX(bullet.getPosX() - 40);
+                projectile.setSpeedX(-10);
+                projectile.setPosX(projectile.getPosX() - 40);
                 if (getSpeedX() != 0 && getSpeedY() == 0) {
-                    bullet.setPosX(bullet.getPosX() - 10);
-                    bullet.setPosY(bullet.getPosY() - 5);
+                    projectile.setPosX(projectile.getPosX() - 10);
+                    projectile.setPosY(projectile.getPosY() - 5);
                 }
             } else {
-                bullet.setSpeedX(10);
-                bullet.setPosX(bullet.getPosX() + 40);
+                projectile.setSpeedX(10);
+                projectile.setPosX(projectile.getPosX() + 40);
                 if (getSpeedX() != 0 && getSpeedY() == 0) {
-                    bullet.setPosX(bullet.getPosX() + 10);
-                    bullet.setPosY(bullet.getPosY() - 5);
+                    projectile.setPosX(projectile.getPosX() + 10);
+                    projectile.setPosY(projectile.getPosY() - 5);
                 }
             }
             if (getIsJumping())
-                bullet.setPosY(bullet.getPosY() - 20);
+                projectile.setPosY(projectile.getPosY() - 20);
 
-            bullet.setTeamType(getTeamType());
-            getGameState().bulletManager.addObject(bullet);
+            projectile.setTeamType(getTeamType());
+            getGameState().projectileManager.addObject(projectile);
 
             lastShootingTime = System.nanoTime();
             isShooting = true;
 
-        }*/
+        }
 
     }
 

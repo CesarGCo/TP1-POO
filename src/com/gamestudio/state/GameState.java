@@ -2,7 +2,6 @@ package com.gamestudio.state;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
@@ -10,6 +9,7 @@ import com.gamestudio.elements.Camera;
 import com.gamestudio.elements.MegaMan;
 import com.gamestudio.interfaces.GameFrame;
 import com.gamestudio.manager.DataLoader;
+import com.gamestudio.manager.ProjectileManager;
 import com.gamestudio.manager.RobotManager;
 import com.gamestudio.manager.StateManager;
 import com.gamestudio.physical.PhysicalMap;
@@ -18,6 +18,7 @@ public class GameState extends State {
     public PhysicalMap physicalMap;
     public MegaMan megaMan;
     public RobotManager robotManager;
+    public ProjectileManager projectileManager;
     public Camera camera;
     BufferedImage mapImage;
 
