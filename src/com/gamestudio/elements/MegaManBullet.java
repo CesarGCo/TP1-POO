@@ -21,19 +21,16 @@ public class MegaManBullet extends Projectile {
 
     @Override
     public Rectangle getBoundForCollisionWithEnemy() {
-        // TODO Auto-generated method stub
         return getBoundForCollisionWithMap();
     }
 
     @Override
     public void draw(Graphics2D g2) {
-        // TODO Auto-generated method stub
         if (getSpeedX() > 0) {
             checkAndApplyIgnoredFrames(g2, forwardBulletAnim);
         } else {
             checkAndApplyIgnoredFrames(g2, backBulletAnim);
         }
-        //drawBoundForCollisionWithEnemy(g2);
     }
 
     private void checkAndApplyIgnoredFrames(Graphics2D g2, Animation forwardBulletAnim) {
@@ -49,7 +46,6 @@ public class MegaManBullet extends Projectile {
 
     @Override
     public void update() {
-        // TODO Auto-generated method stub
         if (forwardBulletAnim.isIgnoreFrame(0) || backBulletAnim.isIgnoreFrame(0))
             setPosX(getPosX() + getSpeedX());
         Robot object = getGameState().robotManager.getCollisionWidthEnemyObject(this);
