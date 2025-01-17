@@ -10,78 +10,74 @@ import com.gamestudio.state.GameState;
 
 public class RobotManager {
 
-    protected List<Robot> robots;
+    protected final List<Robot> robots;
 
-    private GameState gameState;
-    
+    private final GameState gameState;
+
     public RobotManager(GameState gameState) {
-        robots = Collections.synchronizedList(new LinkedList<Robot>());
+        robots = Collections.synchronizedList(new LinkedList<>());
         this.gameState = gameState;
     }
-    
-    public GameState getGameWorld(){
+
+    public GameState getGameWorld() {
         return gameState;
     }
-    
-    public void addObject(Robot robot){
-        
-        synchronized(robots){
+
+    public void addObject(Robot robot) {
+
+        synchronized (robots) {
             robots.add(robot);
         }
-        
+
     }
-    
-    public void RemoveObject(Robot robot){
-        synchronized(robots){
-        
-            for(int id = 0; id < robots.size(); id++){
-                
+
+    public void RemoveObject(Robot robot) {
+        synchronized (robots) {
+
+            for (int id = 0; id < robots.size(); id++) {
+
                 Robot object = robots.get(id);
-                if(object == robot)
+                if (object == robot)
                     robots.remove(id);
 
             }
         }
     }
-    
-    public Robot getCollisionWidthEnemyObject(Robot object){
-        synchronized(robots){
-            for(int id = 0; id < robots.size(); id++){
-                
-                Robot objectInList = robots.get(id);
 
-                if(object.getTeamType() != objectInList.getTeamType() && 
-                        object.getBoundForCollisionWithEnemy().intersects(objectInList.getBoundForCollisionWithEnemy())){
+    public Robot getCollisionWidthEnemyObject(Robot object) {
+        synchronized (robots) {
+            for (Robot objectInList : robots) {
+
+                if (object.getTeamType() != objectInList.getTeamType() &&
+                        object.getBoundForCollisionWithEnemy().intersects(objectInList.getBoundForCollisionWithEnemy())) {
                     return objectInList;
                 }
             }
         }
         return null;
     }
-    
-    /*public void UpdateObjects(){
-        
-        synchronized(robots){
-            for(int id = 0; id < robots.size(); id++){
-                
+
+    public void updateObjects() {
+
+        synchronized (robots) {
+            for (int id = 0; id < robots.size(); id++) {
                 Robot object = robots.get(id);
-                
-                
-                if(!object.isObjectOutOfCameraView()) object.Update();
-                
-                if(object.getCurrentState() == Robot.DEATH){
+
+                if (!object.isObjectOutOfCameraView()) object.update();
+
+                if (object.getCurrentState() == Robot.DEATH) {
                     robots.remove(id);
                 }
             }
         }
-        
-    }*/
-    
-    /*public void draw(Graphics2D g2){
-        synchronized(robots){
-            for(Robot object: robots)
-                if(!object.isObjectOutOfCameraView()) object.draw(g2);
+
+    }
+
+    public void draw(Graphics2D g2) {
+        synchronized (robots) {
+            for (Robot object : robots)
+                if (!object.isObjectOutOfCameraView()) object.draw(g2);
         }
-    } */
-	
+    }
+
 }
