@@ -5,16 +5,18 @@
  */
 package com.gamestudio.elements;
 
+import java.awt.Graphics;
+
 import com.gamestudio.state.GameState;
 
 public class Camera extends GameElement {
 
-    private float widthView;
-    private float heightView;
+    private int widthView;
+    private int heightView;   
 
     private boolean isLocked = false;
 
-    public Camera(int x, int y, float widthView, float heightView, GameState gameState) {
+    public Camera(int x, int y, int widthView, int heightView, GameState gameState) {
         super(x, y, gameState);
         this.widthView = widthView;
         this.heightView = heightView;
@@ -38,28 +40,26 @@ public class Camera extends GameElement {
 
             MegaMan mainCharacter = getGameState().megaMan;
 
-            if (mainCharacter.getPosX() - getPosX() > 400) setPosX(mainCharacter.getPosX() - 400);
-            if (mainCharacter.getPosX() - getPosX() < 200) setPosX(mainCharacter.getPosX() - 200);
+            if(mainCharacter.getPosX() - getPosX() > 150) setPosX(mainCharacter.getPosX() - 150);
+            if(mainCharacter.getPosX() - getPosX() < 100) setPosX(mainCharacter.getPosX() - 100);
 
-            if (mainCharacter.getPosY() - getPosY() > 400) setPosY(mainCharacter.getPosY() - 400); // bottom
-            else if (mainCharacter.getPosY() - getPosY() < 250) setPosY(mainCharacter.getPosY() - 250);// top
         }
 
     }
 
-    public float getWidthView() {
+    public int getWidthView() {
         return widthView;
     }
 
-    public void setWidthView(float widthView) {
+    public void setWidthView(int widthView) {
         this.widthView = widthView;
     }
 
-    public float getHeightView() {
+    public int getHeightView() {
         return heightView;
     }
 
-    public void setHeightView(float heightView) {
+    public void setHeightView(int heightView) {
         this.heightView = heightView;
     }
 }
