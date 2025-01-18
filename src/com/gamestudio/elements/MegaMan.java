@@ -70,7 +70,8 @@ public class MegaMan extends SmartRobot {
         super.update();
 
         if (isShooting) {
-            if (System.nanoTime() - lastShootingTime > 500 * 1000000) {
+            if (System.nanoTime() - lastShootingTime > 900 * 200000) {
+
                 isShooting = false;
             }
         }
@@ -218,7 +219,6 @@ public class MegaMan extends SmartRobot {
             lastShootingTime = System.nanoTime();
             this.isShooting = true;
         }
-
     }
 
     @Override
