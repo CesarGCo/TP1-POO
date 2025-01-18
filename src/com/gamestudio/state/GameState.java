@@ -30,7 +30,11 @@ public class GameState extends State {
 
     public GameState(StateManager stateManager) {
        super(stateManager, new BufferedImage(GameFrame.width, GameFrame.height, BufferedImage.TYPE_INT_ARGB));
-       this.robotManager = new RobotManager(this);
+       initState();
+    }
+
+    public void initState() {
+        this.robotManager = new RobotManager(this);
        this.projectileManager = new ProjectileManager(this);
     
        this.physicalMap = new PhysicalMap(0, 0, this);
@@ -38,8 +42,8 @@ public class GameState extends State {
        this.megaMan = new MegaMan(100, 102, this);
        this.camera = new Camera(0, 0, 400, 240, this);
        robotManager.addObject(megaMan);
+       megaMan.setCurrentState(SmartRobot.ALIVE);
     }
-
     public BufferedImage getMapImage() {
         return mapImage;
     }
@@ -51,6 +55,7 @@ public class GameState extends State {
         if(megaMan.getCurrentState() == SmartRobot.DEATH) {
             System.nanoTime();
             getStateManager().setCurrentState(StateManager.GAMEOVER);
+            initState();
         }
     }
 
@@ -65,6 +70,21 @@ public class GameState extends State {
         }
     }
     
+    
+    private void drawMap(Graphics2D g2d) {
+        // Escala para ajustar o conteúdo da câmera à tela
+        float scaleX = (float) GameFrame.width / camera.getWidthView();
+        float scaleY = (float) GameFrame.height / camera.getHeightView();
+        g2d.scale(scaleX, scaleY);
+
+        g2d.drawImage(
+            mapImage,
+            (int) (-camera.getPosX()), // Ajuste horizontal proporcional à escala
+            (int) (-camera.getPosY()), // Ajuste vertical proporcional à escala
+            null
+        );
+    }
+
     public void setPressedButton(int code) {
         switch(code){
                 
@@ -89,20 +109,6 @@ public class GameState extends State {
                 drawHiboxes = !drawHiboxes;
                 break;
         }
-    }
-    
-    private void drawMap(Graphics2D g2d) {
-        // Escala para ajustar o conteúdo da câmera à tela
-        float scaleX = (float) GameFrame.width / camera.getWidthView();
-        float scaleY = (float) GameFrame.height / camera.getHeightView();
-        g2d.scale(scaleX, scaleY);
-
-        g2d.drawImage(
-            mapImage,
-            (int) (-camera.getPosX()), // Ajuste horizontal proporcional à escala
-            (int) (-camera.getPosY()), // Ajuste vertical proporcional à escala
-            null
-        );
     }
 
     public void setReleasedButton(int code) {
