@@ -89,7 +89,7 @@ public abstract class Robot extends GameElement {
     }
 
     public void setAmountLife(int amountLife) {
-        this.amountLife = Math.max(amountLife, 0);
+        this.amountLife = amountLife;
     }
 
     public int getDamage() {
@@ -139,18 +139,27 @@ public abstract class Robot extends GameElement {
         switch (this.currentState) {
             case ALIVE:
                 // verifica se colidiu com projetiu de inimigo ou não
-                Robot object = this.getGameState().robotManager.getCollisionWidthEnemyObject(this);
-                if (object != null && object.getDamage() > 0) {
-                    System.out.println("Take damage...");
-                    this.beHurt(object.getDamage()); // Aplica dano ao personagem
+                Robot object1 = this.getGameState().robotManager.getCollisionWidthEnemyObject(this);
+                Robot object2 = this.getGameState().projectileManager.getCollisionWidthEnemyObject(this);
+                if (object1 != null && object1.getDamage() > 0) {
+                    this.setAmountLife(this.getAmountLife() - object1.getDamage());
+                    this.currentState = BEHURT;
+                    this.hurtingCallback();
+                } else if(object2 != null && object2.getDamage() > 0){
+                    this.setAmountLife(this.getAmountLife() - object2.getDamage());
+                    this.currentState = BEHURT;
+                    this.hurtingCallback();
                 }
                 break;
 
             case BEHURT:
+                
                 // O personagem tomou dano então a animação de dano ocorre
                 if (this.behurtAnim == null) {
                     this.currentState = ALIVE;
+                    System.out.println("Entrou neste inferno");
                     if (this.getAmountLife() <= 0) {
+                        System.out.println("Entrou aqui");
                         this.currentState = DEATH;
                     }
                 } else {

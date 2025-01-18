@@ -13,10 +13,11 @@ public class MegaManBullet extends Projectile {
     private final Animation backBulletAnim;
 
     public MegaManBullet(float x, float y, GameState gameState) {
-        super(x, y, 8, 8, 1.0f, 10, gameState);
+        super(x, y, 8, 8, 1.0f, 1, gameState);
         forwardBulletAnim = DataLoader.getInstance().getAnimation("plasma_bullet");
         backBulletAnim = DataLoader.getInstance().getAnimation("plasma_bullet");
         backBulletAnim.flipAllImage();
+        setTeamType(Robot.ALLY_TEAM);
     }
 
     @Override

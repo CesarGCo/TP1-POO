@@ -11,17 +11,17 @@ public class Bat extends DumbRobot {
     private Animation idleAnim;
     private Animation openingWingsAnim;
     private Animation flyingAnim;
-    private int speed;
+    private float speed;
     private boolean isActive;
     private boolean isWingsOpened;
 
     public Bat(int x, int y, GameState gameWorld) {
-        super(x, y, 50, 30, 0, 50, gameWorld);
-        idleAnim = DataLoader.getInstance().getAnimation("bat_idle");
-        openingWingsAnim = DataLoader.getInstance().getAnimation("bat_opening_wings");
-        flyingAnim = DataLoader.getInstance().getAnimation("bat_flying");
-        speed = 2;
-        setDamage(5);
+        super(x, y, 20, 20, 0, 2, gameWorld);
+        idleAnim = DataLoader.getInstance().getAnimation("batton_idle");
+        openingWingsAnim = DataLoader.getInstance().getAnimation("batton_rising");
+        flyingAnim = DataLoader.getInstance().getAnimation("batton_flying");
+        speed = 0.3f;
+        setDamage(1);
         isActive = false;
         isWingsOpened = false;
     }
@@ -30,7 +30,7 @@ public class Bat extends DumbRobot {
         float deltaX = getGameState().megaMan.getPosX() - getPosX();
         float deltaY = getGameState().megaMan.getPosY() - getPosY();
         float distance = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-        return distance <= 200; // Distância de ativação do morcego
+        return distance <= 100; // Distância de ativação do morcego
     }
 
     private boolean hasOpeningWingsFinished() {
@@ -45,8 +45,8 @@ public class Bat extends DumbRobot {
             float distance = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
             if (distance > 0) {
-                setSpeedX((int) (deltaX / distance * speed));
-                setSpeedY((int) (deltaY / distance * speed));
+                setSpeedX((float) (deltaX / distance * speed));
+                setSpeedY((float) (deltaY / distance * speed));
             }
 
             setPosX(getPosX() + getSpeedX());
@@ -55,25 +55,22 @@ public class Bat extends DumbRobot {
     }
 
     @Override
-    public void update() {
-        super.update();
+public void update() {
+    super.update();
+    //System.out.println(getCurrentState());
 
-        if (isMegaManInRange()) {
-            if (!isActive) {
-                isActive = true;
-                isWingsOpened = false;
-                openingWingsAnim.reset();
-            }
-        } else {
-            isActive = false;
-        }
-
-        if (isActive && !isWingsOpened && hasOpeningWingsFinished()) {
-            isWingsOpened = true;
-        }
-
-        move();
+    if (!isActive && isMegaManInRange()) {
+        isActive = true;
+        isWingsOpened = false;
+        openingWingsAnim.reset();
     }
+
+    if (isActive && !isWingsOpened && hasOpeningWingsFinished()) {
+        isWingsOpened = true;
+    }
+
+    move();
+}
 
     @Override
     public Rectangle getBoundForCollisionWithEnemy() {
