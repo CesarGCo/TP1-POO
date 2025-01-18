@@ -24,7 +24,7 @@ public class MegaMan extends SmartRobot {
     private final Clip shooting1;
 
     public MegaMan(int x, int y, GameState gameState) {
-        super(x, y, 20, 40, 0.1f, 100, gameState);
+        super(x, y, 18, 24, 0.1f, 100, gameState);
         shooting1 = DataLoader.getInstance().getMusic("Shoot");
         hurtingSound = DataLoader.getInstance().getMusic("Mega_man_hit");
         this.setDirection(MegaMan.RIGHT);
@@ -81,10 +81,10 @@ public class MegaMan extends SmartRobot {
     public Rectangle getBoundForCollisionWithEnemy() {
         // TODO Auto-generated method stub
         Rectangle rect = getBoundForCollisionWithMap();
-        rect.x =  (int) (getPosX() - 22);
-        rect.y =  (int) (getPosY() - 40);
-        rect.width = 44;
-        rect.height = 80;
+        rect.x =  (int) (getPosX() - 9);
+        rect.y =  (int) (getPosY() - 12);
+        rect.width = 18;
+        rect.height = 24;
 
         return rect;
     }
@@ -187,25 +187,25 @@ public class MegaMan extends SmartRobot {
     @Override
     public void attack() {
         if (!isShooting) {
-            //shooting1.play();
-            Projectile projectile = new MegaManBullet(getPosX(), getPosY() + 7, getGameState());
+            //shooting1.open();
+            Projectile projectile = new MegaManBullet(getPosX(), getPosY(), getGameState());
             if (getDirection() == LEFT) {
                 projectile.setSpeedX(-6);
                 projectile.setPosX(projectile.getPosX() - 10);
                 if (getSpeedX() != 0 && getSpeedY() == 0) {
-                    projectile.setPosX(projectile.getPosX() - 5);
+                    projectile.setPosX(projectile.getPosX() - 6);
                     projectile.setPosY(projectile.getPosY());
                 }
             } else {
                 projectile.setSpeedX(6);
                 projectile.setPosX(projectile.getPosX() + 8);
                 if (getSpeedX() != 0 && getSpeedY() == 0) {
-                    projectile.setPosX(projectile.getPosX() + 5);
+                    projectile.setPosX(projectile.getPosX() + 6);
                     projectile.setPosY(projectile.getPosY());
                 }
             }
             if (getIsJumping())
-                projectile.setPosY(projectile.getPosY() - 8);
+                projectile.setPosY(projectile.getPosY() - 4);
 
             projectile.setTeamType(getTeamType());
             getGameState().projectileManager.addObject(projectile);
