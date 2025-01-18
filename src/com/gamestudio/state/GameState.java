@@ -28,6 +28,7 @@ public class GameState extends State {
     public GameState(StateManager stateManager) {
        super(stateManager, new BufferedImage(GameFrame.width, GameFrame.height, BufferedImage.TYPE_INT_ARGB));
        this.robotManager = new RobotManager(this);
+       this.projectileManager = new ProjectileManager(this);
        this.physicalMap = new PhysicalMap(0, 0, this);
        this.mapImage = DataLoader.getInstance().getFrameImage("new_map_fall").getImage();
        this.megaMan = new MegaMan(100, 102, this);
@@ -42,31 +43,36 @@ public class GameState extends State {
     public void update() {
         megaMan.update();
         camera.update();
+        projectileManager.updateObjects();
     }
 
     public void render() {
         Graphics g = getBufferedImage().getGraphics();
         Graphics2D g2 = (Graphics2D) g;
         drawMap(g2);
-        physicalMap.draw(g);
+        projectileManager.draw(g2);
         megaMan.draw(g2);
     }
     
     public void setPressedButton(int code) {
         switch(code){
                 
-            case KeyEvent.VK_RIGHT:
+            case KeyEvent.VK_D:
                 megaMan.setDirection(MegaMan.RIGHT);
                 megaMan.run();
                 break;
                 
-            case KeyEvent.VK_LEFT:
+            case KeyEvent.VK_A:
                 megaMan.setDirection(MegaMan.LEFT);
                 megaMan.run();
                 break;
 
             case KeyEvent.VK_SPACE:
                 megaMan.jump();
+                break;
+
+            case KeyEvent.VK_LEFT:
+                megaMan.attack();
                 break;
         }
     }
@@ -98,12 +104,12 @@ public class GameState extends State {
     public void setReleasedButton(int code) {
         switch(code){
                 
-            case KeyEvent.VK_RIGHT:
+            case KeyEvent.VK_D:
                 if(megaMan.getSpeedX() > 0)
                     megaMan.stopRun();
                 break;
                 
-            case KeyEvent.VK_LEFT:
+            case KeyEvent.VK_A:
                 if(megaMan.getSpeedX() < 0)
                     megaMan.stopRun();
                 break;
