@@ -4,6 +4,9 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
+import javax.sound.sampled.Clip;
+import javax.xml.crypto.Data;
+
 import com.gamestudio.effect.FrameImage;
 import com.gamestudio.elements.ButtonMenu;
 import com.gamestudio.interfaces.GameFrame;
@@ -13,6 +16,7 @@ import com.gamestudio.manager.StateManager;
 public class MenuState extends State {
     private FrameImage backgroundImage;
     private ButtonMenu[] buttons;
+    private Clip menuMusic;
 
     public MenuState(StateManager stateManager) {
         super(stateManager, new BufferedImage(GameFrame.width, GameFrame.height, BufferedImage.TYPE_INT_ARGB));
@@ -23,9 +27,15 @@ public class MenuState extends State {
         buttons[1] = new ButtonMenu(220, 430);
 
         backgroundImage = DataLoader.getInstance().getFrameImage("menu");
+        menuMusic = DataLoader.getInstance().getSound("Menu");
     }
 
-    public void update() {}
+    public void update() {
+        if(!menuMusic.isRunning()) {  
+            menuMusic.setFramePosition(0); 
+            menuMusic.start();
+        }
+    }
 
     public void render() {
         Graphics g = getBufferedImage().getGraphics();
@@ -44,6 +54,7 @@ public class MenuState extends State {
             
         } else if(keyCode == KeyEvent.VK_ENTER) {
             if(buttons[0].isEnabled()) {
+                menuMusic.stop();
                 getStateManager().setCurrentState(StateManager.GAME);;
             } else {
                 System.exit(0);

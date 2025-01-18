@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
+import javax.sound.sampled.Clip;
+
 import com.gamestudio.effect.FrameImage;
 import com.gamestudio.elements.ButtonGameOver;
 import com.gamestudio.interfaces.GameFrame;
@@ -14,6 +16,8 @@ import com.gamestudio.manager.StateManager;
 public class GameOverState extends State {
     private FrameImage backgroundImage;
     private ButtonGameOver[] buttons;
+    private Clip gameOverMusic;
+    private boolean soundPlayed;
     
     public GameOverState(StateManager stateManager) {
        super(stateManager, new BufferedImage(GameFrame.width, GameFrame.height, BufferedImage.TYPE_INT_ARGB));
@@ -24,9 +28,18 @@ public class GameOverState extends State {
        buttons[1] = new ButtonGameOver(358, 320);
        buttons[2] = new ButtonGameOver(358, 360);
        backgroundImage = DataLoader.getInstance().getFrameImage("game_over");
+
+       this.gameOverMusic = DataLoader.getInstance().getSound("Game-over");
+       this.soundPlayed = false;
     }
 
-    public void update() {}
+    public void update() {
+        if(!soundPlayed) {  
+            gameOverMusic.setFramePosition(0); 
+            gameOverMusic.start();
+            soundPlayed = true;
+        }
+    }
 
     public void render() {
         Graphics g = getBufferedImage().getGraphics();
@@ -42,6 +55,8 @@ public class GameOverState extends State {
     public void setPressedButton(int code) {
         switch (code) {
             case KeyEvent.VK_ENTER:
+                soundPlayed = false;
+                gameOverMusic.stop();
                 if(buttons[0].isEnabled()) {
                     getStateManager().setCurrentState(StateManager.GAME);
 
