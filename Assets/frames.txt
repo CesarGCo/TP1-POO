@@ -59,3 +59,6 @@ wood_man_throwing1
 Assets/Map/
 new_map_fall
 0
+Assets/Miscellaneous/
+plasma_bullet1
+0

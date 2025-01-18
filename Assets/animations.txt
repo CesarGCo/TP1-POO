@@ -1,4 +1,4 @@
-23
+24
 megaman_idle
 mega_man_idle1 200000000 mega_man_idle2 200000000 mega_man_idle3 200000000
 
@@ -67,3 +67,6 @@ wood_man_leafshield_cast1 70000000
 
 woodman_throwing
 wood_man_throwing1 70000000 
+
+plasma_bullet
+plasma_bullet1 70000000
