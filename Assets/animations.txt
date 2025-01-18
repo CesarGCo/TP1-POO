@@ -65,3 +65,12 @@ wood_man_leaf_shield_throw1 70000000 wood_man_leaf_shield_throw2 70000000
 
 plasma_bullet
 plasma_bullet1 70000000
+
+fire_bullet
+fire_bullet1 70000000 fire_bullet2 70000000 fire_bullet3 70000000
+
+eletric_bullet
+eletric_bullet1 70000000 eletric_bullet2 70000000 eletric_bullet3 70000000
+
+water_bullet
+water_bullet1 70000000 water_bullet2 70000000 water_bullet3 70000000
