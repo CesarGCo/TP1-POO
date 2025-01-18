@@ -53,24 +53,20 @@ public class GameState extends State {
        this.camera = new Camera(0, 0, 400, 240, this);
        robotManager.addObject(megaMan);
        megaMan.setCurrentState(SmartRobot.ALIVE);
-       //initEnemies();
+       initEnemies();
     }
 
     private void initEnemies(){
-        Robot bat1 = new Bat(200, 102, this);
-        bat1.setDirection(Robot.LEFT);
-        bat1.setTeamType(Robot.ENEMY_TEAM);
-        robotManager.addObject(bat1);
+//        Robot bat1 = new Bat(200, 102, this);
+//        bat1.setDirection(Robot.LEFT);
+//        bat1.setTeamType(Robot.ENEMY_TEAM);
+//        robotManager.addObject(bat1);
 
-        Robot robbit1 = new Rabbit(100, 150, this);
-        bat1.setDirection(Robot.LEFT);
-        bat1.setTeamType(Robot.ENEMY_TEAM);
+        Robot robbit1 = new Rabbit(150, 150, this);
         robotManager.addObject(robbit1);
 
-        Robot woodman = new WoodMan(100, 60, this);
-        bat1.setDirection(Robot.LEFT);
-        bat1.setTeamType(Robot.ENEMY_TEAM);
-        robotManager.addObject(woodman);
+//        Robot woodman = new WoodMan(100, 60, this);
+//        robotManager.addObject(woodman);//
     }
 
     public void update() {
