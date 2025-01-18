@@ -1,26 +1,26 @@
-24
-megaman_idle
+23
+mega_man_idle
 mega_man_idle1 200000000 mega_man_idle2 200000000 mega_man_idle3 200000000
 
-megaman_running
+mega_man_running
 mega_man_running1 200000000 mega_man_running2 200000000 mega_man_running3 200000000
 
-megaman_death
+mega_man_death
 mega_man_death1 200000000 mega_man_death2 200000000 mega_man_death3 200000000 mega_man_death4 200000000
 
-megaman_jump
+mega_man_jump
 mega_man_jumping1 200000000
 
-megaman_shooting
+mega_man_shooting
 mega_man_shooting1 200000000
 
-megaman_shooting_running
+mega_man_shooting_running
 mega_man_shooting_running1 200000000 mega_man_shooting_running2 200000000 mega_man_shooting_running3 200000000
 
-megaman_shooting_jumping
+mega_man_shooting_jumping
 mega_man_shooting_jumping1 200000000
 
-megaman_hurt
+mega_man_hurt
 mega_man_hurt1 200000000
 
 robbit_jump
@@ -41,32 +41,29 @@ batton_idle1 70000000
 batton_rising
 batton_rising1 70000000 batton_rising2 70000000 batton_rising3 70000000 batton_rising4 70000000
 
-woodman_beat
+wood_man_beat
 wood_man_beat1 70000000
 
-woodman_chest
+wood_man_chest
 wood_man_chest1 70000000
 
-woodman_idle
+wood_man_idle
 wood_man_idle1 70000000 wood_man_idle2 70000000
 
-woodman_intro
+wood_man_intro
 wood_man_intro1 70000000
 
-woodman_jumping
+wood_man_jumping
 wood_man_jumping1 70000000
 
-woodman_leaf
+wood_man_leaf
 wood_man_leaf1 70000000 wood_man_leaf2 70000000 wood_man_leaf3 70000000
 
-woodman_leafshield
-wood_man_leafshield1 70000000 wood_man_leafshield2 70000000 wood_man_leafshield3 70000000 wood_man_leafshield4 70000000
+wood_man_leaf_shield
+wood_man_leaf_shield1 70000000 wood_man_leaf_shield2 70000000 wood_man_leaf_shield3 70000000 wood_man_leaf_shield4 70000000
 
-woodman_leafshield_cast
-wood_man_leafshield_cast1 70000000
-
-woodman_throwing
-wood_man_throwing1 70000000 
+wood_man_leaf_shield_throw
+wood_man_leaf_shield_throw1 70000000 wood_man_leaf_shield_throw2 70000000
 
 plasma_bullet
 plasma_bullet1 70000000

@@ -28,7 +28,7 @@ public class WoodMan extends SmartRobot {
         this.setDirection(WoodMan.LEFT);
         setTeamType(ENEMY_TEAM);
 
-        IntroAnimation = DataLoader.getInstance().getAnimation("wood_man_into");
+        IntroAnimation = DataLoader.getInstance().getAnimation("wood_man_intro");
 
         ChestBeatFowardAnimation = DataLoader.getInstance().getAnimation("wood_man_beat");
         ChestBeatBackAnimation = DataLoader.getInstance().getAnimation("wood_man_beat");
@@ -38,7 +38,7 @@ public class WoodMan extends SmartRobot {
         JumpingBackAnimation = DataLoader.getInstance().getAnimation("wood_man_jumping");
         JumpingFowardAnimation.flipAllImage();
 
-        LeafShieldThrowFowardAnimation = DataLoader.getInstance().getAnimation("wood_man_leaf_shield_throw");
+       LeafShieldThrowFowardAnimation = DataLoader.getInstance().getAnimation("wood_man_leaf_shield_throw");
         LeafShieldThrowBackAnimation = DataLoader.getInstance().getAnimation("wood_man_leaf_shield_throw");
         LeafShieldThrowFowardAnimation.flipAllImage();
     }
