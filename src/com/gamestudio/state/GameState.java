@@ -27,10 +27,12 @@ public class GameState extends State {
 
     public GameState(StateManager stateManager) {
        super(stateManager, new BufferedImage(GameFrame.width, GameFrame.height, BufferedImage.TYPE_INT_ARGB));
+       this.robotManager = new RobotManager(this);
        this.physicalMap = new PhysicalMap(0, 0, this);
        this.mapImage = DataLoader.getInstance().getFrameImage("new_map_fall").getImage();
-       this.megaMan = new MegaMan(100, 172, this);
+       this.megaMan = new MegaMan(100, 102, this);
        this.camera = new Camera(0, 0, 400, 240, this);
+       robotManager.addObject(megaMan);
     }
 
     public BufferedImage getMapImage() {
@@ -38,32 +40,46 @@ public class GameState extends State {
     }
 
     public void update() {
+        megaMan.update();
         camera.update();
     }
 
     public void render() {
         Graphics g = getBufferedImage().getGraphics();
-        drawMap(g);
+        Graphics2D g2 = (Graphics2D) g;
+        drawMap(g2);
         physicalMap.draw(g);
+        megaMan.draw(g2);
         
     }
     
     public void setPressedButton(int code) {
-        if(code == KeyEvent.VK_RIGHT) {
-            megaMan.setPosX(megaMan.getPosX() + 10);
-        } if(code == KeyEvent.VK_LEFT) {
-            megaMan.setPosX(megaMan.getPosX() - 10);
+        switch(code){
+                
+            case KeyEvent.VK_RIGHT:
+                megaMan.setDirection(megaMan.RIGHT);
+                megaMan.run();
+                break;
+                
+            case KeyEvent.VK_LEFT:
+                megaMan.setDirection(megaMan.LEFT);
+                megaMan.run();
+                break;
+
+            case KeyEvent.VK_SPACE:
+                megaMan.jump();
+                break;
         }
     }
     
-    private void drawMap(Graphics g) {
+    private void drawMap(Graphics2D g2d) {
         // Escala para ajustar o conteúdo da câmera à tela
         float scaleX = (float) GameFrame.width / camera.getWidthView();
         float scaleY = (float) GameFrame.height / camera.getHeightView();
         
     
         // Salvar o estado original do Graphics
-        Graphics2D g2d = (Graphics2D) g;
+        
         AffineTransform originalTransform = g2d.getTransform();
     
         // Aplicar a escala para desenhar proporcionalmente
@@ -80,5 +96,22 @@ public class GameState extends State {
     }
     
 
-    public void setReleasedButton(int code) {}
+    public void setReleasedButton(int code) {
+        switch(code){
+                
+            case KeyEvent.VK_RIGHT:
+                if(megaMan.getSpeedX() > 0)
+                    megaMan.stopRun();
+                break;
+                
+            case KeyEvent.VK_LEFT:
+                if(megaMan.getSpeedX() < 0)
+                    megaMan.stopRun();
+                break;
+                
+            case KeyEvent.VK_SPACE:
+                
+                break;
+        }
+    }
 }
