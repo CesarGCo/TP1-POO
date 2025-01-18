@@ -48,18 +48,18 @@ public abstract class SmartRobot extends Robot {
                         getGameState().physicalMap.haveCollisionWithLeftWall(getBoundForCollisionWithMap())!=null){
 
                     Rectangle rectLeftWall = getGameState().physicalMap.haveCollisionWithLeftWall(getBoundForCollisionWithMap());
-                    setPosX(rectLeftWall.x + rectLeftWall.width + getWidth()/2);
+                    setPosX(rectLeftWall.x + rectLeftWall.width + (float) getWidth() /2);
 
                 } else if(getDirection() == RIGHT && 
                         getGameState().physicalMap.haveCollisionWithRightWall(getBoundForCollisionWithMap())!=null){
 
                     Rectangle rectRightWall = getGameState().physicalMap.haveCollisionWithRightWall(getBoundForCollisionWithMap());
-                    setPosX(rectRightWall.x - getWidth()/2);
+                    setPosX(rectRightWall.x - (float) getWidth() /2);
 
                 }
 
                 Rectangle boundForCollisionWithMapFuture = getBoundForCollisionWithMap();
-                boundForCollisionWithMapFuture.y += (getSpeedY() != 0? getSpeedY() : 2);
+                boundForCollisionWithMapFuture.y += getSpeedY() != 0? (int) getSpeedY() : 2;
                 Rectangle rectLand = getGameState().physicalMap.haveCollisionWithLand(boundForCollisionWithMapFuture, this);
                 Rectangle rectTop = getGameState().physicalMap.haveCollisionWithTop(boundForCollisionWithMapFuture);
                 
@@ -71,7 +71,7 @@ public abstract class SmartRobot extends Robot {
                 }else if(rectLand != null){
                     setIsJumping(false);
                     setSpeedY(0);
-                    setPosY(rectLand.y - getHeight()/2);
+                    setPosY(rectLand.y - (float) getHeight() /2);
                 }else{
                     setIsJumping(true);
                     setSpeedY((getSpeedY() + getMass()));
