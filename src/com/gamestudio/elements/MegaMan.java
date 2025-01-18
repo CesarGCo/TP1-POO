@@ -4,6 +4,7 @@ import com.gamestudio.manager.DataLoader;
 import com.gamestudio.state.GameState;
 import com.gamestudio.effect.Animation;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import javax.sound.sampled.*;
@@ -23,8 +24,7 @@ public class MegaMan extends SmartRobot {
     private final Clip shooting1;
 
     public MegaMan(int x, int y, GameState gameState) {
-        super(x, y, 70, 90, 1, 100, gameState);
-
+        super(x, y, 40, 40, 1, 100, gameState);
         shooting1 = DataLoader.getInstance().getMusic("Shoot");
         hurtingSound = DataLoader.getInstance().getMusic("Mega_man_hit");
 
@@ -32,17 +32,17 @@ public class MegaMan extends SmartRobot {
 
         runForwardAnim = DataLoader.getInstance().getAnimation("megaman_running");
         runBackAnim = DataLoader.getInstance().getAnimation("megaman_running");
-        runBackAnim.flipAllImage();
+        runForwardAnim.flipAllImage();
 
         idleForwardAnim = DataLoader.getInstance().getAnimation("megaman_idle");
         idleBackAnim = DataLoader.getInstance().getAnimation("megaman_idle");
-        idleBackAnim.flipAllImage();
+        idleForwardAnim.flipAllImage();
 
         flyForwardAnim = DataLoader.getInstance().getAnimation("megaman_jump");
         flyForwardAnim.setIsRepeated(false);
         flyBackAnim = DataLoader.getInstance().getAnimation("megaman_jump");
-        flyBackAnim.setIsRepeated(false);
-        flyBackAnim.flipAllImage();
+        flyForwardAnim.setIsRepeated(false);
+        flyForwardAnim.flipAllImage();
 
         // landingForwardAnim = DataLoader.getInstance().getAnimation("landing");
         // landingBackAnim = DataLoader.getInstance().getAnimation("landing");
@@ -50,20 +50,19 @@ public class MegaMan extends SmartRobot {
 
         behurtForwardAnim = DataLoader.getInstance().getAnimation("megaman_hurt");
         behurtBackAnim = DataLoader.getInstance().getAnimation("megaman_hurt");
-        behurtBackAnim.flipAllImage();
+        behurtForwardAnim.flipAllImage();
 
         idleShootingForwardAnim = DataLoader.getInstance().getAnimation("megaman_shooting");
         idleShootingBackAnim = DataLoader.getInstance().getAnimation("megaman_shooting");
-        idleShootingBackAnim.flipAllImage();
+        idleShootingForwardAnim.flipAllImage();
 
         runShootingForwarAnim = DataLoader.getInstance().getAnimation("megaman_shooting_running");
         runShootingBackAnim = DataLoader.getInstance().getAnimation("megaman_shooting_running");
-        runShootingBackAnim.flipAllImage();
+        runShootingForwarAnim.flipAllImage();
 
         flyShootingForwardAnim = DataLoader.getInstance().getAnimation("megaman_shooting_jumping");
         flyShootingBackAnim = DataLoader.getInstance().getAnimation("megaman_shooting_jumping");
-        flyShootingBackAnim.flipAllImage();
-
+        flyShootingForwardAnim.flipAllImage();
     }
 
     @Override
@@ -102,6 +101,7 @@ public class MegaMan extends SmartRobot {
 
     @Override
     public void draw(Graphics2D g2) {
+        Camera camera = getGameState().camera;
         switch (getCurrentState()) {
             case ALIVE:
                 /*if (getIsLanding()) {
