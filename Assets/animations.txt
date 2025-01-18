@@ -24,7 +24,7 @@ mega_man_hurt
 mega_man_hurt1 200000000
 
 robbit_jumping
-robbit_jumping1 70000000 robbit_jumping2 70000000
+robbit_jumping2 10000000000 robbit_jumping1 70000000
 
 robbit_idle
 robbit_idle1 70000000
