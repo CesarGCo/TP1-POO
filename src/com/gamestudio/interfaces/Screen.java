@@ -37,7 +37,7 @@ public class Screen extends JPanel implements Runnable, KeyListener{
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        this.state.setReleasedButton(e.getKeyCode());
     }
 
     @Override
