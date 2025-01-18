@@ -47,13 +47,13 @@ public class GameState extends State {
        this.robotManager = new RobotManager(this);
        this.projectileManager = new ProjectileManager(this);
     
-       this.physicalMap = new PhysicalMap(0, 0, this);
+       this.physicalMap = new PhysicalMap(-16, 0, this);
        this.mapImage = DataLoader.getInstance().getFrameImage("new_map_fall").getImage();
-       this.megaMan = new MegaMan(100, 100, this);
+       this.megaMan = new MegaMan(100, 50, this);
        this.camera = new Camera(0, 0, 400, 240, this);
        robotManager.addObject(megaMan);
        megaMan.setCurrentState(SmartRobot.ALIVE);
-       initEnemies();
+       //initEnemies();
     }
 
     private void initEnemies(){
@@ -62,7 +62,7 @@ public class GameState extends State {
         bat1.setTeamType(Robot.ENEMY_TEAM);
         robotManager.addObject(bat1);
 
-        Robot robbit1 = new Rabbit(200, 50, this);
+        Robot robbit1 = new Rabbit(100, 150, this);
         bat1.setDirection(Robot.LEFT);
         bat1.setTeamType(Robot.ENEMY_TEAM);
         robotManager.addObject(robbit1);

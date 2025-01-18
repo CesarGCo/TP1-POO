@@ -14,7 +14,6 @@ public class Camera extends GameElement {
     private int widthView;
     private int heightView;   
 
-    private boolean isLocked = false;
 
     public Camera(int x, int y, int widthView, int heightView, GameState gameState) {
         super(x, y, gameState);
@@ -22,29 +21,13 @@ public class Camera extends GameElement {
         this.heightView = heightView;
     }
 
-    public void lock() {
-        isLocked = true;
-    }
-
-    public void unlock() {
-        isLocked = false;
-    }
-
     @Override
     public void update() {
-
-        // NOTE: WHEN SEE FINAL BOSS, THE CAMERA WON'T CHANGE THE POSITION,
-        // AFTER THE TUTORIAL, CAMERA WILL SET THE NEW POS
-
-        if (!isLocked) {
-
-            MegaMan mainCharacter = getGameState().megaMan;
-
+        MegaMan mainCharacter = getGameState().megaMan;
+        if(mainCharacter.getPosX() > 100 && mainCharacter.getPosX() < 2830) {
             if(mainCharacter.getPosX() - getPosX() > 150) setPosX(mainCharacter.getPosX() - 150);
             if(mainCharacter.getPosX() - getPosX() < 100) setPosX(mainCharacter.getPosX() - 100);
-
         }
-
     }
 
     public int getWidthView() {
