@@ -74,7 +74,7 @@ public abstract class SmartRobot extends Robot {
                     setIsJumping(false);
                     if(getSpeedY() > 0) setIsLanding(true);
                     setSpeedY(0);
-                    setPosY((int) (rectLand.y - getHeight()/2 - 1));
+                    setPosY((int) (rectLand.y - getHeight()/2));
                 }else{
                     setIsJumping(true);
                     setSpeedY((int) (getSpeedY() + getMass()));
