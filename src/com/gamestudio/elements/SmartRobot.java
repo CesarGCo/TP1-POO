@@ -42,25 +42,24 @@ public abstract class SmartRobot extends Robot {
         super.update();
         
         if(getCurrentState() == ALIVE){
-            if(!isLanding){
-                setPosX((int) (getPosX() + getSpeedX()));
-                if(getDirection() == RIGHT && 
+            if(!isLanding) {
+                setPosX(getPosX() + getSpeedX());
+                if(getDirection() == LEFT && 
                         getGameState().physicalMap.haveCollisionWithLeftWall(getBoundForCollisionWithMap())!=null){
 
                     Rectangle rectLeftWall = getGameState().physicalMap.haveCollisionWithLeftWall(getBoundForCollisionWithMap());
-                    setPosX((int) (rectLeftWall.x + rectLeftWall.width + getWidth()/2));
+                    setPosX(rectLeftWall.x + rectLeftWall.width + getWidth()/2);
 
-                }
-                if(getDirection() == RIGHT && 
+                } else if(getDirection() == RIGHT && 
                         getGameState().physicalMap.haveCollisionWithRightWall(getBoundForCollisionWithMap())!=null){
 
                     Rectangle rectRightWall = getGameState().physicalMap.haveCollisionWithRightWall(getBoundForCollisionWithMap());
-                    setPosX((int) (rectRightWall.x - getWidth()/2));
+                    setPosX(rectRightWall.x - getWidth()/2);
 
                 }
 
                 Rectangle boundForCollisionWithMapFuture = getBoundForCollisionWithMap();
-                boundForCollisionWithMapFuture.y += (getSpeedY()!=0?getSpeedY(): 2);
+                boundForCollisionWithMapFuture.y += (getSpeedY() != 0? getSpeedY() : 2);
                 Rectangle rectLand = getGameState().physicalMap.haveCollisionWithLand(boundForCollisionWithMapFuture);
                 
                 Rectangle rectTop = getGameState().physicalMap.haveCollisionWithTop(boundForCollisionWithMapFuture);
@@ -72,9 +71,8 @@ public abstract class SmartRobot extends Robot {
                     
                 }else if(rectLand != null){
                     setIsJumping(false);
-                    if(getSpeedY() > 0) setIsLanding(true);
                     setSpeedY(0);
-                    setPosY((int) (rectLand.y - getHeight()/2));
+                    setPosY(rectLand.y - getHeight()/2);
                 }else{
                     setIsJumping(true);
                     setSpeedY((getSpeedY() + getMass()));

@@ -24,7 +24,7 @@ public class MegaMan extends SmartRobot {
     private final Clip shooting1;
 
     public MegaMan(int x, int y, GameState gameState) {
-        super(x, y, 40, 40, 0.1f, 100, gameState);
+        super(x, y, 20, 40, 0.1f, 100, gameState);
         shooting1 = DataLoader.getInstance().getMusic("Shoot");
         hurtingSound = DataLoader.getInstance().getMusic("Mega_man_hit");
         this.setDirection(MegaMan.RIGHT);
@@ -75,16 +75,6 @@ public class MegaMan extends SmartRobot {
             }
         }
 
-        // if (getIsLanding()) {
-        //     landingBackAnim.Update(System.nanoTime());
-        //     if (landingBackAnim.isLastFrame()) {
-        //         setIsLanding(false);
-        //         landingBackAnim.reset();
-        //         runForwardAnim.reset();
-        //         runBackAnim.reset();
-        //     }
-        // }
-
     }
 
     @Override
@@ -104,20 +94,7 @@ public class MegaMan extends SmartRobot {
         Camera camera = getGameState().camera;
         switch (getCurrentState()) {
             case ALIVE:
-                /*if (getIsLanding()) {
-                    if (getDirection() == RIGHT) {
-                        landingForwardAnim.setCurrentFrame(landingBackAnim.getCurrentFrame());
-                        landingForwardAnim.draw( (getPosX() - getGameState().camera.getPosX()),
-                                 getPosY() -  getGameState().camera.getPosY() + (getBoundForCollisionWithMap().height / 2 - landingForwardAnim.getCurrentImage().getHeight() / 2),
-                                g2);
-                    } else {
-                        landingBackAnim.draw( (getPosX() - getGameState().camera.getPosX()),
-                                 getPosY() -  getGameState().camera.getPosY() + (getBoundForCollisionWithMap().height / 2 - landingBackAnim.getCurrentImage().getHeight() / 2),
-                                g2);
-                    }
-
-                } else */if (getIsJumping()) {
-
+                if (getIsJumping()) {
                     if (getDirection() == RIGHT) {
                         flyForwardAnim.Update(System.nanoTime());
                         if (isShooting) {
@@ -193,7 +170,7 @@ public class MegaMan extends SmartRobot {
     public void jump() {
         if (!getIsJumping()) {
             setIsJumping(true);
-            setSpeedY(-5);
+            setSpeedY(-3);
             flyBackAnim.reset();
             flyForwardAnim.reset();
         }
