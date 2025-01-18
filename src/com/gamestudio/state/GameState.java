@@ -3,6 +3,7 @@ package com.gamestudio.state;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -24,6 +25,7 @@ public class GameState extends State {
     public ProjectileManager projectileManager;
     public Camera camera;
     private BufferedImage mapImage;
+    private boolean drawHiboxes = false;
 
     public GameState(StateManager stateManager) {
        super(stateManager, new BufferedImage(GameFrame.width, GameFrame.height, BufferedImage.TYPE_INT_ARGB));
@@ -52,6 +54,9 @@ public class GameState extends State {
         drawMap(g2);
         projectileManager.draw(g2);
         robotManager.draw(g2);
+        if(drawHiboxes) {
+            drawAllHitBox(g2);
+        }
     }
     
     public void setPressedButton(int code) {
@@ -73,6 +78,9 @@ public class GameState extends State {
 
             case KeyEvent.VK_LEFT:
                 megaMan.attack();
+                break;
+            case KeyEvent.VK_F1:
+                drawHiboxes = !drawHiboxes;
                 break;
         }
     }
@@ -99,7 +107,6 @@ public class GameState extends State {
             null
         );
     }
-    
 
     public void setReleasedButton(int code) {
         switch(code){
@@ -118,5 +125,10 @@ public class GameState extends State {
                 
                 break;
         }
+    }
+  
+    private void drawAllHitBox(Graphics2D g2d) {
+        projectileManager.drawAllHitBox(g2d);
+        robotManager.drawAllHitBox(g2d);
     }
 }
