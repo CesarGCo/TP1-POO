@@ -10,12 +10,13 @@ import java.awt.Rectangle;
 public class Rabbit extends DumbRobot {
 
     private Animation jumpingAnim;
+    private Animation idle;
     private int speedX;
     private boolean isFlipped;
 
     public Rabbit(int x, int y, GameState gameWorld) {
-        super(x, y, 50, 30, 0, 50, gameWorld);
-        jumpingAnim = DataLoader.getInstance().getAnimation("rabbit_jumping");
+        super(x, y, 50, 30, 0.1f, 5, gameWorld);
+        jumpingAnim = DataLoader.getInstance().getAnimation("robbit_jumping");
         speedX = 2;
         isFlipped = false;
         setDamage(3);
