@@ -31,7 +31,7 @@ public class DataLoader {
         return instance;
     }
     
-    public Clip getMusic(String name){
+    public Clip getSound(String name){
         return instance.sounds.get(name);
     }
     
@@ -72,8 +72,9 @@ public class DataLoader {
         while((soundName = br.readLine()) != null) {
             try {
                 audioFile = new File(line + soundName + ".wav");
-                AudioSystem.getAudioInputStream(audioFile);
+                AudioInputStream audioStream =AudioSystem.getAudioInputStream(audioFile);
                 clip = AudioSystem.getClip();
+                clip.open(audioStream);
             } catch (Exception e) {
                 e.printStackTrace();
             }

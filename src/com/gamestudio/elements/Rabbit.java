@@ -4,22 +4,55 @@ import com.gamestudio.state.GameState;
 import com.gamestudio.effect.Animation;
 import com.gamestudio.manager.DataLoader;
 import com.gamestudio.physical.PhysicalMap;
+
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 public class Rabbit extends DumbRobot {
 
-    private Animation jumpingAnim;
-    private Animation idle;
-    private int speedX;
-    private boolean isFlipped;
+    private static final int STATE_IDLE = 0;
+    private static final int STATE_JUMPING = 1;
 
-    public Rabbit(int x, int y, GameState gameWorld) {
-        super(x, y, 50, 30, 0.1f, 5, gameWorld);
+    private Animation jumpingAnim;
+    private Animation idleAnim;
+    private float speedX;
+    private float speedY;
+    private boolean isJumping;
+    private float gravity;
+
+    private int currentState;
+    private long stateStartTime;// Tempo de espera entre os pulos (1 segundo)
+
+
+    public Rabbit(float x, float y, GameState gameWorld) {
+        super(x, y, 30, 30, 0.1f, 5, gameWorld);
         jumpingAnim = DataLoader.getInstance().getAnimation("robbit_jumping");
-        speedX = 2;
-        isFlipped = false;
+        idleAnim = DataLoader.getInstance().getAnimation("robbit_idle");
+        speedX = -0.5f;
+        speedY = 0.0f;
+        gravity = 0.12f;
+        isJumping = false;
+        stateStartTime = System.currentTimeMillis();
+        currentState = STATE_IDLE;
         setDamage(3);
+    }
+
+
+    private void checkCollisionWithGround() {
+        Rectangle currentBound = getBoundForCollisionWithMap();
+        PhysicalMap physicalMap = getGameState().physicalMap;
+
+        Rectangle groundCollision = physicalMap.haveCollisionWithLandForDumbRobot(currentBound, this);
+        if (groundCollision != null) {
+            setPosY(groundCollision.y - getHeight() / 2.0f);
+            speedY = 0;
+
+            if (isJumping) {
+                isJumping = false;
+            }
+        } else {
+            speedY += gravity;
+        }
     }
 
     private void checkCollisionWithWall() {
@@ -31,7 +64,7 @@ public class Rabbit extends DumbRobot {
             setPosX(rectLeftWall.x + rectLeftWall.width + getWidth() / 2);
             speedX = Math.abs(speedX);
             jumpingAnim.flipAllImage();
-            isFlipped = false;
+            idleAnim.flipAllImage();
         }
 
         Rectangle rectRightWall = physicalMap.haveCollisionWithRightWall(currentBound);
@@ -39,32 +72,68 @@ public class Rabbit extends DumbRobot {
             setPosX(rectRightWall.x - getWidth() / 2);
             speedX = -Math.abs(speedX);
             jumpingAnim.flipAllImage();
-            isFlipped = true;
+            idleAnim.flipAllImage();
         }
     }
 
+    private void jump() {
+        if (!isJumping) {
+            isJumping = true;
+            speedY = -6.5f;
+        }
+    }
+
+
     @Override
     public void move() {
-        setPosX(getPosX() + speedX);
+        if(currentState == STATE_JUMPING) {
+            setPosX(getPosX() + speedX);
+        }
+        setPosY(getPosY() + speedY);
+        speedY += gravity;
+        checkCollisionWithGround();
         checkCollisionWithWall();
     }
 
     @Override
     public void update() {
         super.update();
+
+        long elapsedTime = System.currentTimeMillis() - stateStartTime;
+
+        switch (currentState) {
+            case STATE_IDLE:
+                jumpingAnim.Update(System.nanoTime());
+                if (elapsedTime > 1000) {
+                    currentState = STATE_JUMPING;
+                    stateStartTime = System.currentTimeMillis();
+                    jump();
+                }
+                break;
+
+            case STATE_JUMPING:
+                jumpingAnim.Update(System.nanoTime());
+                if (!isJumping) {
+                    currentState = STATE_IDLE;
+                    stateStartTime = System.currentTimeMillis();
+                }
+                break;
+        }
         move();
-        jumpingAnim.Update(System.nanoTime());
     }
 
     @Override
     public Rectangle getBoundForCollisionWithEnemy() {
-        return new Rectangle((int) (getPosX() - getWidth() / 2), (int) (getPosY() - getHeight() / 2), (int) getWidth(), (int) getHeight());
+        return new Rectangle((int) (getPosX() - getWidth() / 2),
+                (int) (getPosY() - getHeight() / 2),
+                (int) getWidth(), (int) getHeight());
     }
 
     @Override
     public void draw(Graphics2D g2) {
         if (!isObjectOutOfCameraView()) {
-            jumpingAnim.draw((int) (getPosX() - getGameState().camera.getPosX()),
+            Animation currentAnim = isJumping ? jumpingAnim : idleAnim;
+            currentAnim.draw((int) (getPosX() - getGameState().camera.getPosX()),
                     (int) (getPosY() - getGameState().camera.getPosY()), g2);
         }
     }

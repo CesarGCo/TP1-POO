@@ -25,8 +25,8 @@ public class MegaMan extends SmartRobot {
 
     public MegaMan(int x, int y, GameState gameState) {
         super(x, y, 16, 24, 0.1f, 100, gameState);
-        shooting1 = DataLoader.getInstance().getMusic("Shoot");
-        hurtingSound = DataLoader.getInstance().getMusic("Mega_man_hit");
+        shooting1 = DataLoader.getInstance().getSound("Shoot");
+        hurtingSound = DataLoader.getInstance().getSound("Mega_man_hit");
         this.setDirection(MegaMan.RIGHT);
         setTeamType(ALLY_TEAM);
 
@@ -187,7 +187,12 @@ public class MegaMan extends SmartRobot {
     @Override
     public void attack() {
         if (!isShooting) {
-            shooting1.start();
+            if(shooting1.isRunning()) {  
+                shooting1.stop();
+            } else {
+                shooting1.setFramePosition(0); 
+                shooting1.start();
+            }
             Projectile projectile = new MegaManBullet(getPosX(), getPosY(), getGameState());
             if (getDirection() == LEFT) {
                 projectile.setSpeedX(-6);

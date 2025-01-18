@@ -9,6 +9,7 @@ import com.gamestudio.state.GameState;
 import com.gamestudio.elements.Camera;
 import com.gamestudio.elements.GameElement;
 import com.gamestudio.elements.SmartRobot;
+import com.gamestudio.elements.DumbRobot;
 import com.gamestudio.manager.DataLoader;
 
 /**
@@ -84,6 +85,34 @@ public class PhysicalMap extends GameElement {
                 } else if(phys_map[y][x] == 2) {
                     if(rect.intersects(r))
                         smartRobot.setCurrentState(SmartRobot.DEATH);
+                }
+            }
+        }
+        return null;
+    }
+
+    public Rectangle haveCollisionWithLandForDumbRobot(Rectangle rect, DumbRobot dumbRobot) {
+        int posX1 = rect.x / tileSize - 2;
+        int posX2 = (rect.x + rect.width) / tileSize + 2;
+
+        int posY = (rect.y + rect.height) / tileSize;
+
+        if (posX1 < 0) posX1 = 0;
+        if (posX2 >= phys_map[0].length) posX2 = phys_map[0].length - 1;
+
+        for (int y = posY; y < phys_map.length; y++) {
+            for (int x = posX1; x <= posX2; x++) {
+                Rectangle tileRect = new Rectangle(
+                        (int) getPosX() + x * tileSize,
+                        (int) getPosY() + y * tileSize,
+                        tileSize,
+                        tileSize
+                );
+
+                if (phys_map[y][x] == 1) {
+                    if (rect.intersects(tileRect)) {
+                        return tileRect;
+                    }
                 }
             }
         }

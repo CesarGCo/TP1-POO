@@ -8,6 +8,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.Kernel;
 
+import javax.sound.sampled.Clip;
+
 import com.gamestudio.elements.Bat;
 import com.gamestudio.elements.Camera;
 import com.gamestudio.elements.Robot;
@@ -31,9 +33,11 @@ public class GameState extends State {
     public Camera camera;
     private BufferedImage mapImage;
     private boolean drawHiboxes = false;
+    private Clip levelMusic;
 
     public GameState(StateManager stateManager) {
        super(stateManager, new BufferedImage(GameFrame.width, GameFrame.height, BufferedImage.TYPE_INT_ARGB));
+       this.levelMusic = DataLoader.getInstance().getSound("Level_soundtrack");
        initState();
     }
 
@@ -49,7 +53,7 @@ public class GameState extends State {
     
        this.physicalMap = new PhysicalMap(-16, 0, this);
        this.mapImage = DataLoader.getInstance().getFrameImage("new_map_fall").getImage();
-       this.megaMan = new MegaMan(100, 102, this);
+       this.megaMan = new MegaMan(100, 50, this);
        this.camera = new Camera(0, 0, 400, 240, this);
        robotManager.addObject(megaMan);
        megaMan.setCurrentState(SmartRobot.ALIVE);
@@ -62,19 +66,23 @@ public class GameState extends State {
         bat1.setTeamType(Robot.ENEMY_TEAM);
         robotManager.addObject(bat1);
 
-        Robot robbit1 = new Rabbit(100, 150, this);
+        Robot robbit1 = new Rabbit(150, 150, this);
         robotManager.addObject(robbit1);
 
-        Robot woodman = new WoodMan(3060, 100, this);
-        robotManager.addObject(woodman);
+       Robot woodman = new WoodMan(3060, 100, this);
+       robotManager.addObject(woodman);
     }
 
     public void update() {
         camera.update();
         projectileManager.updateObjects();
         robotManager.updateObjects();
+        if(!levelMusic.isRunning()) {  
+            levelMusic.setFramePosition(0); 
+            levelMusic.start();
+        }
         if(megaMan.getCurrentState() == SmartRobot.DEATH) {
-            System.nanoTime();
+            levelMusic.stop();
             getStateManager().setCurrentState(StateManager.GAMEOVER);
             initState();
         }
@@ -83,7 +91,7 @@ public class GameState extends State {
     public void render() {
         Graphics g = getBufferedImage().getGraphics();
         Graphics2D g2 = (Graphics2D) g;
-        drawMap(g2);
+        drawMap(g2); 
         projectileManager.draw(g2);
         robotManager.draw(g2);
         if(drawHiboxes) {
@@ -125,6 +133,7 @@ public class GameState extends State {
             case KeyEvent.VK_LEFT:
                 megaMan.attack();
                 break;
+                
             case KeyEvent.VK_F1:
                 drawHiboxes = !drawHiboxes;
                 break;
