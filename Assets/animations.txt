@@ -1,4 +1,4 @@
-26
+22
 mega_man_idle
 mega_man_idle1 200000000 mega_man_idle2 200000000 mega_man_idle3 200000000
 
@@ -23,7 +23,7 @@ mega_man_shooting_jumping1 200000000
 mega_man_hurt
 mega_man_hurt1 200000000
 
-robbit_jump
+robbit_jumping
 robbit_jumping1 70000000 robbit_jumping2 70000000
 
 robbit_idle
@@ -42,10 +42,8 @@ batton_rising
 batton_rising1 70000000 batton_rising2 70000000 batton_rising3 70000000 batton_rising4 70000000
 
 wood_man_beat
-wood_man_beat1 70000000
+wood_man_beat1 70000000 wood_man_beat2 70000000
 
-wood_man_chest
-wood_man_chest1 70000000
 
 wood_man_idle
 wood_man_idle1 70000000 wood_man_idle2 70000000

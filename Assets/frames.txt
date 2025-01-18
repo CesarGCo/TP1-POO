@@ -41,7 +41,7 @@ menu
 0
 Assets/Enemies/wood_man/
 wood_man_beat1
-wood_man_chest1
+wood_man_beat2
 wood_man_idle1
 wood_man_idle2
 wood_man_intro1

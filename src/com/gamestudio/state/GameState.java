@@ -3,15 +3,19 @@ package com.gamestudio.state;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.Kernel;
 
+import com.gamestudio.elements.Bat;
 import com.gamestudio.elements.Camera;
+import com.gamestudio.elements.Robot;
+import com.gamestudio.elements.Bat;
 import com.gamestudio.elements.MegaMan;
+import com.gamestudio.elements.Rabbit;
 import com.gamestudio.elements.SmartRobot;
+import com.gamestudio.elements.WoodMan;
 import com.gamestudio.interfaces.GameFrame;
 import com.gamestudio.manager.DataLoader;
 import com.gamestudio.manager.ProjectileManager;
@@ -33,19 +37,40 @@ public class GameState extends State {
        initState();
     }
 
+    
+
+    public BufferedImage getMapImage() {
+        return mapImage;
+    }
+    
     public void initState() {
-        this.robotManager = new RobotManager(this);
+       this.robotManager = new RobotManager(this);
        this.projectileManager = new ProjectileManager(this);
     
        this.physicalMap = new PhysicalMap(0, 0, this);
        this.mapImage = DataLoader.getInstance().getFrameImage("new_map_fall").getImage();
-       this.megaMan = new MegaMan(100, 102, this);
+       this.megaMan = new MegaMan(100, 100, this);
        this.camera = new Camera(0, 0, 400, 240, this);
        robotManager.addObject(megaMan);
        megaMan.setCurrentState(SmartRobot.ALIVE);
+       initEnemies();
     }
-    public BufferedImage getMapImage() {
-        return mapImage;
+
+    private void initEnemies(){
+        Robot bat1 = new Bat(200, 102, this);
+        bat1.setDirection(Robot.LEFT);
+        bat1.setTeamType(Robot.ENEMY_TEAM);
+        robotManager.addObject(bat1);
+
+        Robot robbit1 = new Rabbit(200, 50, this);
+        bat1.setDirection(Robot.LEFT);
+        bat1.setTeamType(Robot.ENEMY_TEAM);
+        robotManager.addObject(robbit1);
+
+        Robot woodman = new WoodMan(100, 60, this);
+        bat1.setDirection(Robot.LEFT);
+        bat1.setTeamType(Robot.ENEMY_TEAM);
+        robotManager.addObject(woodman);
     }
 
     public void update() {
@@ -69,7 +94,6 @@ public class GameState extends State {
             drawAllHitBox(g2);
         }
     }
-    
     
     private void drawMap(Graphics2D g2d) {
         // Escala para ajustar o conteúdo da câmera à tela
