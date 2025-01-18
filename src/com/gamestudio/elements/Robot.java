@@ -19,22 +19,21 @@ public abstract class Robot extends GameElement {
     private int currentState = 0; //Vivo ou morto
     private int width;
     private int height;
-    private int mass;
-    private int speedX;
-    private int speedY;
+    private float mass;
+    private float speedX;
+    private float speedY;
     private int amountLife; //Quantidade de vida do objeto
     private int damage; //Quantidade de dado que o objeto da
     private int direction; //Direita ou esquerda
     private int teamType;
     protected Animation behurtAnim;
 
-    public Robot(int x, int y, int width, int height, int mass, int amountLife, GameState gameState) {
+    public Robot(float x, float y, int width, int height, float mass, int amountLife, GameState gameState) {
         super(x, y, gameState);
         this.setWidth(width);
         this.setHeight(height);
         this.setMass(mass);
         this.setAmountLife(amountLife);
-        this.direction = RIGHT;
     }
 
     public int getCurrentState() {
@@ -61,27 +60,27 @@ public abstract class Robot extends GameElement {
         this.height = height;
     }
 
-    public int getMass() {
+    public float getMass() {
         return mass;
     }
 
-    public void setMass(int mass) {
+    public void setMass(float mass) {
         this.mass = mass;
     }
 
-    public int getSpeedX() {
+    public float getSpeedX() {
         return speedX;
     }
 
-    public void setSpeedX(int speedX) {
+    public void setSpeedX(float speedX) {
         this.speedX = speedX;
     }
 
-    public int getSpeedY() {
+    public float getSpeedY() {
         return speedY;
     }
 
-    public void setSpeedY(int speedY) {
+    public void setSpeedY(float speedY) {
         this.speedY = speedY;
     }
 
@@ -180,13 +179,13 @@ public abstract class Robot extends GameElement {
     public void drawBoundForCollisionWithMap(Graphics2D g2) {
         Rectangle rect = this.getBoundForCollisionWithMap();
         g2.setColor(Color.BLUE);
-        g2.drawRect(rect.x - this.getGameState().camera.getPosX(), rect.y - this.getGameState().camera.getPosY(), rect.width, rect.height);
+        g2.drawRect((int) (rect.x - this.getGameState().camera.getPosX()), (int) (rect.y - this.getGameState().camera.getPosY()), rect.width, rect.height);
     }
 
     public void drawBoundForCollisionWithEnemy(Graphics2D g2) {
         Rectangle rect = this.getBoundForCollisionWithEnemy();
         g2.setColor(Color.RED);
-        g2.drawRect(rect.x - this.getGameState().camera.getPosX(), rect.y - this.getGameState().camera.getPosY(), rect.width, rect.height);
+        g2.drawRect((int) (rect.x - this.getGameState().camera.getPosX()), (int) (rect.y - this.getGameState().camera.getPosY()), rect.width, rect.height);
     }
 
     public abstract Rectangle getBoundForCollisionWithEnemy();

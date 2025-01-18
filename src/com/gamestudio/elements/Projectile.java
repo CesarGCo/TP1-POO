@@ -9,7 +9,7 @@ import java.awt.Graphics2D;
  */
 public abstract class Projectile extends Robot {
 
-    public Projectile(int x, int y, int width, int height, int mass, int damage, GameState gameState) {
+    public Projectile(float x, float y, int width, int height, int mass, int damage, GameState gameState) {
         super(x, y, width, height, mass, 1, gameState);
         setDamage(damage);
     }

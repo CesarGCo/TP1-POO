@@ -2,30 +2,30 @@ package com.gamestudio.elements;
 import com.gamestudio.state.GameState;
 
 public abstract class GameElement {
-    private int posX;
-	private int posY;
+    private float posX;
+	private float posY;
 	
 	private GameState gameState;
 	
-	public GameElement(int x, int y, GameState gameState){
+	public GameElement(float x, float y, GameState gameState){
 		this.posX = x;
 		this.posY = y;
 		this.gameState = gameState;
 	}
 	
-	public void setPosX(int x){
+	public void setPosX(float x){
 		posX = x;
 	}
 	
-	public int getPosX(){
+	public float getPosX(){
 		return posX;
 	}
 	
-	public void setPosY(int y){
+	public void setPosY(float y){
 		posY = y;
 	}
 	
-	public int getPosY(){
+	public float getPosY(){
 		return posY;
 	}
 	

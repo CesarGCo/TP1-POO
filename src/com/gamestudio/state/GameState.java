@@ -50,19 +50,18 @@ public class GameState extends State {
         drawMap(g2);
         physicalMap.draw(g);
         megaMan.draw(g2);
-        
     }
     
     public void setPressedButton(int code) {
         switch(code){
                 
             case KeyEvent.VK_RIGHT:
-                megaMan.setDirection(megaMan.RIGHT);
+                megaMan.setDirection(MegaMan.RIGHT);
                 megaMan.run();
                 break;
                 
             case KeyEvent.VK_LEFT:
-                megaMan.setDirection(megaMan.LEFT);
+                megaMan.setDirection(MegaMan.LEFT);
                 megaMan.run();
                 break;
 

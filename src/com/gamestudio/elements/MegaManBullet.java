@@ -12,7 +12,7 @@ public class MegaManBullet extends Projectile {
     private final Animation forwardBulletAnim;
     private final Animation backBulletAnim;
 
-    public MegaManBullet(int x, int y, GameState gameState) {
+    public MegaManBullet(float x, float y, GameState gameState) {
         super(x, y, 60, 30, 1, 10, gameState);
         forwardBulletAnim = DataLoader.getInstance().getAnimation("plasma_bullet");
         backBulletAnim = DataLoader.getInstance().getAnimation("plasma_bullet");
@@ -41,7 +41,7 @@ public class MegaManBullet extends Projectile {
         }
 
         forwardBulletAnim.Update(System.nanoTime());
-        forwardBulletAnim.draw((getPosX() - getGameState().camera.getPosX()), getPosY() - getGameState().camera.getPosY(), g2);
+        forwardBulletAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2);
     }
 
     @Override

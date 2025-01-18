@@ -24,10 +24,10 @@ public class MegaMan extends SmartRobot {
     private final Clip shooting1;
 
     public MegaMan(int x, int y, GameState gameState) {
-        super(x, y, 40, 40, 1, 100, gameState);
+        super(x, y, 40, 40, 0.1f, 100, gameState);
         shooting1 = DataLoader.getInstance().getMusic("Shoot");
         hurtingSound = DataLoader.getInstance().getMusic("Mega_man_hit");
-
+        this.setDirection(MegaMan.RIGHT);
         setTeamType(ALLY_TEAM);
 
         runForwardAnim = DataLoader.getInstance().getAnimation("megaman_running");
@@ -91,8 +91,8 @@ public class MegaMan extends SmartRobot {
     public Rectangle getBoundForCollisionWithEnemy() {
         // TODO Auto-generated method stub
         Rectangle rect = getBoundForCollisionWithMap();
-        rect.x =  getPosX() - 22;
-        rect.y =  getPosY() - 40;
+        rect.x =  (int) (getPosX() - 22);
+        rect.y =  (int) (getPosY() - 40);
         rect.width = 44;
         rect.height = 80;
 
@@ -122,16 +122,16 @@ public class MegaMan extends SmartRobot {
                         flyForwardAnim.Update(System.nanoTime());
                         if (isShooting) {
                             flyShootingForwardAnim.setCurrentFrame(flyForwardAnim.getCurrentFrame());
-                            flyShootingForwardAnim.draw( (getPosX() - getGameState().camera.getPosX()) + 10,  getPosY() -  getGameState().camera.getPosY(), g2);
+                            flyShootingForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()) + 10, (int) (getPosY() -  getGameState().camera.getPosY()), g2);
                         } else
-                            flyForwardAnim.draw( (getPosX() - getGameState().camera.getPosX()),  getPosY() -  getGameState().camera.getPosY(), g2);
+                            flyForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() -  getGameState().camera.getPosY()), g2);
                     } else {
                         flyBackAnim.Update(System.nanoTime());
                         if (isShooting) {
                             flyShootingBackAnim.setCurrentFrame(flyBackAnim.getCurrentFrame());
-                            flyShootingBackAnim.draw( (getPosX() - getGameState().camera.getPosX()) - 10,  getPosY() -  getGameState().camera.getPosY(), g2);
+                            flyShootingBackAnim.draw((int) (getPosX() - getGameState().camera.getPosX()) - 10,(int) (getPosY() -  getGameState().camera.getPosY()), g2);
                         } else
-                            flyBackAnim.draw( (getPosX() - getGameState().camera.getPosX()),  getPosY() -  getGameState().camera.getPosY(), g2);
+                            flyBackAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() -  getGameState().camera.getPosY()), g2);
                     }
 
                 } else {
@@ -151,10 +151,10 @@ public class MegaMan extends SmartRobot {
 
             case BEHURT:
                 if (getDirection() == RIGHT) {
-                    behurtForwardAnim.draw( (getPosX() - getGameState().camera.getPosX()),  getPosY() - getGameState().camera.getPosY(), g2);
+                    behurtForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()),(int) (getPosY() - getGameState().camera.getPosY()), g2);
                 } else {
                     behurtBackAnim.setCurrentFrame(behurtForwardAnim.getCurrentFrame());
-                    behurtBackAnim.draw((getPosX() - getGameState().camera.getPosX()), getPosY() - getGameState().camera.getPosY(), g2);
+                    behurtBackAnim.draw((int)(getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2);
                 }
                 break;
             default:
@@ -165,10 +165,10 @@ public class MegaMan extends SmartRobot {
     private void setIdleShootingAnimation(Graphics2D g2, Animation idleShootingForwardAnim, Animation idleForwardAnim) {
         if (isShooting) {
             idleShootingForwardAnim.Update(System.nanoTime());
-            idleShootingForwardAnim.draw((getPosX() - getGameState().camera.getPosX()), getPosY() - getGameState().camera.getPosY(), g2);
+            idleShootingForwardAnim.draw((int)(getPosX() - getGameState().camera.getPosX()), (int)(getPosY() - getGameState().camera.getPosY()), g2);
         } else {
             idleForwardAnim.Update(System.nanoTime());
-            idleForwardAnim.draw((getPosX() - getGameState().camera.getPosX()), getPosY() - getGameState().camera.getPosY(), g2);
+            idleForwardAnim.draw((int)(getPosX() - getGameState().camera.getPosX()), (int)(getPosY() - getGameState().camera.getPosY()), g2);
         }
     }
 
@@ -176,17 +176,17 @@ public class MegaMan extends SmartRobot {
         runForwardAnim.Update(System.nanoTime());
         if (isShooting) {
             runShootingForwarAnim.setCurrentFrame(runForwardAnim.getCurrentFrame() - 1);
-            runShootingForwarAnim.draw((getPosX() - getGameState().camera.getPosX()),  getPosY() - getGameState().camera.getPosY(), g2);
+            runShootingForwarAnim.draw((int)(getPosX() - getGameState().camera.getPosX()), (int)( getPosY() - getGameState().camera.getPosY()), g2);
         } else
-            runForwardAnim.draw((getPosX() - getGameState().camera.getPosX()),  getPosY() - getGameState().camera.getPosY(), g2);
+            runForwardAnim.draw((int)(getPosX() - getGameState().camera.getPosX()), (int)( getPosY() - getGameState().camera.getPosY()), g2);
         if (runForwardAnim.getCurrentFrame() == 1) runForwardAnim.setIgnoreFrame(0);
     }
 
     @Override
     public void run() {
         if (getDirection() == LEFT)
-            setSpeedX(-3);
-        else setSpeedX(3);
+            setSpeedX(-2);
+        else setSpeedX(2);
     }
 
     @Override

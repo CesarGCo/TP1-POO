@@ -8,7 +8,7 @@ public abstract class SmartRobot extends Robot {
     private boolean isJumping;
     private boolean isLanding;
 
-    public SmartRobot(int x, int y, int width, int height, int mass, int amountLife, GameState gameState) {
+    public SmartRobot(int x, int y, int width, int height, float mass, int amountLife, GameState gameState) {
         super(x, y, width, height, mass, amountLife, gameState);
         setCurrentState(ALIVE);
     }
@@ -43,7 +43,7 @@ public abstract class SmartRobot extends Robot {
         
         if(getCurrentState() == ALIVE){
             if(!isLanding){
-                setPosX(getPosX() + getSpeedX());
+                setPosX((int) (getPosX() + getSpeedX()));
                 if(getDirection() == RIGHT && 
                         getGameState().physicalMap.haveCollisionWithLeftWall(getBoundForCollisionWithMap())!=null){
 
@@ -77,8 +77,8 @@ public abstract class SmartRobot extends Robot {
                     setPosY((int) (rectLand.y - getHeight()/2));
                 }else{
                     setIsJumping(true);
-                    setSpeedY((int) (getSpeedY() + getMass()));
-                    setPosY(getPosY() + getSpeedY());
+                    setSpeedY((getSpeedY() + getMass()));
+                    setPosY((int) (getPosY() + getSpeedY()));
                 }
             }
         }
