@@ -24,23 +24,23 @@ public class MegaMan extends SmartRobot {
     private final Clip shooting1;
 
     public MegaMan(int x, int y, GameState gameState) {
-        super(x, y, 18, 24, 0.1f, 100, gameState);
+        super(x, y, 16, 24, 0.1f, 100, gameState);
         shooting1 = DataLoader.getInstance().getMusic("Shoot");
         hurtingSound = DataLoader.getInstance().getMusic("Mega_man_hit");
         this.setDirection(MegaMan.RIGHT);
         setTeamType(ALLY_TEAM);
 
-        runForwardAnim = DataLoader.getInstance().getAnimation("megaman_running");
-        runBackAnim = DataLoader.getInstance().getAnimation("megaman_running");
+        runForwardAnim = DataLoader.getInstance().getAnimation("mega_man_running");
+        runBackAnim = DataLoader.getInstance().getAnimation("mega_man_running");
         runForwardAnim.flipAllImage();
 
-        idleForwardAnim = DataLoader.getInstance().getAnimation("megaman_idle");
-        idleBackAnim = DataLoader.getInstance().getAnimation("megaman_idle");
+        idleForwardAnim = DataLoader.getInstance().getAnimation("mega_man_idle");
+        idleBackAnim = DataLoader.getInstance().getAnimation("mega_man_idle");
         idleForwardAnim.flipAllImage();
 
-        flyForwardAnim = DataLoader.getInstance().getAnimation("megaman_jump");
+        flyForwardAnim = DataLoader.getInstance().getAnimation("mega_man_jump");
         flyForwardAnim.setIsRepeated(false);
-        flyBackAnim = DataLoader.getInstance().getAnimation("megaman_jump");
+        flyBackAnim = DataLoader.getInstance().getAnimation("mega_man_jump");
         flyForwardAnim.setIsRepeated(false);
         flyForwardAnim.flipAllImage();
 
@@ -48,20 +48,20 @@ public class MegaMan extends SmartRobot {
         // landingBackAnim = DataLoader.getInstance().getAnimation("landing");
         // landingBackAnim.flipAllImage();
 
-        behurtForwardAnim = DataLoader.getInstance().getAnimation("megaman_hurt");
-        behurtBackAnim = DataLoader.getInstance().getAnimation("megaman_hurt");
+        behurtForwardAnim = DataLoader.getInstance().getAnimation("mega_man_hurt");
+        behurtBackAnim = DataLoader.getInstance().getAnimation("mega_man_hurt");
         behurtForwardAnim.flipAllImage();
 
-        idleShootingForwardAnim = DataLoader.getInstance().getAnimation("megaman_shooting");
-        idleShootingBackAnim = DataLoader.getInstance().getAnimation("megaman_shooting");
+        idleShootingForwardAnim = DataLoader.getInstance().getAnimation("mega_man_shooting");
+        idleShootingBackAnim = DataLoader.getInstance().getAnimation("mega_man_shooting");
         idleShootingForwardAnim.flipAllImage();
 
-        runShootingForwarAnim = DataLoader.getInstance().getAnimation("megaman_shooting_running");
-        runShootingBackAnim = DataLoader.getInstance().getAnimation("megaman_shooting_running");
+        runShootingForwarAnim = DataLoader.getInstance().getAnimation("mega_man_shooting_running");
+        runShootingBackAnim = DataLoader.getInstance().getAnimation("mega_man_shooting_running");
         runShootingForwarAnim.flipAllImage();
 
-        flyShootingForwardAnim = DataLoader.getInstance().getAnimation("megaman_shooting_jumping");
-        flyShootingBackAnim = DataLoader.getInstance().getAnimation("megaman_shooting_jumping");
+        flyShootingForwardAnim = DataLoader.getInstance().getAnimation("mega_man_shooting_jumping");
+        flyShootingBackAnim = DataLoader.getInstance().getAnimation("mega_man_shooting_jumping");
         flyShootingForwardAnim.flipAllImage();
     }
 
@@ -81,7 +81,7 @@ public class MegaMan extends SmartRobot {
     public Rectangle getBoundForCollisionWithEnemy() {
         // TODO Auto-generated method stub
         Rectangle rect = getBoundForCollisionWithMap();
-        rect.x =  (int) (getPosX() - 9);
+        rect.x =  (int) (getPosX() - 8);
         rect.y =  (int) (getPosY() - 12);
         rect.width = 18;
         rect.height = 24;
@@ -187,7 +187,7 @@ public class MegaMan extends SmartRobot {
     @Override
     public void attack() {
         if (!isShooting) {
-            //shooting1.open();
+            shooting1.start();
             Projectile projectile = new MegaManBullet(getPosX(), getPosY(), getGameState());
             if (getDirection() == LEFT) {
                 projectile.setSpeedX(-6);
