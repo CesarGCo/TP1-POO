@@ -17,6 +17,7 @@ public class MenuState extends State {
     private FrameImage backgroundImage;
     private ButtonMenu[] buttons;
     private Clip menuMusic;
+    private Clip arrowSound;
 
     public MenuState(StateManager stateManager) {
         super(stateManager, new BufferedImage(GameFrame.width, GameFrame.height, BufferedImage.TYPE_INT_ARGB));
@@ -28,6 +29,7 @@ public class MenuState extends State {
 
         backgroundImage = DataLoader.getInstance().getFrameImage("menu");
         menuMusic = DataLoader.getInstance().getSound("Menu");
+        arrowSound = DataLoader.getInstance().getSound("sound_arrow_menu");
     }
 
     public void update() {
@@ -46,6 +48,9 @@ public class MenuState extends State {
     }
 
     public void setPressedButton(int keyCode) {
+        arrowSound.stop();
+        arrowSound.setFramePosition(0); 
+        arrowSound.start();
         if(keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_DOWN) {
             for (ButtonMenu bt : buttons) {
                 bt.update();

@@ -9,3 +9,4 @@ Game-over
 Water_shoot
 Eletric_shoot
 Fire_shoot
+sound_arrow_menu

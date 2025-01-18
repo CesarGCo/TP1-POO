@@ -17,6 +17,7 @@ public class GameOverState extends State {
     private FrameImage backgroundImage;
     private ButtonGameOver[] buttons;
     private Clip gameOverMusic;
+    private Clip arrowSound;
     private boolean soundPlayed;
     
     public GameOverState(StateManager stateManager) {
@@ -30,6 +31,7 @@ public class GameOverState extends State {
        backgroundImage = DataLoader.getInstance().getFrameImage("game_over");
 
        this.gameOverMusic = DataLoader.getInstance().getSound("Game-over");
+       this.arrowSound = DataLoader.getInstance().getSound("sound_arrow_menu");
        this.soundPlayed = false;
     }
 
@@ -53,6 +55,9 @@ public class GameOverState extends State {
     }
     
     public void setPressedButton(int code) {
+        arrowSound.stop();
+        arrowSound.setFramePosition(0); 
+        arrowSound.start();
         switch (code) {
             case KeyEvent.VK_ENTER:
                 soundPlayed = false;
