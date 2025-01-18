@@ -60,8 +60,7 @@ public abstract class SmartRobot extends Robot {
 
                 Rectangle boundForCollisionWithMapFuture = getBoundForCollisionWithMap();
                 boundForCollisionWithMapFuture.y += (getSpeedY() != 0? getSpeedY() : 2);
-                Rectangle rectLand = getGameState().physicalMap.haveCollisionWithLand(boundForCollisionWithMapFuture);
-                
+                Rectangle rectLand = getGameState().physicalMap.haveCollisionWithLand(boundForCollisionWithMapFuture, this);
                 Rectangle rectTop = getGameState().physicalMap.haveCollisionWithTop(boundForCollisionWithMapFuture);
                 
                 if(rectTop !=null){

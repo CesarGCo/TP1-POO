@@ -3,10 +3,12 @@ package com.gamestudio.physical;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.Robot;
 
 import com.gamestudio.state.GameState;
 import com.gamestudio.elements.Camera;
 import com.gamestudio.elements.GameElement;
+import com.gamestudio.elements.SmartRobot;
 import com.gamestudio.manager.DataLoader;
 
 /**
@@ -61,7 +63,7 @@ public class PhysicalMap extends GameElement {
     }
     
     
-    public Rectangle haveCollisionWithLand(Rectangle rect){
+    public Rectangle haveCollisionWithLand(Rectangle rect, SmartRobot smartRobot){
 
         int posX1 = rect.x/tileSize;
         posX1 -= 2;
@@ -75,11 +77,13 @@ public class PhysicalMap extends GameElement {
         if(posX2 >= phys_map[0].length) posX2 = phys_map[0].length - 1;
         for(int y = posY; y < phys_map.length;y++){
             for(int x = posX1; x <= posX2; x++){
-                
+                Rectangle r = new Rectangle((int) getPosX() + x * tileSize, (int) getPosY() + y * tileSize, tileSize, tileSize);
                 if(phys_map[y][x] == 1){
-                    Rectangle r = new Rectangle((int) getPosX() + x * tileSize, (int) getPosY() + y * tileSize, tileSize, tileSize);
                     if(rect.intersects(r))
                         return r;
+                } else if(phys_map[y][x] == 2) {
+                    if(rect.intersects(r))
+                        smartRobot.setCurrentState(SmartRobot.DEATH);
                 }
             }
         }
