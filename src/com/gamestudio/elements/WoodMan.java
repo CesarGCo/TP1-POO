@@ -23,7 +23,7 @@ public class WoodMan extends SmartRobot {
 
 
     public WoodMan(int x, int y, GameState gameState) {
-        super(x, y, 50, 68, 0.1f, 2, gameState);
+        super(x, y, 32, 31, 0.1f, 2, gameState);
         currentState = STATE_INTRO;
         stateStartTime = System.currentTimeMillis();
         this.setDirection(WoodMan.RIGHT);
@@ -75,8 +75,8 @@ public class WoodMan extends SmartRobot {
     @Override
     public Rectangle getBoundForCollisionWithEnemy() {
         Rectangle rect = getBoundForCollisionWithMap();
-        rect.x += getPosX() - getWidth() / 2;
-        rect.y += getPosY() - getHeight() / 2;
+        rect.x += (int) (getPosX() - (float) getWidth() / 2);
+        rect.y += (int) (getPosY() - (float) getHeight() / 2);
         rect.width = getWidth();
         rect.height = getHeight();
 
@@ -135,14 +135,14 @@ public class WoodMan extends SmartRobot {
         switch (currentState) {
             case STATE_INTRO:
                 // Play intro animation
-                IntroAnimation.Update(System.currentTimeMillis());
+                IntroAnimation.Update(System.nanoTime());
                 break;
 
             case STATE_BEATING_CHEST:
                 if (getDirection() == RIGHT) {
-                    ChestBeatBackAnimation.Update(System.currentTimeMillis());
+                    ChestBeatBackAnimation.Update(System.nanoTime());
                 } else {
-                    ChestBeatFowardAnimation.Update(System.currentTimeMillis());
+                    ChestBeatFowardAnimation.Update(System.nanoTime());
                 }
                 break;
 
