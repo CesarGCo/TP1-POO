@@ -11,7 +11,7 @@ import com.gamestudio.manager.StateManager;
 public class GameFrame extends JFrame {
     public static final int width = 1000;
     public static final int height = 600;
-    private StateManager stateManager; 
+    private final StateManager stateManager;
 
 
     public GameFrame() {
