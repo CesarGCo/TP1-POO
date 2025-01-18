@@ -9,7 +9,7 @@ import java.awt.Graphics2D;
  */
 public abstract class Projectile extends Robot {
 
-    public Projectile(float x, float y, int width, int height, int mass, int damage, GameState gameState) {
+    public Projectile(float x, float y, int width, int height, float mass, int damage, GameState gameState) {
         super(x, y, width, height, mass, 1, gameState);
         setDamage(damage);
     }
@@ -20,8 +20,8 @@ public abstract class Projectile extends Robot {
         super.update();
         setPosX(getPosX() + getSpeedX());
         setPosY(getPosY() + getSpeedY());
-        Robot object = getGameState().robotManager.getCollisionWidthEnemyObject(this);
-        if(object!=null && object.getCurrentState() == ALIVE){
+        Robot object = getGameState().projectileManager.getCollisionWidthEnemyObject(this);
+        if(object!=null && object.getCurrentState() == ALIVE) {
             object.beHurt(getDamage());
             System.out.println("Bullet set behurt for enemy");
         }

@@ -13,7 +13,7 @@ public class MegaManBullet extends Projectile {
     private final Animation backBulletAnim;
 
     public MegaManBullet(float x, float y, GameState gameState) {
-        super(x, y, 60, 30, 1, 10, gameState);
+        super(x, y, 8, 8, 1.0f, 10, gameState);
         forwardBulletAnim = DataLoader.getInstance().getAnimation("plasma_bullet");
         backBulletAnim = DataLoader.getInstance().getAnimation("plasma_bullet");
         backBulletAnim.flipAllImage();
@@ -33,11 +33,11 @@ public class MegaManBullet extends Projectile {
         }
     }
 
-    private void checkAndApplyIgnoredFrames(Graphics2D g2, Animation forwardBulletAnim) {
-        if (!forwardBulletAnim.isIgnoreFrame(0) && forwardBulletAnim.getCurrentFrame() == 3) {
-            forwardBulletAnim.setIgnoreFrame(0);
-            forwardBulletAnim.setIgnoreFrame(1);
-            forwardBulletAnim.setIgnoreFrame(2);
+    private void checkAndApplyIgnoredFrames(Graphics2D g2, Animation bulletAnim) {
+        if (!bulletAnim.isIgnoreFrame(0) && bulletAnim.getCurrentFrame() == 3) {
+            bulletAnim.setIgnoreFrame(0);
+            bulletAnim.setIgnoreFrame(1);
+            bulletAnim.setIgnoreFrame(2);
         }
 
         forwardBulletAnim.Update(System.nanoTime());
@@ -46,13 +46,6 @@ public class MegaManBullet extends Projectile {
 
     @Override
     public void update() {
-        if (forwardBulletAnim.isIgnoreFrame(0) || backBulletAnim.isIgnoreFrame(0))
-            setPosX(getPosX() + getSpeedX());
-        Robot object = getGameState().robotManager.getCollisionWidthEnemyObject(this);
-        if (object != null && object.getCurrentState() == ALIVE) {
-            object.setCurrentState(BEHURT);
-            System.out.println("Bullet set behurt for enemy");
-        }
+        super.update();
     }
-
 }

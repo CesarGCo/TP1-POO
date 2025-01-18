@@ -41,9 +41,9 @@ public class GameState extends State {
     }
 
     public void update() {
-        megaMan.update();
         camera.update();
         projectileManager.updateObjects();
+        robotManager.updateObjects();
     }
 
     public void render() {
@@ -51,7 +51,7 @@ public class GameState extends State {
         Graphics2D g2 = (Graphics2D) g;
         drawMap(g2);
         projectileManager.draw(g2);
-        megaMan.draw(g2);
+        robotManager.draw(g2);
     }
     
     public void setPressedButton(int code) {

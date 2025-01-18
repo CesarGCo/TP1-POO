@@ -91,7 +91,6 @@ public class MegaMan extends SmartRobot {
 
     @Override
     public void draw(Graphics2D g2) {
-        Camera camera = getGameState().camera;
         switch (getCurrentState()) {
             case ALIVE:
                 if (getIsJumping()) {
@@ -189,31 +188,30 @@ public class MegaMan extends SmartRobot {
     public void attack() {
         if (!isShooting) {
             //shooting1.play();
-            Projectile projectile = new MegaManBullet(getPosX(), getPosY(), getGameState());
+            Projectile projectile = new MegaManBullet(getPosX(), getPosY() + 7, getGameState());
             if (getDirection() == LEFT) {
-                projectile.setSpeedX(-10);
-                projectile.setPosX(projectile.getPosX() - 40);
+                projectile.setSpeedX(-6);
+                projectile.setPosX(projectile.getPosX() - 10);
                 if (getSpeedX() != 0 && getSpeedY() == 0) {
-                    projectile.setPosX(projectile.getPosX() - 10);
-                    projectile.setPosY(projectile.getPosY() - 5);
+                    projectile.setPosX(projectile.getPosX() - 5);
+                    projectile.setPosY(projectile.getPosY());
                 }
             } else {
-                projectile.setSpeedX(10);
-                projectile.setPosX(projectile.getPosX() + 40);
+                projectile.setSpeedX(6);
+                projectile.setPosX(projectile.getPosX() + 8);
                 if (getSpeedX() != 0 && getSpeedY() == 0) {
-                    projectile.setPosX(projectile.getPosX() + 10);
-                    projectile.setPosY(projectile.getPosY() - 5);
+                    projectile.setPosX(projectile.getPosX() + 5);
+                    projectile.setPosY(projectile.getPosY());
                 }
             }
             if (getIsJumping())
-                projectile.setPosY(projectile.getPosY() - 20);
+                projectile.setPosY(projectile.getPosY() - 8);
 
             projectile.setTeamType(getTeamType());
             getGameState().projectileManager.addObject(projectile);
 
             lastShootingTime = System.nanoTime();
-            isShooting = true;
-
+            this.isShooting = true;
         }
 
     }
