@@ -6,3 +6,6 @@ Mega_man_hit
 Menu
 Music-1
 Game-over
+Water_shoot
+Eletric_shoot
+Fire_shoot
