@@ -22,7 +22,7 @@ public class WoodMan extends SmartRobot {
     private final Animation LeafShieldThrowAnimation;
 
     public WoodMan(int x, int y, GameState gameState) {
-        super(x, y, 34, 31, 0.1f, 2, gameState);
+        super(x, y, 34, 31, 0.1f, 28, gameState);
         currentState = STATE_INTRO;
         stateStartTime = System.currentTimeMillis();
         this.setDirection(WoodMan.LEFT);
