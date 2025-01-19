@@ -167,13 +167,11 @@ public class GameState extends State {
         if (this.megaMan.getPosX() == 2850 && !this.bossFightStarted) {
             initBossBattle();
         }
+
         if (bossFightStarted && !bossMusic.isRunning()) {
+            levelMusic.stop();
             bossMusic.setFramePosition(0);
             bossMusic.start();
-        }
-
-        if (getStateManager().getCurrentState() == StateManager.GAMEOVER) {
-            bossMusic.stop();
         }
 
         if (!levelMusic.isRunning() && !this.bossFightStarted) {
@@ -182,6 +180,7 @@ public class GameState extends State {
         }
 
         if (megaMan.getCurrentState() == SmartRobot.DEATH && !megaMan.getIsExploding()) {
+            bossMusic.stop();
             levelMusic.stop();
             getStateManager().setCurrentState(StateManager.GAMEOVER);
             initState();
