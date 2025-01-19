@@ -66,14 +66,18 @@ public class WoodMan extends SmartRobot {
     }
 
     public void setUpAttack() {
+        System.out.println("Wood-Man setup up attack");
         this.leafShield.setSpeedX(0);
+        this.leafShield.setPosY(this.getPosY());
+        this.leafShield.setPosX(this.getPosX());
         this.leafShield.setTeamType(this.getTeamType());
         getGameState().projectileManager.addObject(this.leafShield);
     }
 
     @Override
     public void attack() {
-        this.leafShield.setSpeedX(this.getDirection() == LEFT ? -2 : 2);
+        System.out.println("Wood-Man attack!");
+        this.leafShield.setSpeedX(this.getDirection() == LEFT ? -1 : 1);
         this.leafShield.setPosX(this.getPosX());
         this.leafShield.setPosY(this.getPosY());
     }
