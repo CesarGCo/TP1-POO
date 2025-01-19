@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import javax.sound.sampled.Clip;
+
 import com.gamestudio.elements.*;
 import com.gamestudio.interfaces.GameFrame;
 import com.gamestudio.manager.DataLoader;
@@ -129,15 +130,10 @@ public class GameState extends State {
         robbit4.setTeamType(Robot.ENEMY_TEAM);
         robotManager.addObject(robbit4);
 
-        Robot goomba1 = new Goomba(384, 130, this);
+        Robot goomba1 = new Goomba(100, 100, this);
         goomba1.setDirection(Robot.RIGHT);
         goomba1.setTeamType(Robot.ENEMY_TEAM);
         robotManager.addObject(goomba1);
-
-        Robot goomba2 = new Goomba(2244, 100, this);
-        goomba2.setDirection(Robot.RIGHT);
-        goomba2.setTeamType(Robot.ENEMY_TEAM);
-        robotManager.addObject(goomba2);
     }
 
     private void initBossBattle() {
@@ -185,8 +181,8 @@ public class GameState extends State {
         }
 
         if (megaMan.getCurrentState() == SmartRobot.DEATH && !megaMan.getIsExploding()) {
-            bossMusic.stop();
-            levelMusic.stop();
+            if(bossMusic.isRunning()) bossMusic.stop();
+            if(levelMusic.isRunning()) levelMusic.stop();
             getStateManager().setCurrentState(StateManager.GAMEOVER);
             initState();
             bossFightStarted = false;
@@ -248,6 +244,13 @@ public class GameState extends State {
                     transformationStartTime = System.currentTimeMillis();
                 }
                 break;
+            case KeyEvent.VK_B: // Transform to Water Mega Man
+                if (!isOnCooldown && !isTransformed) {
+                    switchToWaterMegaMan();
+                    isTransformed = true;
+                    transformationStartTime = System.currentTimeMillis();
+                }
+                break;
         }
     }
 
@@ -262,6 +265,20 @@ public class GameState extends State {
         fireMegaMan.setDirection(megaMan.getDirection());
         robotManager.RemoveObject(megaMan);
         megaMan = fireMegaMan;
+        robotManager.addObject(megaMan);
+    }
+
+    private void switchToWaterMegaMan() {
+        WaterMegaMan waterMegaMan = new WaterMegaMan(
+                (int) megaMan.getPosX(),
+                (int) megaMan.getPosY(),
+                this
+        );
+        waterMegaMan.setAmountLife(megaMan.getAmountLife());
+        waterMegaMan.setCurrentState(megaMan.getCurrentState());
+        waterMegaMan.setDirection(megaMan.getDirection());
+        robotManager.RemoveObject(megaMan);
+        megaMan = waterMegaMan;
         robotManager.addObject(megaMan);
     }
 
