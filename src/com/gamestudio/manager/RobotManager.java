@@ -50,7 +50,19 @@ public class RobotManager {
         synchronized (robots) {
             for (Robot objectInList : robots) {
 
-                if (object.getTeamType() != objectInList.getTeamType() &&
+                if (object.getTeamType() != objectInList.getTeamType() && object.getTeamType() != Robot.ITEM_TEAM &&
+                        object.getBoundForCollisionWithEnemy().intersects(objectInList.getBoundForCollisionWithEnemy())) {
+                    return objectInList;
+                }
+            }
+        }
+        return null;
+    }
+
+    public Robot getCollisionWidthItem(Robot object) {
+        synchronized (robots) {
+            for (Robot objectInList : robots) {
+                if (objectInList.getTeamType() == Robot.ALLY_TEAM &&
                         object.getBoundForCollisionWithEnemy().intersects(objectInList.getBoundForCollisionWithEnemy())) {
                     return objectInList;
                 }
