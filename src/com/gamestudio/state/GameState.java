@@ -146,7 +146,7 @@ public class GameState extends State {
                 megaMan.jump();
                 break;
 
-            case KeyEvent.VK_LEFT:
+            case KeyEvent.VK_H:
                 megaMan.attack();
                 break;
 
