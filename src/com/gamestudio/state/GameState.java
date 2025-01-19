@@ -1,19 +1,15 @@
 package com.gamestudio.state;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.awt.image.Kernel;
 
 import javax.sound.sampled.Clip;
 
 import com.gamestudio.elements.Bat;
 import com.gamestudio.elements.Camera;
 import com.gamestudio.elements.Robot;
-import com.gamestudio.elements.Bat;
 import com.gamestudio.elements.MegaMan;
 import com.gamestudio.elements.Rabbit;
 import com.gamestudio.elements.SmartRobot;
@@ -33,7 +29,7 @@ public class GameState extends State {
     public Camera camera;
     private BufferedImage mapImage;
     private boolean drawHiboxes = false;
-    private Clip levelMusic;
+    private final Clip levelMusic;
 
     public GameState(StateManager stateManager) {
        super(stateManager, new BufferedImage(GameFrame.width, GameFrame.height, BufferedImage.TYPE_INT_ARGB));
@@ -69,7 +65,7 @@ public class GameState extends State {
         Robot robbit1 = new Rabbit(150, 150, this);
         robotManager.addObject(robbit1);
 
-       Robot woodman = new WoodMan(3060, 100, this);
+       Robot woodman = new WoodMan(3050, 100, this);
        robotManager.addObject(woodman);
     }
 
