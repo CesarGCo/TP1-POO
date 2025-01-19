@@ -44,7 +44,6 @@ batton_rising1 70000000 batton_rising2 70000000 batton_rising3 70000000 batton_r
 wood_man_beat
 wood_man_beat1 70000000 wood_man_beat2 70000000
 
-
 wood_man_idle
 wood_man_idle1 70000000 wood_man_idle2 70000000
 
