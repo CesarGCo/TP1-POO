@@ -3,7 +3,6 @@ package com.gamestudio.elements;
 import com.gamestudio.manager.DataLoader;
 import com.gamestudio.state.GameState;
 import com.gamestudio.effect.Animation;
-import com.gamestudio.effect.FrameImage;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -16,7 +15,6 @@ import javax.swing.Timer;
 import javax.sound.sampled.*;
 
 public class MegaMan extends SmartRobot {
-    public static final int RUNSPEED = 3;
     private final Animation runForwardAnim, runBackAnim, runShootingForwarAnim, runShootingBackAnim;
     private final Animation idleForwardAnim, idleBackAnim, idleShootingForwardAnim, idleShootingBackAnim;
     private final Animation flyForwardAnim, flyBackAnim, flyShootingForwardAnim, flyShootingBackAnim;
@@ -24,7 +22,6 @@ public class MegaMan extends SmartRobot {
     private final ArrayList<Image> lifeBar;
     private final Image face;
     private long lastShootingTime;
-    private boolean animationInvencible;
     private boolean isShooting = false;
 
     private final Clip hurtingSound;
@@ -177,7 +174,7 @@ public class MegaMan extends SmartRobot {
         g2d.drawImage(lifeBar.get(Math.max(getAmountLife()-1, 0)),10, 25, null);
     }
 
-    private void setIdleShootingAnimation(Graphics2D g2d, Animation idleShootingForwardAnim, Animation idleForwardAnim) {
+    void setIdleShootingAnimation(Graphics2D g2d, Animation idleShootingForwardAnim, Animation idleForwardAnim) {
         if (isShooting) {
             idleShootingForwardAnim.Update(System.nanoTime());
             idleShootingForwardAnim.draw((int)(getPosX() - getGameState().camera.getPosX()), (int)(getPosY() - getGameState().camera.getPosY()), g2d);
@@ -187,7 +184,7 @@ public class MegaMan extends SmartRobot {
         }
     }
 
-    private void setRunFowardAnimation(Graphics2D g2d, Animation runForwardAnim, Animation runShootingForwarAnim) {
+    void setRunFowardAnimation(Graphics2D g2d, Animation runForwardAnim, Animation runShootingForwarAnim) {
         runForwardAnim.Update(System.nanoTime());
         if (isShooting) {
             runShootingForwarAnim.setCurrentFrame(runForwardAnim.getCurrentFrame() - 1);

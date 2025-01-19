@@ -7,13 +7,7 @@ import java.awt.image.BufferedImage;
 
 import javax.sound.sampled.Clip;
 
-import com.gamestudio.elements.Bat;
-import com.gamestudio.elements.Camera;
-import com.gamestudio.elements.Robot;
-import com.gamestudio.elements.MegaMan;
-import com.gamestudio.elements.Rabbit;
-import com.gamestudio.elements.SmartRobot;
-import com.gamestudio.elements.WoodMan;
+import com.gamestudio.elements.*;
 import com.gamestudio.interfaces.GameFrame;
 import com.gamestudio.manager.DataLoader;
 import com.gamestudio.manager.ProjectileManager;
@@ -50,6 +44,8 @@ public class GameState extends State {
         this.physicalMap = new PhysicalMap(-16, 0, this);
         this.mapImage = DataLoader.getInstance().getFrameImage("new_map_fall").getImage();
         this.megaMan = new MegaMan(100, 100, this);
+        this.megaMan.setAmountLife(20);
+        this.megaMan.setCurrentState(Robot.ALIVE);
         this.camera = new Camera(0, 0, 400, 240, this);
         initEnemies();
         robotManager.addObject(megaMan);
@@ -154,8 +150,49 @@ public class GameState extends State {
             case KeyEvent.VK_F1:
                 drawHiboxes = !drawHiboxes;
                 break;
+
+            case KeyEvent.VK_F: // Switch to Fire Mega Man
+                if (!(megaMan instanceof FireMegaMan)) {
+                    switchToFireMegaMan();
+                }
+                break;
+
+            case KeyEvent.VK_M: // Switch back to Normal Mega Man
+                if (megaMan instanceof FireMegaMan) {
+                    switchToNormalMegaMan();
+                }
+                break;
         }
     }
+
+    private void switchToFireMegaMan() {
+        FireMegaMan fireMegaMan = new FireMegaMan(
+                (int) megaMan.getPosX(),
+                (int) megaMan.getPosY(),
+                this
+        );
+        fireMegaMan.setAmountLife(megaMan.getAmountLife());
+        fireMegaMan.setCurrentState(megaMan.getCurrentState());
+        fireMegaMan.setDirection(megaMan.getDirection());
+        robotManager.RemoveObject(megaMan); // Remove old Mega Man
+        megaMan = fireMegaMan;             // Replace with Fire Mega Man
+        robotManager.addObject(megaMan);   // Add new Mega Man to RobotManager
+    }
+
+    private void switchToNormalMegaMan() {
+        MegaMan normalMegaMan = new MegaMan(
+                (int) megaMan.getPosX(),
+                (int) megaMan.getPosY(),
+                this
+        );
+        normalMegaMan.setAmountLife(megaMan.getAmountLife());
+        normalMegaMan.setCurrentState(megaMan.getCurrentState());
+        normalMegaMan.setDirection(megaMan.getDirection());
+        robotManager.RemoveObject(megaMan); // Remove old Mega Man
+        megaMan = normalMegaMan;            // Replace with Normal Mega Man
+        robotManager.addObject(megaMan);    // Add new Mega Man to RobotManager
+    }
+
 
     public void setReleasedButton(int code) {
         switch (code) {
