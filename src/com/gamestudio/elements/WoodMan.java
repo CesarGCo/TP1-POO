@@ -22,7 +22,7 @@ public class WoodMan extends SmartRobot {
     private final Animation LeafShieldThrowAnimation;
 
     public WoodMan(int x, int y, GameState gameState) {
-        super(x, y, 35, 31, 0.1f, 2, gameState);
+        super(x, y, 34, 31, 0.1f, 2, gameState);
         currentState = STATE_INTRO;
         stateStartTime = System.currentTimeMillis();
         this.setDirection(WoodMan.LEFT);
@@ -64,8 +64,8 @@ public class WoodMan extends SmartRobot {
     @Override
     public Rectangle getBoundForCollisionWithEnemy() {
         Rectangle rect = getBoundForCollisionWithMap();
-        rect.x += (int) (getPosX() - (float) getWidth() / 2);
-        rect.y += (int) (getPosY() - (float) getHeight() / 2);
+        rect.x = (int) (getPosX() - (float) getWidth() / 2);
+        rect.y = (int) (getPosY() - (float) getHeight() / 2);
         rect.width = getWidth();
         rect.height = getHeight();
 
