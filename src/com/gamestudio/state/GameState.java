@@ -83,15 +83,10 @@ public class GameState extends State {
             levelMusic.start();
         }
 
-        if (megaMan.getCurrentState() == SmartRobot.DEATH) {
+        if (megaMan.getCurrentState() == SmartRobot.DEATH && !megaMan.getIsExploding()) {
             levelMusic.stop();
-            Timer timer = new Timer(800, (ActionEvent e) -> {
-                getStateManager().setCurrentState(StateManager.GAMEOVER);
-                initState();
-                ((Timer) e.getSource()).stop();
-            });
-            timer.setRepeats(false);
-            timer.start();
+            getStateManager().setCurrentState(StateManager.GAMEOVER);
+            initState();
         }
     }
 

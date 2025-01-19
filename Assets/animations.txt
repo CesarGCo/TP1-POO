@@ -6,7 +6,7 @@ mega_man_running
 mega_man_running1 200000000 mega_man_running2 200000000 mega_man_running3 200000000
 
 mega_man_death
-mega_man_death1 200000000 mega_man_death2 200000000 mega_man_death3 200000000 mega_man_death4 200000000
+mega_man_death1 200000000 mega_man_death2 200000000 mega_man_death3 200000000 mega_man_death4 400000000
 
 mega_man_jump
 mega_man_jumping1 200000000
