@@ -1,13 +1,16 @@
 package com.gamestudio.elements;
 
+import com.gamestudio.manager.DataLoader;
 import com.gamestudio.state.GameState;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-public abstract class DumbRobot extends Robot {
+import javax.sound.sampled.Clip;
 
+public abstract class DumbRobot extends Robot {
     public DumbRobot(float x, float y, int width, int height, float mass, int amountLife, GameState gameWorld) {
         super(x, y, width, height, mass, amountLife, gameWorld);
+        setDeathSound(DataLoader.getInstance().getSound("enemy_death"));
         setTeamType(ENEMY_TEAM);
     }
 
