@@ -5,7 +5,10 @@ import com.gamestudio.state.GameState;
 import com.gamestudio.effect.Animation;
 
 import javax.sound.sampled.Clip;
+import javax.swing.Timer;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 public class WaterMegaMan extends MegaMan {
@@ -73,48 +76,65 @@ public class WaterMegaMan extends MegaMan {
             drawDeathAnimation(g2d);
             return;
         }
-        if (getCurrentState() == ALIVE) {
-            if (!getIsInvencible()) {
-                if (getIsJumping()) {
-                    if (getDirection() == RIGHT) {
-                        waterFlyForwardAnim.Update(System.nanoTime());
-                        if (isShooting) {
-                            waterFlyShootingForwardAnim.setCurrentFrame(waterFlyForwardAnim.getCurrentFrame());
-                            waterFlyShootingForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()) + 10, (int) (getPosY() - getGameState().camera.getPosY()), g2d);
+        switch (getCurrentState()) {
+            case ALIVE:
+                if (getCurrentState() == ALIVE) {
+                    if (!getIsInvencible()) {
+                        if (getIsJumping()) {
+                            if (getDirection() == RIGHT) {
+                                waterFlyForwardAnim.Update(System.nanoTime());
+                                if (isShooting) {
+                                    waterFlyShootingForwardAnim.setCurrentFrame(waterFlyForwardAnim.getCurrentFrame());
+                                    waterFlyShootingForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()) + 10, (int) (getPosY() - getGameState().camera.getPosY()), g2d);
+                                } else {
+                                    waterFlyForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2d);
+                                }
+                            } else {
+                                waterFlyBackAnim.Update(System.nanoTime());
+                                if (isShooting) {
+                                    waterFlyShootingBackAnim.setCurrentFrame(waterFlyBackAnim.getCurrentFrame());
+                                    waterFlyShootingBackAnim.draw((int) (getPosX() - getGameState().camera.getPosX()) - 10, (int) (getPosY() - getGameState().camera.getPosY()), g2d);
+                                } else {
+                                    waterFlyBackAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2d);
+                                }
+                            }
                         } else {
-                            waterFlyForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2d);
+                            if (getSpeedX() > 0) {
+                                setWaterRunFowardAnimation(g2d, waterRunForwardAnim, waterRunShootingForwardAnim);
+                            } else if (getSpeedX() < 0) {
+                                setWaterRunFowardAnimation(g2d, waterRunBackAnim, waterRunShootingBackAnim);
+                            } else {
+                                if (getDirection() == RIGHT) {
+                                    setWaterIdleShootingAnimation(g2d, waterIdleShootingForwardAnim, waterIdleForwardAnim);
+                                } else {
+                                    setWaterIdleShootingAnimation(g2d, waterIdleShootingBackAnim, waterIdleBackAnim);
+                                }
+                            }
                         }
-                    } else {
-                        waterFlyBackAnim.Update(System.nanoTime());
-                        if (isShooting) {
-                            waterFlyShootingBackAnim.setCurrentFrame(waterFlyBackAnim.getCurrentFrame());
-                            waterFlyShootingBackAnim.draw((int) (getPosX() - getGameState().camera.getPosX()) - 10, (int) (getPosY() - getGameState().camera.getPosY()), g2d);
-                        } else {
-                            waterFlyBackAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2d);
-                        }
-                    }
-                } else {
-                    if (getSpeedX() > 0) {
-                        setWaterRunFowardAnimation(g2d, waterRunForwardAnim, waterRunShootingForwardAnim);
-                    } else if (getSpeedX() < 0) {
-                        setWaterRunFowardAnimation(g2d, waterRunBackAnim, waterRunShootingBackAnim);
                     } else {
                         if (getDirection() == RIGHT) {
-                            setWaterIdleShootingAnimation(g2d, waterIdleShootingForwardAnim, waterIdleForwardAnim);
+                            waterBehurtForwardAnim.Update(System.nanoTime());
+                            waterBehurtForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2d);
                         } else {
-                            setWaterIdleShootingAnimation(g2d, waterIdleShootingBackAnim, waterIdleBackAnim);
+                            waterBehurtBackAnim.Update(System.nanoTime());
+                            waterBehurtBackAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2d);
                         }
                     }
                 }
-            } else {
-                if (getDirection() == RIGHT) {
-                    waterBehurtForwardAnim.Update(System.nanoTime());
-                    waterBehurtForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2d);
-                } else {
-                    waterBehurtBackAnim.Update(System.nanoTime());
-                    waterBehurtBackAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2d);
-                }
-            }
+                break;
+            case BEHURT:
+                hurtingSound.setFramePosition(0); 
+                hurtingSound.start();
+                setIsInvencible(true);
+                Timer timer = new Timer(500, (ActionEvent e) -> { 
+                    setIsInvencible(false);
+                    ((Timer) e.getSource()).stop();
+                });
+                timer.setRepeats(false);
+                timer.start();
+                break;
+            default:
+                break;
         }
         drawWaterLifeBar(g2d);
     }
