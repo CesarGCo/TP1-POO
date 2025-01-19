@@ -71,8 +71,8 @@ public class GameState extends State {
 
     public void update() {
         camera.update();
-        projectileManager.updateObjects();
         robotManager.updateObjects();
+        projectileManager.updateObjects();
 
         if (this.megaMan.getPosX() >= 2800) {
             levelMusic.stop();
