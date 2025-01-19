@@ -8,6 +8,7 @@ import javax.sound.sampled.Clip;
 import com.gamestudio.elements.*;
 import com.gamestudio.interfaces.GameFrame;
 import com.gamestudio.manager.DataLoader;
+import com.gamestudio.manager.ItemManager;
 import com.gamestudio.manager.ProjectileManager;
 import com.gamestudio.manager.RobotManager;
 import com.gamestudio.manager.StateManager;
@@ -18,6 +19,7 @@ public class GameState extends State {
     public MegaMan megaMan;
     public RobotManager robotManager;
     public ProjectileManager projectileManager;
+    public ItemManager itemManager;
     public Camera camera;
     private BufferedImage mapImage;
     private boolean drawHiboxes = false;
@@ -43,6 +45,7 @@ public class GameState extends State {
     public void initState() {
         this.robotManager = new RobotManager(this);
         this.projectileManager = new ProjectileManager(this);
+        this.itemManager = new ItemManager(this);
 
         this.physicalMap = new PhysicalMap(-16, 0, this);
         this.mapImage = DataLoader.getInstance().getFrameImage("new_map_fall").getImage();
@@ -148,6 +151,7 @@ public class GameState extends State {
         camera.update();
         robotManager.updateObjects();
         projectileManager.updateObjects();
+        itemManager.updateObjects();
 
         if (isTransformed) {
             if (System.currentTimeMillis() - transformationStartTime >= 4000) {
@@ -194,6 +198,7 @@ public class GameState extends State {
         drawMap(g2);
         projectileManager.draw(g2);
         robotManager.draw(g2);
+        itemManager.draw(g2);
         if (drawHiboxes) {
             drawAllHitBox(g2);
         }
@@ -291,6 +296,7 @@ public class GameState extends State {
     private void drawAllHitBox(Graphics2D g2d) {
         projectileManager.drawAllHitBox(g2d);
         robotManager.drawAllHitBox(g2d);
+        itemManager.drawAllHitBox(g2d);
         physicalMap.draw(g2d);
     }
 }
