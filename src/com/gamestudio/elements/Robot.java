@@ -14,6 +14,7 @@ import javax.swing.Timer;
 public abstract class Robot extends GameElement {
     public static final int ALLY_TEAM = 0;
     public static final int ENEMY_TEAM = 1;
+    public static final int ITEM_TEAM = 2;
     public static final int LEFT = 0;
     public static final int RIGHT = 1;
     public static final int ALIVE = 0;
@@ -28,7 +29,8 @@ public abstract class Robot extends GameElement {
     private float mass;
     private float speedX;
     private float speedY;
-    private int amountLife; //Quantidade de vida do objeto
+    private int amountLife; 
+    private int maxLife;
     private int damage; //Quantidade de dado que o objeto da
     private int direction; //Direita ou esquerda
     private int teamType;
@@ -44,6 +46,7 @@ public abstract class Robot extends GameElement {
         this.setHeight(height);
         this.setMass(mass);
         this.setAmountLife(amountLife);
+        this.maxLife = amountLife;
     }
 
     public int getCurrentState() {
@@ -185,6 +188,10 @@ public abstract class Robot extends GameElement {
     public void beHurt(int damageEat) {
         this.setAmountLife(this.getAmountLife() - damageEat);
         this.currentState = BEHURT;
+    }
+
+    public void regen(int life) {
+        this.setAmountLife(Math.min(this.getAmountLife() + life, maxLife));
     }
 
     public void update() {

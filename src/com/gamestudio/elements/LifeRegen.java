@@ -20,7 +20,7 @@ public class LifeRegen extends Item {
         super.update();
         Robot object = getGameState().robotManager.getCollisionWidthItem(this);
         if(object != null) {
-            object.setAmountLife(object.getAmountLife() + life);
+            object.regen(life);
             this.setCurrentState(DEATH);
         }
     }
