@@ -11,6 +11,7 @@ public class WoodMan extends SmartRobot {
     private static final int BEATING_CHEST = 1;
     private static final int IDLE = 2;
     private static final int JUMPING = 3;
+    private static final int LEAF_SHIELD_THROW = 4;
 
     private long stateStartTime;
 
@@ -18,7 +19,9 @@ public class WoodMan extends SmartRobot {
     private final Animation ChestBeatAnimation, ChestBeatBackAnimation;
     private final Animation IdleAnimation, IdleBackAnimation;
     private final Animation JumpingAnimation, JumpingBackAnimation;
-    private final Animation LeafShieldThrowAnimation;
+    private final Animation LeafShieldThrowAnimation, LeafShieldThrowBackAnimation;
+
+    private final Projectile leafShield = new LeafShield(getPosX(), getPosY(), getGameState());
 
     public WoodMan(int x, int y, GameState gameState) {
         super(x, y, 34, 31, 0.1f, 2, gameState);
@@ -40,10 +43,13 @@ public class WoodMan extends SmartRobot {
         IdleBackAnimation.flipAllImage();
         JumpingBackAnimation = DataLoader.getInstance().getAnimation("wood_man_jumping");
         JumpingBackAnimation.flipAllImage();
+        LeafShieldThrowBackAnimation = DataLoader.getInstance().getAnimation("wood_man_leaf_shield_throw");
+        LeafShieldThrowBackAnimation.flipAllImage();
     }
 
     @Override
-    public void run() {}
+    public void run() {
+    }
 
     @Override
     public void jump() {
@@ -55,10 +61,25 @@ public class WoodMan extends SmartRobot {
     }
 
     @Override
-    public void stopRun() {}
+    public void stopRun() {
+    }
+
+    public void setUpAttack() {
+        System.out.println("Wood-Man setup up attack");
+        this.leafShield.setSpeedX(0);
+        this.leafShield.setPosY(this.getPosY());
+        this.leafShield.setPosX(this.getPosX());
+        this.leafShield.setTeamType(this.getTeamType());
+        getGameState().projectileManager.addObject(this.leafShield);
+    }
 
     @Override
-    public void attack() {}
+    public void attack() {
+        System.out.println("Wood-Man attack!");
+        this.leafShield.setSpeedX(this.getDirection() == LEFT ? -1 : 1);
+        this.leafShield.setPosX(this.getPosX());
+        this.leafShield.setPosY(this.getPosY());
+    }
 
     @Override
     public Rectangle getBoundForCollisionWithEnemy() {
@@ -74,7 +95,6 @@ public class WoodMan extends SmartRobot {
     @Override
     public void update() {
         super.update();
-        // Update state based on elapsed time
         long elapsedTime = System.currentTimeMillis() - stateStartTime;
 
         switch (getCurrentAction()) {
@@ -87,13 +107,23 @@ public class WoodMan extends SmartRobot {
 
             case BEATING_CHEST:
                 if (elapsedTime > 3000) {
+                    // Setup attack after chest beating
+                    setUpAttack();
+                    setCurrentAction(LEAF_SHIELD_THROW);
+                    stateStartTime = System.currentTimeMillis();
+                }
+                break;
+
+            case LEAF_SHIELD_THROW:
+                if (elapsedTime > 1000) { // Adjust duration for throw animation
+                    attack(); // Perform the attack (set projectile speed/direction)
                     setCurrentAction(IDLE);
                     stateStartTime = System.currentTimeMillis();
                 }
                 break;
 
             case IDLE:
-                if (elapsedTime > 1000) {
+                if (elapsedTime > 2000) { // Adjust idle duration
                     setCurrentAction(JUMPING);
                     stateStartTime = System.currentTimeMillis();
                 }
@@ -107,12 +137,12 @@ public class WoodMan extends SmartRobot {
                 break;
         }
 
-        // Perform actions based on the current state
         performCurrentStateAction();
 
         // Stop horizontal movement if not jumping
         if (!getIsJumping()) setSpeedX(0);
     }
+
 
     private void performCurrentStateAction() {
         switch (getCurrentAction()) {
@@ -126,6 +156,10 @@ public class WoodMan extends SmartRobot {
                 } else {
                     ChestBeatBackAnimation.Update(System.nanoTime());
                 }
+                break;
+
+            case LEAF_SHIELD_THROW:
+                LeafShieldThrowAnimation.Update(System.nanoTime());
                 break;
 
             case IDLE:
@@ -147,7 +181,6 @@ public class WoodMan extends SmartRobot {
         }
     }
 
-
     @Override
     public void draw(Graphics2D g2) {
         int drawX = (int) (getPosX() - getGameState().camera.getPosX());
@@ -168,10 +201,14 @@ public class WoodMan extends SmartRobot {
         Animation currentAnimation;
         switch (getCurrentAction()) {
             case INTRO -> currentAnimation = IntroAnimation;
-            case BEATING_CHEST -> currentAnimation =  this.getDirection() == LEFT? ChestBeatAnimation: ChestBeatBackAnimation;
-            case IDLE -> currentAnimation =  this.getDirection() == LEFT? IdleAnimation: IdleBackAnimation;
-            case JUMPING -> currentAnimation =  this.getDirection() == LEFT? JumpingAnimation: JumpingBackAnimation;
-            default -> throw new IllegalStateException("Unexpected action: " + getCurrentAction());
+            case BEATING_CHEST ->
+                    currentAnimation = this.getDirection() == LEFT ? ChestBeatAnimation : ChestBeatBackAnimation;
+            case IDLE -> currentAnimation = this.getDirection() == LEFT ? IdleAnimation : IdleBackAnimation;
+            case JUMPING ->
+                    currentAnimation = this.getDirection() == LEFT ? JumpingAnimation : JumpingBackAnimation;
+            case LEAF_SHIELD_THROW ->
+                    currentAnimation = this.getDirection() == LEFT ? LeafShieldThrowAnimation: LeafShieldThrowBackAnimation;
+            default -> throw new IllegalStateException("Unexpected state: " + getCurrentAction());
         }
         return currentAnimation;
     }
