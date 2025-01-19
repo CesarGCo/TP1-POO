@@ -2,12 +2,10 @@ package com.gamestudio.state;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import javax.sound.sampled.Clip;
-import javax.swing.*;
 
 import com.gamestudio.elements.Bat;
 import com.gamestudio.elements.Camera;
@@ -31,7 +29,9 @@ public class GameState extends State {
     public Camera camera;
     private BufferedImage mapImage;
     private boolean drawHiboxes = false;
-    private Clip levelMusic;
+    private final Clip levelMusic;
+    private Clip bossMusic;
+    private boolean bossFightStarted = false;
 
     public GameState(StateManager stateManager) {
         super(stateManager, new BufferedImage(GameFrame.width, GameFrame.height, BufferedImage.TYPE_INT_ARGB));
@@ -64,7 +64,13 @@ public class GameState extends State {
 
         Robot robbit1 = new Rabbit(150, 150, this);
         robotManager.addObject(robbit1);
+    }
 
+    private void initBossBattle() {
+        this.bossFightStarted = true;
+        levelMusic.stop();
+        bossMusic = DataLoader.getInstance().getSound("Boss_soundtrack");
+        bossMusic.start();
         Robot woodman = new WoodMan(3000, 100, this);
         robotManager.addObject(woodman);
     }
@@ -74,11 +80,19 @@ public class GameState extends State {
         projectileManager.updateObjects();
         robotManager.updateObjects();
 
-        if (this.megaMan.getPosX() >= 2800) {
-            levelMusic.stop();
-            levelMusic = DataLoader.getInstance().getSound("Boss_soundtrack");
-            levelMusic.start();
-        } else if (!levelMusic.isRunning()) {
+        if (this.megaMan.getPosX() == 2850 && !this.bossFightStarted) {
+            initBossBattle();
+        }
+        if(bossFightStarted && !bossMusic.isRunning()) {
+            bossMusic.setFramePosition(0);
+            bossMusic.start();
+        }
+
+        if(getStateManager().getCurrentState() == StateManager.GAMEOVER) {
+            bossMusic.stop();
+        }
+
+        if (!levelMusic.isRunning() && !this.bossFightStarted) {
             levelMusic.setFramePosition(0);
             levelMusic.start();
         }
