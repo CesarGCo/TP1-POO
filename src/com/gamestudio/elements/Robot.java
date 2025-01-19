@@ -26,6 +26,7 @@ public abstract class Robot extends GameElement {
     private int damage; //Quantidade de dado que o objeto da
     private int direction; //Direita ou esquerda
     private int teamType;
+    private boolean isInvencible = false;
     protected Animation behurtAnim;
 
     public Robot(float x, float y, int width, int height, float mass, int amountLife, GameState gameState) {
@@ -42,6 +43,14 @@ public abstract class Robot extends GameElement {
 
     public void setCurrentState(int currentState) {
         this.currentState = currentState;
+    }
+
+    public boolean getIsInvencible() {
+        return this.isInvencible;
+    }
+
+    public void setIsInvencible(boolean isInvencible) {
+        this.isInvencible = isInvencible;
     }
 
     public int getWidth() {
@@ -141,11 +150,11 @@ public abstract class Robot extends GameElement {
                 // verifica se colidiu com projetiu de inimigo ou não
                 Robot object1 = this.getGameState().robotManager.getCollisionWidthEnemyObject(this);
                 Robot object2 = this.getGameState().projectileManager.getCollisionWidthEnemyObject(this);
-                if (object1 != null && object1.getDamage() > 0) {
+                if (object1 != null && object1.getDamage() > 0 && !isInvencible) {
                     this.setAmountLife(this.getAmountLife() - object1.getDamage());
                     this.currentState = BEHURT;
                     this.hurtingCallback();
-                } else if(object2 != null && object2.getDamage() > 0){
+                } else if(object2 != null && object2.getDamage() > 0 && !isInvencible){
                     this.setAmountLife(this.getAmountLife() - object2.getDamage());
                     this.currentState = BEHURT;
                     this.hurtingCallback();
@@ -157,12 +166,10 @@ public abstract class Robot extends GameElement {
                 // O personagem tomou dano então a animação de dano ocorre
                 if (this.behurtAnim == null) {
                     this.currentState = ALIVE;
-                    System.out.println("Entrou neste inferno");
                     if (this.getAmountLife() <= 0) {
-                        System.out.println("Entrou aqui");
                         this.currentState = DEATH;
                     }
-                } else {
+                } /*else {
                     // Executa a animação de ferimento
                     this.behurtAnim.Update(System.nanoTime());
                     if (this.behurtAnim.isLastFrame()) {
@@ -172,7 +179,7 @@ public abstract class Robot extends GameElement {
                             this.currentState = DEATH;
                         }
                     }
-                }
+                }*/
                 break;
 
             case DEATH:
