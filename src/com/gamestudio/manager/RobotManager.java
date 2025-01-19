@@ -67,7 +67,7 @@ public class RobotManager {
 
                 if (!object.isObjectOutOfCameraView()) object.update();
 
-                if (object.getCurrentState() == Robot.DEATH) {
+                if (object.getCurrentState() == Robot.DEATH && !object.getIsExploding()) {
                     robots.remove(id);
                 }
             }

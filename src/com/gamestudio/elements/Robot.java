@@ -32,7 +32,7 @@ public abstract class Robot extends GameElement {
     private int damage; //Quantidade de dado que o objeto da
     private int direction; //Direita ou esquerda
     private int teamType;
-    private boolean isExplosion = false;
+    private boolean isExploding = false;
     private boolean isInvencible = false;
     private Animation deathAnimation;
     private Clip deathClip;
@@ -145,12 +145,12 @@ public abstract class Robot extends GameElement {
         this.deathAnimation = deathAnimation;
     }
 
-    public boolean getIsExplosion() {
-        return this.isExplosion;
+    public boolean getIsExploding() {
+        return this.isExploding;
     }
 
-    public void setIsExplosion(boolean isExplosion) {
-        this.isExplosion = isExplosion;
+    public void setIsExploding(boolean isExploding) {
+        this.isExploding = isExploding;
     }
 
     public boolean isObjectOutOfCameraView() {
@@ -189,9 +189,9 @@ public abstract class Robot extends GameElement {
             case BEHURT:
                 this.currentState = ALIVE;
                 if (this.getAmountLife() <= 0) {
-                    this.isExplosion = true;
+                    this.isExploding = true;
                     Timer timer = new Timer(1000, (ActionEvent e) -> { 
-                        isExplosion = false;
+                        isExploding = false;
                         ((Timer) e.getSource()).stop();
                     });
                     timer.setRepeats(false);
