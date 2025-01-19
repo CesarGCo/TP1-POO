@@ -49,6 +49,7 @@ public class WoodMan extends SmartRobot {
 
         setDeathAnimation(DataLoader.getInstance().getAnimation("explosion_effect"));
         setDeathSound(DataLoader.getInstance().getSound("enemy_death"));
+        setDeathTime(400);
     }
 
     @Override
