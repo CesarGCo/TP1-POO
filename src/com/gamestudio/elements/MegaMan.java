@@ -4,9 +4,11 @@ import com.gamestudio.manager.DataLoader;
 import com.gamestudio.state.GameState;
 import com.gamestudio.effect.Animation;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import javax.swing.Timer;
+
 import javax.sound.sampled.*;
 
 public class MegaMan extends SmartRobot {
@@ -24,7 +26,7 @@ public class MegaMan extends SmartRobot {
     private final Clip shooting1;
 
     public MegaMan(int x, int y, GameState gameState) {
-        super(x, y, 16, 24, 0.1f, 100, gameState);
+        super(x, y, 16, 24, 0.1f, 10, gameState);
         shooting1 = DataLoader.getInstance().getSound("Shoot");
         hurtingSound = DataLoader.getInstance().getSound("Mega_man_hit");
         this.setDirection(MegaMan.RIGHT);
@@ -68,7 +70,6 @@ public class MegaMan extends SmartRobot {
     @Override
     public void update() {
         super.update();
-
         if (isShooting) {
             if (System.nanoTime() - lastShootingTime > 900 * 200000) {
 
@@ -127,10 +128,20 @@ public class MegaMan extends SmartRobot {
                 break;
 
             case BEHURT:
+                hurtingSound.setFramePosition(0); 
+                hurtingSound.start();
+                setIsInvencible(true);
+                Timer timer = new Timer(2000, (ActionEvent e) -> { 
+                    setIsInvencible(false);
+                    ((Timer) e.getSource()).stop();
+                });
+                timer.setRepeats(false);
+                timer.start();
                 if (getDirection() == RIGHT) {
+                    behurtForwardAnim.Update(System.nanoTime());
                     behurtForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()),(int) (getPosY() - getGameState().camera.getPosY()), g2);
                 } else {
-                    behurtBackAnim.setCurrentFrame(behurtForwardAnim.getCurrentFrame());
+                    behurtBackAnim.Update(System.nanoTime());
                     behurtBackAnim.draw((int)(getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2);
                 }
                 break;

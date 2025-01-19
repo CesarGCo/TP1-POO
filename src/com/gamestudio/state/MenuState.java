@@ -48,16 +48,19 @@ public class MenuState extends State {
     }
 
     public void setPressedButton(int keyCode) {
-        arrowSound.stop();
-        arrowSound.setFramePosition(0); 
-        arrowSound.start();
         if(keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_DOWN) {
+            arrowSound.stop();
+            arrowSound.setFramePosition(0); 
+            arrowSound.start();
             for (ButtonMenu bt : buttons) {
                 bt.update();
             }
             update();
             
         } else if(keyCode == KeyEvent.VK_ENTER) {
+            arrowSound.stop();
+            arrowSound.setFramePosition(0); 
+            arrowSound.start();
             if(buttons[0].isEnabled()) {
                 menuMusic.stop();
                 getStateManager().setCurrentState(StateManager.GAME);;

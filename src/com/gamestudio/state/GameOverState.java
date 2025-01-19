@@ -55,11 +55,11 @@ public class GameOverState extends State {
     }
     
     public void setPressedButton(int code) {
-        arrowSound.stop();
-        arrowSound.setFramePosition(0); 
-        arrowSound.start();
         switch (code) {
             case KeyEvent.VK_ENTER:
+                arrowSound.stop();
+                arrowSound.setFramePosition(0); 
+                arrowSound.start();
                 soundPlayed = false;
                 gameOverMusic.stop();
                 if(buttons[0].isEnabled()) {
@@ -75,6 +75,9 @@ public class GameOverState extends State {
                 } 
                 break;
             case KeyEvent.VK_UP:
+                arrowSound.stop();
+                arrowSound.setFramePosition(0); 
+                arrowSound.start();
                 if(buttons[1].isEnabled()) {
                     buttons[0].update();
                     buttons[1].update();
@@ -84,6 +87,9 @@ public class GameOverState extends State {
                 } 
                 break;
             case KeyEvent.VK_DOWN:
+                arrowSound.stop();
+                arrowSound.setFramePosition(0); 
+                arrowSound.start();
                 if(buttons[0].isEnabled()) {
                     buttons[0].update();
                     buttons[1].update();
