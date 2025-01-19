@@ -5,6 +5,7 @@ mega_man_death2
 mega_man_death3
 mega_man_death4
 mega_man_hurt1
+mega_man_invisible1
 mega_man_idle1
 mega_man_idle2
 mega_man_idle3
