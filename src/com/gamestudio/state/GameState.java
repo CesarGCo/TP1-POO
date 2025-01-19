@@ -53,13 +53,80 @@ public class GameState extends State {
     }
 
     private void initEnemies() {
-        Robot bat1 = new Bat(200, 102, this);
+        Robot bat1 = new Bat(250, 80, this);
         bat1.setDirection(Robot.LEFT);
         bat1.setTeamType(Robot.ENEMY_TEAM);
         robotManager.addObject(bat1);
 
-        Robot robbit1 = new Rabbit(150, 150, this);
+        Robot bat2 = new Bat(362, 80, this);
+        bat2.setDirection(Robot.LEFT);
+        bat2.setTeamType(Robot.ENEMY_TEAM);
+        robotManager.addObject(bat2);
+
+        Robot bat3 = new Bat(630, 80, this);
+        bat3.setDirection(Robot.LEFT);
+        bat3.setTeamType(Robot.ENEMY_TEAM);
+        robotManager.addObject(bat3);
+
+        Robot bat4 = new Bat(830, 80, this);
+        bat4.setDirection(Robot.LEFT);
+        bat4.setTeamType(Robot.ENEMY_TEAM);
+        robotManager.addObject(bat4);
+
+        Robot bat5 = new Bat(1000, 40, this);
+        bat5.setDirection(Robot.LEFT);
+        bat5.setTeamType(Robot.ENEMY_TEAM);
+        robotManager.addObject(bat5);
+
+        Robot bat6 = new Bat(1310, 20, this);
+        bat6.setDirection(Robot.LEFT);
+        bat6.setTeamType(Robot.ENEMY_TEAM);
+        robotManager.addObject(bat6);
+
+        Robot bat7 = new Bat(1462, 20, this);
+        bat7.setDirection(Robot.LEFT);
+        bat7.setTeamType(Robot.ENEMY_TEAM);
+        robotManager.addObject(bat7);
+
+        Robot bat8 = new Bat(1664, 12, this);
+        bat8.setDirection(Robot.LEFT);
+        bat8.setTeamType(Robot.ENEMY_TEAM);
+        robotManager.addObject(bat8);
+
+        Robot bat9 = new Bat(2062, 50, this);
+        bat9.setDirection(Robot.LEFT);
+        bat9.setTeamType(Robot.ENEMY_TEAM);
+        robotManager.addObject(bat9);
+
+        Robot bat10 = new Bat(2168, 30, this);
+        bat10.setDirection(Robot.LEFT);
+        bat10.setTeamType(Robot.ENEMY_TEAM);
+        robotManager.addObject(bat10);
+
+        Robot bat11 = new Bat(2308, 50, this);
+        bat11.setDirection(Robot.LEFT);
+        bat11.setTeamType(Robot.ENEMY_TEAM);
+        robotManager.addObject(bat11);
+
+        Robot robbit1 = new Rabbit(500, 100, this);
+        robbit1.setDirection(Robot.RIGHT);
+        robbit1.setTeamType(Robot.ENEMY_TEAM);
         robotManager.addObject(robbit1);
+
+        Robot robbit2 = new Rabbit(930, 100, this);
+        robbit2.setDirection(Robot.RIGHT);
+        robbit2.setTeamType(Robot.ENEMY_TEAM);
+        robotManager.addObject(robbit2);
+
+        Robot robbit3 = new Rabbit(2030, 100, this);
+        robbit3.setDirection(Robot.RIGHT);
+        robbit3.setTeamType(Robot.ENEMY_TEAM);
+        robotManager.addObject(robbit3);
+
+        Robot robbit4 = new Rabbit(2492, 100, this);
+        robbit4.setDirection(Robot.RIGHT);
+        robbit4.setTeamType(Robot.ENEMY_TEAM);
+        robotManager.addObject(robbit4);
     }
 
     private void initBossBattle() {
