@@ -70,6 +70,7 @@ public class MegaMan extends SmartRobot {
         invencibleAnim = DataLoader.getInstance().getAnimation("mega_man_invisible");
         setDeathAnimation(DataLoader.getInstance().getAnimation("mega_man_death"));
 
+
         for(int i = 1; i < 30; i++){
             lifeBar.addFirst(DataLoader.getInstance().getFrameImage("life_bar" + i).getImage());
         }
@@ -78,6 +79,8 @@ public class MegaMan extends SmartRobot {
 
         this.setDirection(MegaMan.RIGHT);
         setTeamType(ALLY_TEAM);
+        setDeathSound(DataLoader.getInstance().getSound("death"));
+        setDeathTime(800);
     }
 
     @Override
@@ -108,6 +111,7 @@ public class MegaMan extends SmartRobot {
     public void draw(Graphics2D g2d) {
         if(getIsExploding()){
             drawDeathAnimation(g2d);
+            return;
         }
         switch (getCurrentState()) {
             case ALIVE:

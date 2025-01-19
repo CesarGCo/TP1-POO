@@ -34,6 +34,7 @@ public abstract class Robot extends GameElement {
     private int teamType;
     private boolean isExploding = false;
     private boolean isInvencible = false;
+    private int deathTime;
     private Animation deathAnimation;
     private Clip deathSound;
 
@@ -160,6 +161,14 @@ public abstract class Robot extends GameElement {
     public void setDeathSound(Clip deathSound) {
         this.deathSound = deathSound;
     }
+
+    public int getDeathTime() {
+        return deathTime;
+    }
+
+    public void setDeathTime(int deathTime) {
+        this.deathTime = deathTime;
+    }
     public boolean isObjectOutOfCameraView() {
         return this.getPosX() - this.getGameState().camera.getPosX() > this.getGameState().camera.getWidthView() || this.getPosX() - this.getGameState().camera.getPosX() < -50.0F || this.getPosY() - this.getGameState().camera.getPosY() > this.getGameState().camera.getHeightView() || this.getPosY() - this.getGameState().camera.getPosY() < -50.0F;
     }
@@ -192,7 +201,7 @@ public abstract class Robot extends GameElement {
                 this.currentState = ALIVE;
                 if (this.getAmountLife() <= 0) {
                     this.isExploding = true;
-                    Timer timer = new Timer(400, (ActionEvent e) -> { 
+                    Timer timer = new Timer(deathTime, (ActionEvent e) -> { 
                         isExploding = false;
                         ((Timer) e.getSource()).stop();
                     });
@@ -203,7 +212,7 @@ public abstract class Robot extends GameElement {
                 break;
 
             case DEATH:
-                if(deathSound != null) {
+                if(deathSound != null && !deathSound.isRunning()) {
                     deathSound.setFramePosition(0); 
                     deathSound.start();
                 }
