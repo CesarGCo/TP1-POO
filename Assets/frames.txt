@@ -44,6 +44,17 @@ batton_rising2
 batton_rising3
 batton_rising4
 0
+Assets/Enemies/goomba/
+goomba_walking1
+goomba_walking2
+goomba_walking3
+goomba_walking4
+goomba_walking5
+goomba_walking6
+goomba_walking7
+goomba_walking8
+goomba_dying1
+0
 Assets/Enemies/robbit/
 robbit_carrot1
 robbit_idle1
