@@ -29,32 +29,32 @@ public class GameState extends State {
     public Camera camera;
     private BufferedImage mapImage;
     private boolean drawHiboxes = false;
-    private final Clip levelMusic;
+    private Clip levelMusic;
 
     public GameState(StateManager stateManager) {
-       super(stateManager, new BufferedImage(GameFrame.width, GameFrame.height, BufferedImage.TYPE_INT_ARGB));
-       this.levelMusic = DataLoader.getInstance().getSound("Level_soundtrack");
-       initState();
+        super(stateManager, new BufferedImage(GameFrame.width, GameFrame.height, BufferedImage.TYPE_INT_ARGB));
+        this.levelMusic = DataLoader.getInstance().getSound("Level_soundtrack");
+        initState();
     }
 
     public BufferedImage getMapImage() {
         return mapImage;
     }
-    
+
     public void initState() {
-       this.robotManager = new RobotManager(this);
-       this.projectileManager = new ProjectileManager(this);
-    
-       this.physicalMap = new PhysicalMap(-16, 0, this);
-       this.mapImage = DataLoader.getInstance().getFrameImage("new_map_fall").getImage();
-       this.megaMan = new MegaMan(100, 100, this);
-       this.camera = new Camera(0, 0, 400, 240, this);
-       initEnemies();
-       robotManager.addObject(megaMan);
-       megaMan.setCurrentState(SmartRobot.ALIVE);
+        this.robotManager = new RobotManager(this);
+        this.projectileManager = new ProjectileManager(this);
+
+        this.physicalMap = new PhysicalMap(-16, 0, this);
+        this.mapImage = DataLoader.getInstance().getFrameImage("new_map_fall").getImage();
+        this.megaMan = new MegaMan(100, 100, this);
+        this.camera = new Camera(0, 0, 400, 240, this);
+        initEnemies();
+        robotManager.addObject(megaMan);
+        megaMan.setCurrentState(SmartRobot.ALIVE);
     }
 
-    private void initEnemies(){
+    private void initEnemies() {
         Robot bat1 = new Bat(200, 102, this);
         bat1.setDirection(Robot.LEFT);
         bat1.setTeamType(Robot.ENEMY_TEAM);
@@ -63,19 +63,25 @@ public class GameState extends State {
         Robot robbit1 = new Rabbit(150, 150, this);
         robotManager.addObject(robbit1);
 
-       Robot woodman = new WoodMan(3000, 100, this);
-       robotManager.addObject(woodman);
+        Robot woodman = new WoodMan(3000, 100, this);
+        robotManager.addObject(woodman);
     }
 
     public void update() {
         camera.update();
         projectileManager.updateObjects();
         robotManager.updateObjects();
-        if(!levelMusic.isRunning()) {  
-            levelMusic.setFramePosition(0); 
+
+        if (this.megaMan.getPosX() >= 2800) {
+            levelMusic.stop();
+            levelMusic = DataLoader.getInstance().getSound("Boss_soundtrack");
+            levelMusic.start();
+        } else if (!levelMusic.isRunning()) {
+            levelMusic.setFramePosition(0);
             levelMusic.start();
         }
-        if(megaMan.getCurrentState() == SmartRobot.DEATH) {
+
+        if (megaMan.getCurrentState() == SmartRobot.DEATH) {
             levelMusic.stop();
             getStateManager().setCurrentState(StateManager.GAMEOVER);
             initState();
@@ -85,14 +91,14 @@ public class GameState extends State {
     public void render() {
         Graphics g = getBufferedImage().getGraphics();
         Graphics2D g2 = (Graphics2D) g;
-        drawMap(g2); 
+        drawMap(g2);
         projectileManager.draw(g2);
         robotManager.draw(g2);
-        if(drawHiboxes) {
+        if (drawHiboxes) {
             drawAllHitBox(g2);
         }
     }
-    
+
     private void drawMap(Graphics2D g2d) {
         // Escala para ajustar o conteúdo da câmera à tela
         float scaleX = (float) GameFrame.width / camera.getWidthView();
@@ -100,21 +106,21 @@ public class GameState extends State {
         g2d.scale(scaleX, scaleY);
 
         g2d.drawImage(
-            mapImage,
-            (int) (-camera.getPosX()), // Ajuste horizontal proporcional à escala
-            (int) (-camera.getPosY()), // Ajuste vertical proporcional à escala
-            null
+                mapImage,
+                (int) (-camera.getPosX()), // Ajuste horizontal proporcional à escala
+                (int) (-camera.getPosY()), // Ajuste vertical proporcional à escala
+                null
         );
     }
 
     public void setPressedButton(int code) {
-        switch(code){
-                
+        switch (code) {
+
             case KeyEvent.VK_D:
                 megaMan.setDirection(MegaMan.RIGHT);
                 megaMan.run();
                 break;
-                
+
             case KeyEvent.VK_A:
                 megaMan.setDirection(MegaMan.LEFT);
                 megaMan.run();
@@ -127,7 +133,7 @@ public class GameState extends State {
             case KeyEvent.VK_LEFT:
                 megaMan.attack();
                 break;
-                
+
             case KeyEvent.VK_F1:
                 drawHiboxes = !drawHiboxes;
                 break;
@@ -135,24 +141,24 @@ public class GameState extends State {
     }
 
     public void setReleasedButton(int code) {
-        switch(code){
-                
+        switch (code) {
+
             case KeyEvent.VK_D:
-                if(megaMan.getSpeedX() > 0)
+                if (megaMan.getSpeedX() > 0)
                     megaMan.stopRun();
                 break;
-                
+
             case KeyEvent.VK_A:
-                if(megaMan.getSpeedX() < 0)
+                if (megaMan.getSpeedX() < 0)
                     megaMan.stopRun();
                 break;
-                
+
             case KeyEvent.VK_SPACE:
-                
+
                 break;
         }
     }
-  
+
     private void drawAllHitBox(Graphics2D g2d) {
         projectileManager.drawAllHitBox(g2d);
         robotManager.drawAllHitBox(g2d);
