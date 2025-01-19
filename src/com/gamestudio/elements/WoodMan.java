@@ -46,6 +46,9 @@ public class WoodMan extends SmartRobot {
         JumpingBackAnimation.flipAllImage();
         LeafShieldThrowBackAnimation = DataLoader.getInstance().getAnimation("wood_man_leaf_shield_throw");
         LeafShieldThrowBackAnimation.flipAllImage();
+
+        setDeathAnimation(DataLoader.getInstance().getAnimation("explosion_effect"));
+        setDeathSound(DataLoader.getInstance().getSound("enemy_death"));
     }
 
     @Override
@@ -196,7 +199,11 @@ public class WoodMan extends SmartRobot {
             this.setDirection(WoodMan.LEFT);
         }
 
-        currentAnimation.draw(drawX, drawY, g2);
+        if (getIsExploding()) {
+            drawDeathAnimation(g2);
+        } else {
+            currentAnimation.draw(drawX, drawY, g2);
+        }
     }
 
     private Animation getAnimation() {
@@ -206,10 +213,9 @@ public class WoodMan extends SmartRobot {
             case BEATING_CHEST ->
                     currentAnimation = this.getDirection() == LEFT ? ChestBeatAnimation : ChestBeatBackAnimation;
             case IDLE -> currentAnimation = this.getDirection() == LEFT ? IdleAnimation : IdleBackAnimation;
-            case JUMPING ->
-                    currentAnimation = this.getDirection() == LEFT ? JumpingAnimation : JumpingBackAnimation;
+            case JUMPING -> currentAnimation = this.getDirection() == LEFT ? JumpingAnimation : JumpingBackAnimation;
             case LEAF_SHIELD_THROW ->
-                    currentAnimation = this.getDirection() == LEFT ? LeafShieldThrowAnimation: LeafShieldThrowBackAnimation;
+                    currentAnimation = this.getDirection() == LEFT ? LeafShieldThrowAnimation : LeafShieldThrowBackAnimation;
             default -> throw new IllegalStateException("Unexpected state: " + getCurrentAction());
         }
         return currentAnimation;
