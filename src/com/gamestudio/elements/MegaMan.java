@@ -68,6 +68,7 @@ public class MegaMan extends SmartRobot {
         flyShootingForwardAnim.flipAllImage();
 
         invencibleAnim = DataLoader.getInstance().getAnimation("mega_man_invisible");
+        setDeathAnimation(DataLoader.getInstance().getAnimation("mega_man_death"));
 
         for(int i = 1; i < 30; i++){
             lifeBar.addFirst(DataLoader.getInstance().getFrameImage("life_bar" + i).getImage());
@@ -105,6 +106,9 @@ public class MegaMan extends SmartRobot {
 
     @Override
     public void draw(Graphics2D g2d) {
+        if(getIsExploding()){
+            drawDeathAnimation(g2d);
+        }
         switch (getCurrentState()) {
             case ALIVE:
                 if(!getIsInvencible()) {
@@ -168,7 +172,7 @@ public class MegaMan extends SmartRobot {
 
     public void drawLifeBar(Graphics2D g2d) {
         g2d.drawImage(face, 8, 10, null);
-        g2d.drawImage(lifeBar.get(getAmountLife() - 1),10, 25, null);
+        g2d.drawImage(lifeBar.get(Math.max(getAmountLife()-1, 0)),10, 25, null);
     }
 
     private void setIdleShootingAnimation(Graphics2D g2d, Animation idleShootingForwardAnim, Animation idleForwardAnim) {

@@ -114,11 +114,10 @@ public class Rabbit extends DumbRobot {
                         setCurrentAction(IDLE);
                         stateStartTime = System.currentTimeMillis();
                     }
-                    break;
-
                 }
+                break;
             case DEATH:
-                
+            
                 break;
         }
         move();

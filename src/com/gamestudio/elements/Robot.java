@@ -35,7 +35,7 @@ public abstract class Robot extends GameElement {
     private boolean isExploding = false;
     private boolean isInvencible = false;
     private Animation deathAnimation;
-    private Clip deathClip;
+    private Clip deathSound;
 
     public Robot(float x, float y, int width, int height, float mass, int amountLife, GameState gameState) {
         super(x, y, gameState);
@@ -153,6 +153,13 @@ public abstract class Robot extends GameElement {
         this.isExploding = isExploding;
     }
 
+    public Clip getDeathSound() {
+        return deathSound;
+    }
+
+    public void setDeathSound(Clip deathSound) {
+        this.deathSound = deathSound;
+    }
     public boolean isObjectOutOfCameraView() {
         return this.getPosX() - this.getGameState().camera.getPosX() > this.getGameState().camera.getWidthView() || this.getPosX() - this.getGameState().camera.getPosX() < -50.0F || this.getPosY() - this.getGameState().camera.getPosY() > this.getGameState().camera.getHeightView() || this.getPosY() - this.getGameState().camera.getPosY() < -50.0F;
     }
@@ -178,19 +185,17 @@ public abstract class Robot extends GameElement {
                 Robot object1 = this.getGameState().robotManager.getCollisionWidthEnemyObject(this);
                 Robot object2 = this.getGameState().projectileManager.getCollisionWidthEnemyObject(this);
                 if (object1 != null && object1.getDamage() > 0 && !isInvencible) {
-                    this.setAmountLife(this.getAmountLife() - object1.getDamage());
-                    this.currentState = BEHURT;
+                    beHurt(object1.getDamage());
                 } else if(object2 != null && object2.getDamage() > 0 && !isInvencible){
-                    this.setAmountLife(this.getAmountLife() - object2.getDamage());
-                    this.currentState = BEHURT;
+                    beHurt(object2.getDamage());
                 }
                 break;
 
-            case BEHURT:
+            case BEHURT: 
                 this.currentState = ALIVE;
                 if (this.getAmountLife() <= 0) {
                     this.isExploding = true;
-                    Timer timer = new Timer(500, (ActionEvent e) -> { 
+                    Timer timer = new Timer(400, (ActionEvent e) -> { 
                         isExploding = false;
                         ((Timer) e.getSource()).stop();
                     });
@@ -201,6 +206,10 @@ public abstract class Robot extends GameElement {
                 break;
 
             case DEATH:
+                if(!deathSound.isRunning()) {
+                    deathSound.setFramePosition(0); 
+                    deathSound.start();
+                }
                 break;
 
             default:

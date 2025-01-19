@@ -2,10 +2,12 @@ package com.gamestudio.state;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import javax.sound.sampled.Clip;
+import javax.swing.*;
 
 import com.gamestudio.elements.Bat;
 import com.gamestudio.elements.Camera;
@@ -83,8 +85,13 @@ public class GameState extends State {
 
         if (megaMan.getCurrentState() == SmartRobot.DEATH) {
             levelMusic.stop();
-            getStateManager().setCurrentState(StateManager.GAMEOVER);
-            initState();
+            Timer timer = new Timer(800, (ActionEvent e) -> {
+                getStateManager().setCurrentState(StateManager.GAMEOVER);
+                initState();
+                ((Timer) e.getSource()).stop();
+            });
+            timer.setRepeats(false);
+            timer.start();
         }
     }
 
