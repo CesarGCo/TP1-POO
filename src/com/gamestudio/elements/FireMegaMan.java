@@ -64,11 +64,11 @@ public class FireMegaMan extends MegaMan {
             lifeBar.addFirst(DataLoader.getInstance().getFrameImage("life_bar" + i).getImage());
         }
 
-        this.face = DataLoader.getInstance().getFrameImage("mega_man_face").getImage();
+        this.face = DataLoader.getInstance().getFrameImage("fire_mega_man_face").getImage();
     }
 
     @Override
-    public void draw(java.awt.Graphics2D g2d) {
+    public void draw(Graphics2D g2d) {
         if (getIsExploding()) {
             drawDeathAnimation(g2d);
             return;
@@ -95,14 +95,14 @@ public class FireMegaMan extends MegaMan {
                     }
                 } else {
                     if (getSpeedX() > 0) {
-                        setRunFowardAnimation(g2d, fireRunForwardAnim, fireRunShootingForwardAnim);
+                        setFireRunFowardAnimation(g2d, fireRunForwardAnim, fireRunShootingForwardAnim);
                     } else if (getSpeedX() < 0) {
-                        setRunFowardAnimation(g2d, fireRunBackAnim, fireRunShootingBackAnim);
+                        setFireRunFowardAnimation(g2d, fireRunBackAnim, fireRunShootingBackAnim);
                     } else {
                         if (getDirection() == RIGHT) {
-                            setIdleShootingAnimation(g2d, fireIdleShootingForwardAnim, fireIdleForwardAnim);
+                            setFireIdleShootingAnimation(g2d, fireIdleShootingForwardAnim, fireIdleForwardAnim);
                         } else {
-                            setIdleShootingAnimation(g2d, fireIdleShootingBackAnim, fireIdleBackAnim);
+                            setFireIdleShootingAnimation(g2d, fireIdleShootingBackAnim, fireIdleBackAnim);
                         }
                     }
                 }
@@ -115,11 +115,13 @@ public class FireMegaMan extends MegaMan {
                     fireBehurtBackAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2d);
                 }
             }
-        } else {
-            super.draw(g2d);
         }
+        drawFireLifeBar(g2d);
+    }
 
-        drawLifeBar(g2d);
+    public void drawFireLifeBar(Graphics2D g2d) {
+        g2d.drawImage(face, 8, 10, null);
+        g2d.drawImage(lifeBar.get(Math.max(getAmountLife()-1, 0)),10, 25, null);
     }
 
     @Override
@@ -133,6 +135,25 @@ public class FireMegaMan extends MegaMan {
         }
     }
 
+    void setFireRunFowardAnimation(Graphics2D g2d, Animation firerunForwardAnim, Animation firerunShootingForwarAnim) {
+        firerunForwardAnim.Update(System.nanoTime());
+        if (isShooting) {
+            firerunShootingForwarAnim.setCurrentFrame(firerunForwardAnim.getCurrentFrame() - 1);
+            firerunShootingForwarAnim.draw((int)(getPosX() - getGameState().camera.getPosX()), (int)( getPosY() - getGameState().camera.getPosY()), g2d);
+        } else
+            firerunForwardAnim.draw((int)(getPosX() - getGameState().camera.getPosX()), (int)( getPosY() - getGameState().camera.getPosY()), g2d);
+        if (firerunForwardAnim.getCurrentFrame() == 1) firerunForwardAnim.setIgnoreFrame(0);
+    }
+
+    void setFireIdleShootingAnimation(Graphics2D g2d, Animation fireidleShootingForwardAnim, Animation fireidleForwardAnim) {
+        if (isShooting) {
+            fireidleShootingForwardAnim.Update(System.nanoTime());
+            fireidleShootingForwardAnim.draw((int)(getPosX() - getGameState().camera.getPosX()), (int)(getPosY() - getGameState().camera.getPosY()), g2d);
+        } else {
+            fireidleForwardAnim.Update(System.nanoTime());
+            fireidleForwardAnim.draw((int)(getPosX() - getGameState().camera.getPosX()), (int)(getPosY() - getGameState().camera.getPosY()), g2d);
+        }
+    }
     @Override
     public void attack() {
         if (!isShooting) {

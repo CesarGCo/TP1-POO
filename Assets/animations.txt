@@ -1,4 +1,4 @@
-31
+32
 mega_man_idle
 mega_man_idle1 200000000 mega_man_idle2 200000000 mega_man_idle3 200000000
 
@@ -92,3 +92,5 @@ fire_mega_man_shooting_jumping1 200000000
 fire_mega_man_hurt
 fire_mega_man_hurt1 70000000 fire_mega_man_hurt2 70000000
 
+goomba_walking
+goomba_walking1 200000000 goomba_walking2 200000000 goomba_walking3 200000000 goomba_walking4 200000000 goomba_walking5 200000000 goomba_walking6 200000000 goomba_walking7 200000000 goomba_walking8 200000000

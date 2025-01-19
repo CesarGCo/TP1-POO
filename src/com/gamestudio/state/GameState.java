@@ -66,12 +66,12 @@ public class GameState extends State {
         bat2.setTeamType(Robot.ENEMY_TEAM);
         robotManager.addObject(bat2);
 
-        Robot bat3 = new Bat(630, 80, this);
+        Robot bat3 = new Bat(630, 60, this);
         bat3.setDirection(Robot.LEFT);
         bat3.setTeamType(Robot.ENEMY_TEAM);
         robotManager.addObject(bat3);
 
-        Robot bat4 = new Bat(830, 80, this);
+        Robot bat4 = new Bat(830, 60, this);
         bat4.setDirection(Robot.LEFT);
         bat4.setTeamType(Robot.ENEMY_TEAM);
         robotManager.addObject(bat4);
