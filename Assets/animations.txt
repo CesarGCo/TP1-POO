@@ -1,4 +1,4 @@
-48
+31
 mega_man_idle
 mega_man_idle1 200000000 mega_man_idle2 200000000 mega_man_idle3 200000000
 
@@ -23,8 +23,8 @@ mega_man_shooting_jumping1 200000000
 mega_man_hurt
 mega_man_hurt1 70000000 mega_man_hurt2 70000000
 
-mega_man_invisible
-mega_man_invisible1 200000000
+plasma_bullet
+plasma_bullet1 70000000
 
 robbit_jumping
 robbit_jumping2 10000000000 robbit_jumping1 70000000
@@ -65,17 +65,8 @@ wood_man_leaf_shield1 70000000 wood_man_leaf_shield2 70000000 wood_man_leaf_shie
 wood_man_leaf_shield_throw
 wood_man_leaf_shield_throw1 70000000 wood_man_leaf_shield_throw2 70000000
 
-plasma_bullet
-plasma_bullet1 70000000
-
 fire_bullet
 fire_bullet1 70000000 fire_bullet2 70000000 fire_bullet3 70000000
-
-eletric_bullet
-eletric_bullet1 70000000 eletric_bullet2 70000000 
-
-water_bullet
-water_bullet1 70000000 water_bullet2 70000000 water_bullet3 70000000
 
 explosion_effect
 explosion_effect5 70000000 explosion_effect4 70000000 explosion_effect3 70000000 explosion_effect2 70000000 explosion_effect1 70000000
@@ -100,47 +91,4 @@ fire_mega_man_shooting_jumping1 200000000
 
 fire_mega_man_hurt
 fire_mega_man_hurt1 70000000 fire_mega_man_hurt2 70000000
-
-water_mega_man_idle
-water_mega_man_idle1 200000000 water_mega_man_idle2 200000000 water_mega_man_idle3 200000000
-
-water_mega_man_running
-water_mega_man_running1 200000000 water_mega_man_running2 200000000 water_mega_man_running3 200000000
-
-water_mega_man_jump
-water_mega_man_jumping1 200000000
-
-water_mega_man_shooting
-water_mega_man_shooting1 200000000
-
-water_mega_man_shooting_running
-water_mega_man_shooting_running1 200000000 water_mega_man_shooting_running2 200000000 water_mega_man_shooting_running3 200000000
-
-water_mega_man_shooting_jumping
-water_mega_man_shooting_jumping1 200000000
-
-water_mega_man_hurt
-water_mega_man_hurt1 70000000 water_mega_man_hurt2 70000000
-
-eletric_mega_man_idle
-eletric_mega_man_idle1 200000000 eletric_mega_man_idle2 200000000 eletric_mega_man_idle3 200000000
-
-eletric_mega_man_running
-eletric_mega_man_running1 200000000 eletric_mega_man_running2 200000000 eletric_mega_man_running3 200000000
-
-eletric_mega_man_jump
-eletric_mega_man_jumping1 200000000
-
-eletric_mega_man_shooting
-eletric_mega_man_shooting1 200000000
-
-eletric_mega_man_shooting_running
-eletric_mega_man_shooting_running1 200000000 eletric_mega_man_shooting_running2 200000000 eletric_mega_man_shooting_running3 200000000
-
-eletric_mega_man_shooting_jumping
-eletric_mega_man_shooting_jumping1 200000000
-
-eletric_mega_man_hurt
-eletric_mega_man_hurt1 70000000 eletric_mega_man_hurt2 70000000
-
 

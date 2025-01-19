@@ -21,7 +21,6 @@ public class MegaMan extends SmartRobot {
     private final Animation idleForwardAnim, idleBackAnim, idleShootingForwardAnim, idleShootingBackAnim;
     private final Animation flyForwardAnim, flyBackAnim, flyShootingForwardAnim, flyShootingBackAnim;
     private final Animation behurtForwardAnim, behurtBackAnim;
-    private final Animation invencibleAnim;
     private final ArrayList<Image> lifeBar;
     private final Image face;
     private long lastShootingTime;
@@ -66,8 +65,6 @@ public class MegaMan extends SmartRobot {
         flyShootingForwardAnim = DataLoader.getInstance().getAnimation("mega_man_shooting_jumping");
         flyShootingBackAnim = DataLoader.getInstance().getAnimation("mega_man_shooting_jumping");
         flyShootingForwardAnim.flipAllImage();
-
-        invencibleAnim = DataLoader.getInstance().getAnimation("mega_man_invisible");
         setDeathAnimation(DataLoader.getInstance().getAnimation("mega_man_death"));
 
 
@@ -158,6 +155,7 @@ public class MegaMan extends SmartRobot {
                 break;
 
             case BEHURT:
+                System.out.println("Estado Mega: " + getCurrentState());
                 hurtingSound.setFramePosition(0); 
                 hurtingSound.start();
                 setIsInvencible(true);

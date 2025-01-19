@@ -29,6 +29,7 @@ public class WoodMan extends SmartRobot {
         stateStartTime = System.currentTimeMillis();
         this.setDirection(WoodMan.LEFT);
         setTeamType(ENEMY_TEAM);
+        setDamage(10);
 
         // Initialize animations
         IntroAnimation = DataLoader.getInstance().getAnimation("wood_man_intro");
