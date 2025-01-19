@@ -47,8 +47,6 @@ public class GameState extends State {
         this.physicalMap = new PhysicalMap(-16, 0, this);
         this.mapImage = DataLoader.getInstance().getFrameImage("new_map_fall").getImage();
         this.megaMan = new MegaMan(100, 100, this);
-        this.megaMan.setAmountLife(20);
-        this.megaMan.setCurrentState(Robot.ALIVE);
         this.camera = new Camera(0, 0, 400, 240, this);
         initEnemies();
         robotManager.addObject(megaMan);
