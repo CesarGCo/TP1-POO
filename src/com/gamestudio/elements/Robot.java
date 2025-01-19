@@ -203,10 +203,10 @@ public abstract class Robot extends GameElement {
                 break;
 
             case DEATH:
-                // if(!deathSound.isRunning()) {
-                //     deathSound.setFramePosition(0); 
-                //     deathSound.start();
-                // }
+                if(deathSound != null) {
+                    deathSound.setFramePosition(0); 
+                    deathSound.start();
+                }
                 break;
 
             default:
