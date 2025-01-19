@@ -130,10 +130,15 @@ public class GameState extends State {
         robbit4.setTeamType(Robot.ENEMY_TEAM);
         robotManager.addObject(robbit4);
 
-        Robot goomba1 = new Goomba(100, 100, this);
+        Robot goomba1 = new Goomba(384, 130, this);
         goomba1.setDirection(Robot.RIGHT);
         goomba1.setTeamType(Robot.ENEMY_TEAM);
         robotManager.addObject(goomba1);
+
+        Robot goomba2 = new Goomba(2244, 100, this);
+        goomba2.setDirection(Robot.RIGHT);
+        goomba2.setTeamType(Robot.ENEMY_TEAM);
+        robotManager.addObject(goomba2);
     }
 
     private void initBossBattle() {
