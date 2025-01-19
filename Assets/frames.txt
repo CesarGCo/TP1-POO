@@ -18,6 +18,7 @@ mega_man_shooting_running1
 mega_man_shooting_running2
 mega_man_shooting_running3
 mega_man_shooting1
+fire_mega_man_face
 fire_mega_man_hurt1
 fire_mega_man_hurt2
 fire_mega_man_idle1
