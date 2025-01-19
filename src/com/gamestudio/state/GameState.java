@@ -181,8 +181,8 @@ public class GameState extends State {
         }
 
         if (megaMan.getCurrentState() == SmartRobot.DEATH && !megaMan.getIsExploding()) {
-            if(bossMusic.isRunning()) bossMusic.stop();
-            if(levelMusic.isRunning()) levelMusic.stop();
+            if (bossMusic.isRunning()) bossMusic.stop();
+            if (levelMusic.isRunning()) levelMusic.stop();
             getStateManager().setCurrentState(StateManager.GAMEOVER);
             initState();
             bossFightStarted = false;
@@ -251,6 +251,13 @@ public class GameState extends State {
                     transformationStartTime = System.currentTimeMillis();
                 }
                 break;
+            case KeyEvent.VK_E: // Transform to Water Mega Man
+                if (!isOnCooldown && !isTransformed) {
+                    switchToEletricMegaMan();
+                    isTransformed = true;
+                    transformationStartTime = System.currentTimeMillis();
+                }
+                break;
         }
     }
 
@@ -279,6 +286,20 @@ public class GameState extends State {
         waterMegaMan.setDirection(megaMan.getDirection());
         robotManager.RemoveObject(megaMan);
         megaMan = waterMegaMan;
+        robotManager.addObject(megaMan);
+    }
+
+    private void switchToEletricMegaMan() {
+        EletricMegaMan eletricMegaMan = new EletricMegaMan(
+                (int) megaMan.getPosX(),
+                (int) megaMan.getPosY(),
+                this
+        );
+        eletricMegaMan.setAmountLife(megaMan.getAmountLife());
+        eletricMegaMan.setCurrentState(megaMan.getCurrentState());
+        eletricMegaMan.setDirection(megaMan.getDirection());
+        robotManager.RemoveObject(megaMan);
+        megaMan = eletricMegaMan;
         robotManager.addObject(megaMan);
     }
 
