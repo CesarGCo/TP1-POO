@@ -3,10 +3,14 @@ package com.gamestudio.elements;
 import com.gamestudio.manager.DataLoader;
 import com.gamestudio.state.GameState;
 import com.gamestudio.effect.Animation;
+import com.gamestudio.effect.FrameImage;
 
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+
 import javax.swing.Timer;
 
 import javax.sound.sampled.*;
@@ -16,9 +20,9 @@ public class MegaMan extends SmartRobot {
     private final Animation runForwardAnim, runBackAnim, runShootingForwarAnim, runShootingBackAnim;
     private final Animation idleForwardAnim, idleBackAnim, idleShootingForwardAnim, idleShootingBackAnim;
     private final Animation flyForwardAnim, flyBackAnim, flyShootingForwardAnim, flyShootingBackAnim;
-    //private final Animation landingForwardAnim, landingBackAnim;
     private final Animation behurtForwardAnim, behurtBackAnim;
-
+    private final ArrayList<Image> lifeBar;
+    private final Image face;
     private long lastShootingTime;
     private boolean isShooting = false;
 
@@ -26,11 +30,10 @@ public class MegaMan extends SmartRobot {
     private final Clip shooting1;
 
     public MegaMan(int x, int y, GameState gameState) {
-        super(x, y, 16, 24, 0.1f, 10, gameState);
+        super(x, y, 16, 24, 0.1f, 29, gameState);
+        this.lifeBar = new ArrayList<>();
         shooting1 = DataLoader.getInstance().getSound("Shoot");
         hurtingSound = DataLoader.getInstance().getSound("Mega_man_hit");
-        this.setDirection(MegaMan.RIGHT);
-        setTeamType(ALLY_TEAM);
 
         runForwardAnim = DataLoader.getInstance().getAnimation("mega_man_running");
         runBackAnim = DataLoader.getInstance().getAnimation("mega_man_running");
@@ -45,10 +48,6 @@ public class MegaMan extends SmartRobot {
         flyBackAnim = DataLoader.getInstance().getAnimation("mega_man_jump");
         flyForwardAnim.setIsRepeated(false);
         flyForwardAnim.flipAllImage();
-
-        // landingForwardAnim = DataLoader.getInstance().getAnimation("landing");
-        // landingBackAnim = DataLoader.getInstance().getAnimation("landing");
-        // landingBackAnim.flipAllImage();
 
         behurtForwardAnim = DataLoader.getInstance().getAnimation("mega_man_hurt");
         behurtBackAnim = DataLoader.getInstance().getAnimation("mega_man_hurt");
@@ -65,6 +64,15 @@ public class MegaMan extends SmartRobot {
         flyShootingForwardAnim = DataLoader.getInstance().getAnimation("mega_man_shooting_jumping");
         flyShootingBackAnim = DataLoader.getInstance().getAnimation("mega_man_shooting_jumping");
         flyShootingForwardAnim.flipAllImage();
+
+        for(int i = 1; i < 30; i++){
+            lifeBar.addFirst(DataLoader.getInstance().getFrameImage("life_bar" + i).getImage());
+        }
+        
+        this.face = DataLoader.getInstance().getFrameImage("mega_man_face").getImage();
+
+        this.setDirection(MegaMan.RIGHT);
+        setTeamType(ALLY_TEAM);
     }
 
     @Override
@@ -92,7 +100,7 @@ public class MegaMan extends SmartRobot {
     }
 
     @Override
-    public void draw(Graphics2D g2) {
+    public void draw(Graphics2D g2d) {
         switch (getCurrentState()) {
             case ALIVE:
                 if (getIsJumping()) {
@@ -100,28 +108,28 @@ public class MegaMan extends SmartRobot {
                         flyForwardAnim.Update(System.nanoTime());
                         if (isShooting) {
                             flyShootingForwardAnim.setCurrentFrame(flyForwardAnim.getCurrentFrame());
-                            flyShootingForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()) + 10, (int) (getPosY() -  getGameState().camera.getPosY()), g2);
+                            flyShootingForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()) + 10, (int) (getPosY() -  getGameState().camera.getPosY()), g2d);
                         } else
-                            flyForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() -  getGameState().camera.getPosY()), g2);
+                            flyForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() -  getGameState().camera.getPosY()), g2d);
                     } else {
                         flyBackAnim.Update(System.nanoTime());
                         if (isShooting) {
                             flyShootingBackAnim.setCurrentFrame(flyBackAnim.getCurrentFrame());
-                            flyShootingBackAnim.draw((int) (getPosX() - getGameState().camera.getPosX()) - 10,(int) (getPosY() -  getGameState().camera.getPosY()), g2);
+                            flyShootingBackAnim.draw((int) (getPosX() - getGameState().camera.getPosX()) - 10,(int) (getPosY() -  getGameState().camera.getPosY()), g2d);
                         } else
-                            flyBackAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() -  getGameState().camera.getPosY()), g2);
+                            flyBackAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() -  getGameState().camera.getPosY()), g2d);
                     }
 
                 } else {
                     if (getSpeedX() > 0) {
-                        setRunFowardAnimation(g2, runForwardAnim, runShootingForwarAnim);
+                        setRunFowardAnimation(g2d, runForwardAnim, runShootingForwarAnim);
                     } else if (getSpeedX() < 0) {
-                        setRunFowardAnimation(g2, runBackAnim, runShootingBackAnim);
+                        setRunFowardAnimation(g2d, runBackAnim, runShootingBackAnim);
                     } else {
                         if (getDirection() == RIGHT) {
-                            setIdleShootingAnimation(g2, idleShootingForwardAnim, idleForwardAnim);
+                            setIdleShootingAnimation(g2d, idleShootingForwardAnim, idleForwardAnim);
                         } else {
-                            setIdleShootingAnimation(g2, idleShootingBackAnim, idleBackAnim);
+                            setIdleShootingAnimation(g2d, idleShootingBackAnim, idleBackAnim);
                         }
                     }
                 }
@@ -131,7 +139,7 @@ public class MegaMan extends SmartRobot {
                 hurtingSound.setFramePosition(0); 
                 hurtingSound.start();
                 setIsInvencible(true);
-                Timer timer = new Timer(2000, (ActionEvent e) -> { 
+                Timer timer = new Timer(1500, (ActionEvent e) -> { 
                     setIsInvencible(false);
                     ((Timer) e.getSource()).stop();
                 });
@@ -139,34 +147,40 @@ public class MegaMan extends SmartRobot {
                 timer.start();
                 if (getDirection() == RIGHT) {
                     behurtForwardAnim.Update(System.nanoTime());
-                    behurtForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()),(int) (getPosY() - getGameState().camera.getPosY()), g2);
+                    behurtForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()),(int) (getPosY() - getGameState().camera.getPosY()), g2d);
                 } else {
                     behurtBackAnim.Update(System.nanoTime());
-                    behurtBackAnim.draw((int)(getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2);
+                    behurtBackAnim.draw((int)(getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2d);
                 }
                 break;
             default:
                 break;
         }
+        drawLifeBar(g2d);
     }
 
-    private void setIdleShootingAnimation(Graphics2D g2, Animation idleShootingForwardAnim, Animation idleForwardAnim) {
+    public void drawLifeBar(Graphics2D g2d) {
+        g2d.drawImage(face, 8, 10, null);
+        g2d.drawImage(lifeBar.get(getAmountLife() - 1),10, 25, null);
+    }
+
+    private void setIdleShootingAnimation(Graphics2D g2d, Animation idleShootingForwardAnim, Animation idleForwardAnim) {
         if (isShooting) {
             idleShootingForwardAnim.Update(System.nanoTime());
-            idleShootingForwardAnim.draw((int)(getPosX() - getGameState().camera.getPosX()), (int)(getPosY() - getGameState().camera.getPosY()), g2);
+            idleShootingForwardAnim.draw((int)(getPosX() - getGameState().camera.getPosX()), (int)(getPosY() - getGameState().camera.getPosY()), g2d);
         } else {
             idleForwardAnim.Update(System.nanoTime());
-            idleForwardAnim.draw((int)(getPosX() - getGameState().camera.getPosX()), (int)(getPosY() - getGameState().camera.getPosY()), g2);
+            idleForwardAnim.draw((int)(getPosX() - getGameState().camera.getPosX()), (int)(getPosY() - getGameState().camera.getPosY()), g2d);
         }
     }
 
-    private void setRunFowardAnimation(Graphics2D g2, Animation runForwardAnim, Animation runShootingForwarAnim) {
+    private void setRunFowardAnimation(Graphics2D g2d, Animation runForwardAnim, Animation runShootingForwarAnim) {
         runForwardAnim.Update(System.nanoTime());
         if (isShooting) {
             runShootingForwarAnim.setCurrentFrame(runForwardAnim.getCurrentFrame() - 1);
-            runShootingForwarAnim.draw((int)(getPosX() - getGameState().camera.getPosX()), (int)( getPosY() - getGameState().camera.getPosY()), g2);
+            runShootingForwarAnim.draw((int)(getPosX() - getGameState().camera.getPosX()), (int)( getPosY() - getGameState().camera.getPosY()), g2d);
         } else
-            runForwardAnim.draw((int)(getPosX() - getGameState().camera.getPosX()), (int)( getPosY() - getGameState().camera.getPosY()), g2);
+            runForwardAnim.draw((int)(getPosX() - getGameState().camera.getPosX()), (int)( getPosY() - getGameState().camera.getPosY()), g2d);
         if (runForwardAnim.getCurrentFrame() == 1) runForwardAnim.setIgnoreFrame(0);
     }
 
