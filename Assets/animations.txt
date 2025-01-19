@@ -1,4 +1,4 @@
-32
+46
 mega_man_idle
 mega_man_idle1 200000000 mega_man_idle2 200000000 mega_man_idle3 200000000
 
@@ -22,6 +22,69 @@ mega_man_shooting_jumping1 200000000
 
 mega_man_hurt
 mega_man_hurt1 70000000 mega_man_hurt2 70000000
+
+eletric_mega_man_idle
+eletric_mega_man_idle1 200000000 eletric_mega_man_idle2 200000000 eletric_mega_man_idle3 200000000
+
+eletric_mega_man_running
+eletric_mega_man_running1 200000000 eletric_mega_man_running2 200000000 eletric_mega_man_running3 200000000
+
+eletric_mega_man_jump
+eletric_mega_man_jumping1 200000000
+
+eletric_mega_man_shooting
+eletric_mega_man_shooting1 200000000
+
+eletric_mega_man_shooting_running
+eletric_mega_man_shooting_running1 200000000 eletric_mega_man_shooting_running2 200000000 eletric_mega_man_shooting_running3 200000000
+
+eletric_mega_man_shooting_jumping
+eletric_mega_man_shooting_jumping1 200000000
+
+eletric_mega_man_hurt
+eletric_mega_man_hurt1 70000000 eletric_mega_man_hurt2 70000000
+
+fire_mega_man_idle
+fire_mega_man_idle1 200000000 fire_mega_man_idle2 200000000 fire_mega_man_idle3 200000000
+
+fire_mega_man_running
+fire_mega_man_running1 200000000 fire_mega_man_running2 200000000 fire_mega_man_running3 200000000
+
+fire_mega_man_jump
+fire_mega_man_jumping1 200000000
+
+fire_mega_man_shooting
+fire_mega_man_shooting1 200000000
+
+fire_mega_man_shooting_running
+fire_mega_man_shooting_running1 200000000 fire_mega_man_shooting_running2 200000000 fire_mega_man_shooting_running3 200000000
+
+fire_mega_man_shooting_jumping
+fire_mega_man_shooting_jumping1 200000000
+
+fire_mega_man_hurt
+fire_mega_man_hurt1 70000000 fire_mega_man_hurt2 70000000
+
+water_mega_man_idle
+water_mega_man_idle1 200000000 water_mega_man_idle2 200000000 water_mega_man_idle3 200000000
+
+water_mega_man_running
+water_mega_man_running1 200000000 water_mega_man_running2 200000000 water_mega_man_running3 200000000
+
+water_mega_man_jump
+water_mega_man_jumping1 200000000
+
+water_mega_man_shooting
+water_mega_man_shooting1 200000000
+
+water_mega_man_shooting_running
+water_mega_man_shooting_running1 200000000 water_mega_man_shooting_running2 200000000 water_mega_man_shooting_running3 200000000
+
+water_mega_man_shooting_jumping
+water_mega_man_shooting_jumping1 200000000
+
+water_mega_man_hurt
+water_mega_man_hurt1 70000000 water_mega_man_hurt2 70000000
 
 plasma_bullet
 plasma_bullet1 70000000
@@ -70,27 +133,6 @@ fire_bullet1 70000000 fire_bullet2 70000000 fire_bullet3 70000000
 
 explosion_effect
 explosion_effect5 70000000 explosion_effect4 70000000 explosion_effect3 70000000 explosion_effect2 70000000 explosion_effect1 70000000
-
-fire_mega_man_idle
-fire_mega_man_idle1 200000000 fire_mega_man_idle2 200000000 fire_mega_man_idle3 200000000
-
-fire_mega_man_running
-fire_mega_man_running1 200000000 fire_mega_man_running2 200000000 fire_mega_man_running3 200000000
-
-fire_mega_man_jump
-fire_mega_man_jumping1 200000000
-
-fire_mega_man_shooting
-fire_mega_man_shooting1 200000000
-
-fire_mega_man_shooting_running
-fire_mega_man_shooting_running1 200000000 fire_mega_man_shooting_running2 200000000 fire_mega_man_shooting_running3 200000000
-
-fire_mega_man_shooting_jumping
-fire_mega_man_shooting_jumping1 200000000
-
-fire_mega_man_hurt
-fire_mega_man_hurt1 70000000 fire_mega_man_hurt2 70000000
 
 goomba_walking
 goomba_walking1 200000000 goomba_walking2 200000000 goomba_walking3 200000000 goomba_walking4 200000000 goomba_walking5 200000000 goomba_walking6 200000000 goomba_walking7 200000000 goomba_walking8 200000000
