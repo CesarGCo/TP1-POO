@@ -1,4 +1,4 @@
-22
+23
 mega_man_idle
 mega_man_idle1 200000000 mega_man_idle2 200000000 mega_man_idle3 200000000
 
@@ -21,7 +21,10 @@ mega_man_shooting_jumping
 mega_man_shooting_jumping1 200000000
 
 mega_man_hurt
-mega_man_hurt1 200000000
+mega_man_hurt1 70000000 mega_man_hurt2 70000000
+
+mega_man_invisible
+mega_man_invisible1 200000000
 
 robbit_jumping
 robbit_jumping2 10000000000 robbit_jumping1 70000000

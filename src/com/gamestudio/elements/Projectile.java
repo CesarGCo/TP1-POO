@@ -20,10 +20,10 @@ public abstract class Projectile extends Robot {
         super.update();
         setPosX(getPosX() + getSpeedX());
         setPosY(getPosY() + getSpeedY());
-        Robot object = getGameState().projectileManager.getCollisionWidthEnemyObject(this);
+        Robot object = getGameState().robotManager.getCollisionWidthEnemyObject(this);
         if(object!=null && object.getCurrentState() == ALIVE) {
             object.beHurt(getDamage());
-            System.out.println("Bullet set behurt for enemy");
+            this.setCurrentState(Robot.DEATH);
         }
     }
 

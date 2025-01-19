@@ -15,6 +15,7 @@ public abstract class Robot extends GameElement {
     public static final int ALIVE = 0;
     public static final int DEATH = 1;
     public static final int BEHURT = 2;
+    public static final int NOBEHURT = 3;
 
     private int currentState = 0; //Vivo ou morto
     private int width;
@@ -153,33 +154,17 @@ public abstract class Robot extends GameElement {
                 if (object1 != null && object1.getDamage() > 0 && !isInvencible) {
                     this.setAmountLife(this.getAmountLife() - object1.getDamage());
                     this.currentState = BEHURT;
-                    this.hurtingCallback();
                 } else if(object2 != null && object2.getDamage() > 0 && !isInvencible){
                     this.setAmountLife(this.getAmountLife() - object2.getDamage());
                     this.currentState = BEHURT;
-                    this.hurtingCallback();
                 }
                 break;
 
             case BEHURT:
-                
-                // O personagem tomou dano então a animação de dano ocorre
-                if (this.behurtAnim == null) {
-                    this.currentState = ALIVE;
-                    if (this.getAmountLife() <= 0) {
-                        this.currentState = DEATH;
-                    }
-                } /*else {
-                    // Executa a animação de ferimento
-                    this.behurtAnim.Update(System.nanoTime());
-                    if (this.behurtAnim.isLastFrame()) {
-                        this.behurtAnim.reset();
-                        this.currentState = ALIVE;
-                        if (this.getAmountLife() <= 0) {
-                            this.currentState = DEATH;
-                        }
-                    }
-                }*/
+                this.currentState = ALIVE;
+                if (this.getAmountLife() <= 0) {
+                    this.currentState = DEATH;
+                }
                 break;
 
             case DEATH:
