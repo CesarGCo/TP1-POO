@@ -59,6 +59,8 @@ wood_man_jumping1
 wood_man_leaf1
 wood_man_leaf2
 wood_man_leaf3
+wood_man_face
+wood_man_lifebar
 wood_man_leaf_shield1
 wood_man_leaf_shield2
 wood_man_leaf_shield3
