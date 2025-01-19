@@ -6,6 +6,8 @@ import com.gamestudio.state.GameState;
 
 import java.awt.*;
 
+import javax.xml.crypto.Data;
+
 public class WoodMan extends SmartRobot {
     private static final int INTRO = 0;
     private static final int BEATING_CHEST = 1;
@@ -20,6 +22,8 @@ public class WoodMan extends SmartRobot {
     private final Animation IdleAnimation, IdleBackAnimation;
     private final Animation JumpingAnimation, JumpingBackAnimation;
     private final Animation LeafShieldThrowAnimation, LeafShieldThrowBackAnimation;
+    private final Image face;
+    private final Image lifeBar;
 
     private Projectile leafShield;
 
@@ -46,6 +50,8 @@ public class WoodMan extends SmartRobot {
         JumpingBackAnimation.flipAllImage();
         LeafShieldThrowBackAnimation = DataLoader.getInstance().getAnimation("wood_man_leaf_shield_throw");
         LeafShieldThrowBackAnimation.flipAllImage();
+        face = DataLoader.getInstance().getFrameImage("wood_man_face").getImage();
+        lifeBar = DataLoader.getInstance().getFrameImage("wood_man_lifebar").getImage();
 
         setDeathAnimation(DataLoader.getInstance().getAnimation("explosion_effect"));
         setDeathSound(DataLoader.getInstance().getSound("enemy_death"));
@@ -205,6 +211,15 @@ public class WoodMan extends SmartRobot {
         } else {
             currentAnimation.draw(drawX, drawY, g2);
         }
+        drawLifeBar(g2);
+    }
+
+    public void drawLifeBar(Graphics2D g2d) {
+        int life = Math.max(getAmountLife(), 0);
+        g2d.setColor(Color.green);
+        g2d.fillRect(350 - life, 14, life, 8);
+        g2d.drawImage(lifeBar, 290, 10, 64, lifeBar.getHeight(null),null);
+        g2d.drawImage(face, 360, 10, null);
     }
 
     private Animation getAnimation() {
