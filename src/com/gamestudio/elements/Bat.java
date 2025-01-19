@@ -5,15 +5,17 @@ import com.gamestudio.effect.Animation;
 import com.gamestudio.manager.DataLoader;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.Desktop.Action;
 
 public class Bat extends DumbRobot {
+    private static final int ACTIVE = 0;
+    private static final int ACTIVANTING = 2;
+    private static final int NOACTIVE = 3;
 
     private Animation idleAnim;
     private Animation openingWingsAnim;
     private Animation flyingAnim;
     private float speed;
-    private boolean isActive;
-    private boolean isWingsOpened;
 
     public Bat(int x, int y, GameState gameWorld) {
         super(x, y, 20, 20, 0, 2, gameWorld);
@@ -22,8 +24,7 @@ public class Bat extends DumbRobot {
         flyingAnim = DataLoader.getInstance().getAnimation("batton_flying");
         speed = 0.3f;
         setDamage(1);
-        isActive = false;
-        isWingsOpened = false;
+        setCurrentAction(NOACTIVE);
     }
 
     private boolean isMegaManInRange() {
@@ -39,7 +40,7 @@ public class Bat extends DumbRobot {
 
     @Override
     public void move() {
-        if (isActive) {
+        if (getCurrentAction() == ACTIVE) {
             float deltaX = getGameState().megaMan.getPosX() - getPosX();
             float deltaY = getGameState().megaMan.getPosY() - getPosY();
             float distance = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
@@ -59,14 +60,13 @@ public void update() {
     super.update();
     //System.out.println(getCurrentState());
 
-    if (!isActive && isMegaManInRange()) {
-        isActive = true;
-        isWingsOpened = false;
+    if (getCurrentAction() == NOACTIVE && isMegaManInRange()) {
+        setCurrentAction(ACTIVANTING);
         openingWingsAnim.reset();
     }
 
-    if (isActive && !isWingsOpened && hasOpeningWingsFinished()) {
-        isWingsOpened = true;
+    if (getCurrentAction() == ACTIVANTING && hasOpeningWingsFinished()) {
+        setCurrentAction(ACTIVE);
     }
 
     move();
@@ -80,11 +80,11 @@ public void update() {
     @Override
     public void draw(Graphics2D g2) {
         if (!isObjectOutOfCameraView()) {
-            if (!isActive) {
+            if (getCurrentAction() == NOACTIVE) {
                 idleAnim.Update(System.nanoTime());
                 idleAnim.draw((int) (getPosX() - getGameState().camera.getPosX()),
                         (int) (getPosY() - getGameState().camera.getPosY()), g2);
-            } else if (!isWingsOpened) {
+            } else if (getCurrentAction() == ACTIVANTING) {
                 openingWingsAnim.Update(System.nanoTime());
                 openingWingsAnim.draw((int) (getPosX() - getGameState().camera.getPosX()),
                         (int) (getPosY() - getGameState().camera.getPosY()), g2);

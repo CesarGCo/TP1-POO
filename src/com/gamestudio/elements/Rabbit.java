@@ -10,8 +10,8 @@ import java.awt.Rectangle;
 
 public class Rabbit extends DumbRobot {
 
-    private static final int STATE_IDLE = 0;
-    private static final int STATE_JUMPING = 1;
+    private static final int IDLE = 0;
+    private static final int JUMPING = 1;
 
     private Animation jumpingAnim;
     private Animation idleAnim;
@@ -19,24 +19,22 @@ public class Rabbit extends DumbRobot {
     private float speedY;
     private boolean isJumping;
     private float gravity;
-
-    private int currentState;
     private long stateStartTime;// Tempo de espera entre os pulos (1 segundo)
 
 
     public Rabbit(float x, float y, GameState gameWorld) {
-        super(x, y, 30, 30, 0.1f, 5, gameWorld);
+        super(x, y, 30, 30, 0.1f, 2, gameWorld);
         jumpingAnim = DataLoader.getInstance().getAnimation("robbit_jumping");
         idleAnim = DataLoader.getInstance().getAnimation("robbit_idle");
+        setDeathAnimation(DataLoader.getInstance().getAnimation("explosion_effect"));
         speedX = -0.5f;
         speedY = 0.0f;
         gravity = 0.12f;
         isJumping = false;
         stateStartTime = System.currentTimeMillis();
-        currentState = STATE_IDLE;
+        setCurrentAction(IDLE);
         setDamage(3);
     }
-
 
     private void checkCollisionWithGround() {
         Rectangle currentBound = getBoundForCollisionWithMap();
@@ -86,7 +84,7 @@ public class Rabbit extends DumbRobot {
 
     @Override
     public void move() {
-        if(currentState == STATE_JUMPING) {
+        if(getCurrentAction() == JUMPING) {
             setPosX(getPosX() + speedX);
         }
         setPosY(getPosY() + speedY);
@@ -98,25 +96,29 @@ public class Rabbit extends DumbRobot {
     @Override
     public void update() {
         super.update();
-
+        System.out.println(getCurrentState());
         long elapsedTime = System.currentTimeMillis() - stateStartTime;
 
-        switch (currentState) {
-            case STATE_IDLE:
-                jumpingAnim.Update(System.nanoTime());
-                if (elapsedTime > 1000) {
-                    currentState = STATE_JUMPING;
-                    stateStartTime = System.currentTimeMillis();
-                    jump();
-                }
-                break;
+        switch (getCurrentState()) {
+            case ALIVE:
+                if(getCurrentAction() == IDLE) {
+                    jumpingAnim.Update(System.nanoTime());
+                    if (elapsedTime > 1000) {
+                        setCurrentAction(JUMPING);
+                        stateStartTime = System.currentTimeMillis();
+                        jump();
+                    }
+                } else {
+                    jumpingAnim.Update(System.nanoTime());
+                    if (!isJumping) {
+                        setCurrentAction(IDLE);
+                        stateStartTime = System.currentTimeMillis();
+                    }
+                    break;
 
-            case STATE_JUMPING:
-                jumpingAnim.Update(System.nanoTime());
-                if (!isJumping) {
-                    currentState = STATE_IDLE;
-                    stateStartTime = System.currentTimeMillis();
                 }
+            case DEATH:
+                
                 break;
         }
         move();
@@ -133,8 +135,10 @@ public class Rabbit extends DumbRobot {
     public void draw(Graphics2D g2) {
         if (!isObjectOutOfCameraView()) {
             Animation currentAnim = isJumping ? jumpingAnim : idleAnim;
-            currentAnim.draw((int) (getPosX() - getGameState().camera.getPosX()),
-                    (int) (getPosY() - getGameState().camera.getPosY()), g2);
+            currentAnim.draw(
+            (int) (getPosX() - getGameState().camera.getPosX()),
+            (int) (getPosY() - getGameState().camera.getPosY()), g2);
+            
         }
     }
 }

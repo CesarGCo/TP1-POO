@@ -7,12 +7,11 @@ import com.gamestudio.state.GameState;
 import java.awt.*;
 
 public class WoodMan extends SmartRobot {
-    private static final int STATE_INTRO = 0;
-    private static final int STATE_BEATING_CHEST = 1;
-    private static final int STATE_IDLE = 2;
-    private static final int STATE_JUMPING = 3;
+    private static final int INTRO = 0;
+    private static final int BEATING_CHEST = 1;
+    private static final int IDLE = 2;
+    private static final int JUMPING = 3;
 
-    private int currentState;
     private long stateStartTime;
 
     private final Animation IntroAnimation;
@@ -23,7 +22,7 @@ public class WoodMan extends SmartRobot {
 
     public WoodMan(int x, int y, GameState gameState) {
         super(x, y, 34, 31, 0.1f, 2, gameState);
-        currentState = STATE_INTRO;
+        setCurrentAction(INTRO);
         stateStartTime = System.currentTimeMillis();
         this.setDirection(WoodMan.LEFT);
         setTeamType(ENEMY_TEAM);
@@ -78,31 +77,31 @@ public class WoodMan extends SmartRobot {
         // Update state based on elapsed time
         long elapsedTime = System.currentTimeMillis() - stateStartTime;
 
-        switch (currentState) {
-            case STATE_INTRO:
+        switch (getCurrentAction()) {
+            case INTRO:
                 if (elapsedTime > 2000) {
-                    currentState = STATE_BEATING_CHEST;
+                    setCurrentAction(BEATING_CHEST);
                     stateStartTime = System.currentTimeMillis();
                 }
                 break;
 
-            case STATE_BEATING_CHEST:
+            case BEATING_CHEST:
                 if (elapsedTime > 3000) {
-                    currentState = STATE_IDLE;
+                    setCurrentAction(IDLE);
                     stateStartTime = System.currentTimeMillis();
                 }
                 break;
 
-            case STATE_IDLE:
+            case IDLE:
                 if (elapsedTime > 1000) {
-                    currentState = STATE_JUMPING;
+                    setCurrentAction(JUMPING);
                     stateStartTime = System.currentTimeMillis();
                 }
                 break;
 
-            case STATE_JUMPING:
+            case JUMPING:
                 if (!getIsJumping()) {
-                    currentState = STATE_BEATING_CHEST;
+                    setCurrentAction(BEATING_CHEST);
                     stateStartTime = System.currentTimeMillis();
                 }
                 break;
@@ -116,12 +115,12 @@ public class WoodMan extends SmartRobot {
     }
 
     private void performCurrentStateAction() {
-        switch (currentState) {
-            case STATE_INTRO:
+        switch (getCurrentAction()) {
+            case INTRO:
                 IntroAnimation.Update(System.nanoTime());
                 break;
 
-            case STATE_BEATING_CHEST:
+            case BEATING_CHEST:
                 if (getDirection() == LEFT) {
                     ChestBeatAnimation.Update(System.nanoTime());
                 } else {
@@ -129,7 +128,7 @@ public class WoodMan extends SmartRobot {
                 }
                 break;
 
-            case STATE_IDLE:
+            case IDLE:
                 if (getDirection() == LEFT) {
                     IdleAnimation.Update(System.nanoTime());
                 } else {
@@ -137,7 +136,7 @@ public class WoodMan extends SmartRobot {
                 }
                 break;
 
-            case STATE_JUMPING:
+            case JUMPING:
                 if (!getIsJumping()) jump();
                 if (getDirection() == LEFT) {
                     JumpingAnimation.Update(System.nanoTime());
@@ -167,12 +166,12 @@ public class WoodMan extends SmartRobot {
 
     private Animation getAnimation() {
         Animation currentAnimation;
-        switch (currentState) {
-            case STATE_INTRO -> currentAnimation = IntroAnimation;
-            case STATE_BEATING_CHEST -> currentAnimation =  this.getDirection() == LEFT? ChestBeatAnimation: ChestBeatBackAnimation;
-            case STATE_IDLE -> currentAnimation =  this.getDirection() == LEFT? IdleAnimation: IdleBackAnimation;
-            case STATE_JUMPING -> currentAnimation =  this.getDirection() == LEFT? JumpingAnimation: JumpingBackAnimation;
-            default -> throw new IllegalStateException("Unexpected state: " + currentState);
+        switch (getCurrentAction()) {
+            case INTRO -> currentAnimation = IntroAnimation;
+            case BEATING_CHEST -> currentAnimation =  this.getDirection() == LEFT? ChestBeatAnimation: ChestBeatBackAnimation;
+            case IDLE -> currentAnimation =  this.getDirection() == LEFT? IdleAnimation: IdleBackAnimation;
+            case JUMPING -> currentAnimation =  this.getDirection() == LEFT? JumpingAnimation: JumpingBackAnimation;
+            default -> throw new IllegalStateException("Unexpected action: " + getCurrentAction());
         }
         return currentAnimation;
     }
