@@ -190,7 +190,7 @@ public abstract class Robot extends GameElement {
                 this.currentState = ALIVE;
                 if (this.getAmountLife() <= 0) {
                     this.isExploding = true;
-                    Timer timer = new Timer(1000, (ActionEvent e) -> { 
+                    Timer timer = new Timer(500, (ActionEvent e) -> { 
                         isExploding = false;
                         ((Timer) e.getSource()).stop();
                     });

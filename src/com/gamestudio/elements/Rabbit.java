@@ -134,10 +134,14 @@ public class Rabbit extends DumbRobot {
     @Override
     public void draw(Graphics2D g2) {
         if (!isObjectOutOfCameraView()) {
-            Animation currentAnim = isJumping ? jumpingAnim : idleAnim;
-            currentAnim.draw(
-            (int) (getPosX() - getGameState().camera.getPosX()),
-            (int) (getPosY() - getGameState().camera.getPosY()), g2);
+                if(getIsExploding()) {
+                    drawDeathAnimation(g2);
+                } else {
+                    Animation currentAnim = isJumping ? jumpingAnim : idleAnim;
+                    currentAnim.draw(
+                    (int) (getPosX() - getGameState().camera.getPosX()),
+                    (int) (getPosY() - getGameState().camera.getPosY()), g2);
+                }
             
         }
     }

@@ -22,6 +22,7 @@ public class Bat extends DumbRobot {
         idleAnim = DataLoader.getInstance().getAnimation("batton_idle");
         openingWingsAnim = DataLoader.getInstance().getAnimation("batton_rising");
         flyingAnim = DataLoader.getInstance().getAnimation("batton_flying");
+        setDeathAnimation(DataLoader.getInstance().getAnimation("explosion_effect"));
         speed = 0.3f;
         setDamage(1);
         setCurrentAction(NOACTIVE);
@@ -40,7 +41,7 @@ public class Bat extends DumbRobot {
 
     @Override
     public void move() {
-        if (getCurrentAction() == ACTIVE) {
+        if (getCurrentAction() == ACTIVE && !getIsExploding()) {
             float deltaX = getGameState().megaMan.getPosX() - getPosX();
             float deltaY = getGameState().megaMan.getPosY() - getPosY();
             float distance = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
@@ -52,14 +53,15 @@ public class Bat extends DumbRobot {
 
             setPosX(getPosX() + getSpeedX());
             setPosY(getPosY() + getSpeedY());
+        } else {
+            setPosX(getPosX());
+            setPosY(getPosY());
         }
     }
 
     @Override
 public void update() {
     super.update();
-    //System.out.println(getCurrentState());
-
     if (getCurrentAction() == NOACTIVE && isMegaManInRange()) {
         setCurrentAction(ACTIVANTING);
         openingWingsAnim.reset();
@@ -68,7 +70,6 @@ public void update() {
     if (getCurrentAction() == ACTIVANTING && hasOpeningWingsFinished()) {
         setCurrentAction(ACTIVE);
     }
-
     move();
 }
 
@@ -80,7 +81,9 @@ public void update() {
     @Override
     public void draw(Graphics2D g2) {
         if (!isObjectOutOfCameraView()) {
-            if (getCurrentAction() == NOACTIVE) {
+            if(getIsExploding()) {
+                drawDeathAnimation(g2);
+            } else if (getCurrentAction() == NOACTIVE) {
                 idleAnim.Update(System.nanoTime());
                 idleAnim.draw((int) (getPosX() - getGameState().camera.getPosX()),
                         (int) (getPosY() - getGameState().camera.getPosY()), g2);
