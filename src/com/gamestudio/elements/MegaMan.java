@@ -253,10 +253,4 @@ public class MegaMan extends SmartRobot {
         }
     }
 
-    @Override
-    public void hurtingCallback() {
-        System.out.println("Call back hurting");
-       // hurtingSound.play();
-    }
-
 }
