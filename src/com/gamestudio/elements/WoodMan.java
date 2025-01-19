@@ -21,7 +21,7 @@ public class WoodMan extends SmartRobot {
     private final Animation JumpingAnimation, JumpingBackAnimation;
     private final Animation LeafShieldThrowAnimation, LeafShieldThrowBackAnimation;
 
-    private final Projectile leafShield = new LeafShield(getPosX(), getPosY(), getGameState());
+    private Projectile leafShield;
 
     public WoodMan(int x, int y, GameState gameState) {
         super(x, y, 34, 31, 0.1f, 2, gameState);
@@ -66,6 +66,7 @@ public class WoodMan extends SmartRobot {
 
     public void setUpAttack() {
         System.out.println("Wood-Man setup up attack");
+        this.leafShield = new LeafShield(getPosX(), getPosY(), getGameState());
         this.leafShield.setSpeedX(0);
         this.leafShield.setPosY(this.getPosY());
         this.leafShield.setPosX(this.getPosX());
