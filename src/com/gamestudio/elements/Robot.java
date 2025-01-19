@@ -183,11 +183,8 @@ public abstract class Robot extends GameElement {
             case ALIVE:
                 // verifica se colidiu com projetiu de inimigo ou não
                 Robot object1 = this.getGameState().robotManager.getCollisionWidthEnemyObject(this);
-                Robot object2 = this.getGameState().projectileManager.getCollisionWidthEnemyObject(this);
                 if (object1 != null && object1.getDamage() > 0 && !isInvencible) {
                     beHurt(object1.getDamage());
-                } else if(object2 != null && object2.getDamage() > 0 && !isInvencible){
-                    beHurt(object2.getDamage());
                 }
                 break;
 
@@ -206,10 +203,10 @@ public abstract class Robot extends GameElement {
                 break;
 
             case DEATH:
-                if(!deathSound.isRunning()) {
-                    deathSound.setFramePosition(0); 
-                    deathSound.start();
-                }
+                // if(!deathSound.isRunning()) {
+                //     deathSound.setFramePosition(0); 
+                //     deathSound.start();
+                // }
                 break;
 
             default:

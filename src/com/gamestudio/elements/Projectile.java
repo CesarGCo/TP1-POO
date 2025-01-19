@@ -21,7 +21,7 @@ public abstract class Projectile extends Robot {
         setPosX(getPosX() + getSpeedX());
         setPosY(getPosY() + getSpeedY());
         Robot object = getGameState().robotManager.getCollisionWidthEnemyObject(this);
-        if(object!=null && object.getCurrentState() == ALIVE) {
+        if(object!=null && !object.getIsInvencible()) {
             object.beHurt(getDamage());
             this.setCurrentState(Robot.DEATH);
         }
