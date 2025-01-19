@@ -16,63 +16,50 @@ public class WoodMan extends SmartRobot {
     private long stateStartTime;
 
     private final Animation IntroAnimation;
-    private final Animation IdleAnimation;
-    private final Animation ChestBeatFowardAnimation, ChestBeatBackAnimation;
-    private final Animation JumpingFowardAnimation, JumpingBackAnimation;
-    private final Animation LeafShieldThrowFowardAnimation, LeafShieldThrowBackAnimation;
-
+    private final Animation ChestBeatAnimation, ChestBeatBackAnimation;
+    private final Animation IdleAnimation, IdleBackAnimation;
+    private final Animation JumpingAnimation, JumpingBackAnimation;
+    private final Animation LeafShieldThrowAnimation;
 
     public WoodMan(int x, int y, GameState gameState) {
         super(x, y, 35, 31, 0.1f, 2, gameState);
         currentState = STATE_INTRO;
         stateStartTime = System.currentTimeMillis();
-        this.setDirection(WoodMan.RIGHT);
+        this.setDirection(WoodMan.LEFT);
         setTeamType(ENEMY_TEAM);
 
+        // Initialize animations
         IntroAnimation = DataLoader.getInstance().getAnimation("wood_man_intro");
-
-        ChestBeatFowardAnimation = DataLoader.getInstance().getAnimation("wood_man_beat");
-        ChestBeatBackAnimation = DataLoader.getInstance().getAnimation("wood_man_beat");
-        ChestBeatFowardAnimation.flipAllImage();
-
-        JumpingFowardAnimation = DataLoader.getInstance().getAnimation("wood_man_jumping");
-        JumpingBackAnimation = DataLoader.getInstance().getAnimation("wood_man_jumping");
-        JumpingFowardAnimation.flipAllImage();
-
-       LeafShieldThrowFowardAnimation = DataLoader.getInstance().getAnimation("wood_man_leaf_shield_throw");
-        LeafShieldThrowBackAnimation = DataLoader.getInstance().getAnimation("wood_man_leaf_shield_throw");
-        LeafShieldThrowFowardAnimation.flipAllImage();
-
+        ChestBeatAnimation = DataLoader.getInstance().getAnimation("wood_man_beat");
         IdleAnimation = DataLoader.getInstance().getAnimation("wood_man_idle");
+        JumpingAnimation = DataLoader.getInstance().getAnimation("wood_man_jumping");
+        LeafShieldThrowAnimation = DataLoader.getInstance().getAnimation("wood_man_leaf_shield_throw");
+
+        ChestBeatBackAnimation = DataLoader.getInstance().getAnimation("wood_man_beat");
+        ChestBeatBackAnimation.flipAllImage();
+        IdleBackAnimation = DataLoader.getInstance().getAnimation("wood_man_idle");
+        IdleBackAnimation.flipAllImage();
+        JumpingBackAnimation = DataLoader.getInstance().getAnimation("wood_man_jumping");
+        JumpingBackAnimation.flipAllImage();
     }
 
     @Override
-    public void run() {
-
-    }
+    public void run() {}
 
     @Override
     public void jump() {
         if (!getIsJumping()) {
             setIsJumping(true);
-            setSpeedY(-2); // Set upward speed for the jump
-            if (getDirection() == LEFT) {
-                setSpeedX(-2); // Move left
-            } else {
-                setSpeedX(2); // Move right
-            }
+            setSpeedY(-2);
+            setSpeedX(getDirection() == LEFT ? -2 : 2);
         }
     }
 
     @Override
-    public void stopRun() {
-
-    }
+    public void stopRun() {}
 
     @Override
-    public void attack() {
-
-    }
+    public void attack() {}
 
     @Override
     public Rectangle getBoundForCollisionWithEnemy() {
@@ -88,7 +75,7 @@ public class WoodMan extends SmartRobot {
     @Override
     public void update() {
         super.update();
-
+        // Update state based on elapsed time
         long elapsedTime = System.currentTimeMillis() - stateStartTime;
 
         switch (currentState) {
@@ -121,76 +108,73 @@ public class WoodMan extends SmartRobot {
                 break;
         }
 
-        if (getDirection() == LEFT && getGameState().physicalMap.haveCollisionWithLeftWall(getBoundForCollisionWithMap()) != null) {
-            setDirection(RIGHT);
-        } else if (getDirection() == RIGHT && getGameState().physicalMap.haveCollisionWithRightWall(getBoundForCollisionWithMap()) != null) {
-            setDirection(LEFT);
-        }
-
+        // Perform actions based on the current state
         performCurrentStateAction();
 
-        if(!getIsJumping()) setSpeedX(0);
-
+        // Stop horizontal movement if not jumping
+        if (!getIsJumping()) setSpeedX(0);
     }
 
     private void performCurrentStateAction() {
         switch (currentState) {
             case STATE_INTRO:
-                // Play intro animation
                 IntroAnimation.Update(System.nanoTime());
                 break;
 
             case STATE_BEATING_CHEST:
-                if (getDirection() == RIGHT) {
-                    ChestBeatBackAnimation.Update(System.nanoTime());
+                if (getDirection() == LEFT) {
+                    ChestBeatAnimation.Update(System.nanoTime());
                 } else {
-                    ChestBeatFowardAnimation.Update(System.nanoTime());
+                    ChestBeatBackAnimation.Update(System.nanoTime());
                 }
                 break;
 
             case STATE_IDLE:
+                if (getDirection() == LEFT) {
+                    IdleAnimation.Update(System.nanoTime());
+                } else {
+                    IdleBackAnimation.Update(System.nanoTime());
+                }
                 break;
 
             case STATE_JUMPING:
-                if (!getIsJumping()) {
-                    jump();
-                }
-                if (getDirection() == RIGHT) {
-                    setSpeedX(-1);
+                if (!getIsJumping()) jump();
+                if (getDirection() == LEFT) {
+                    JumpingAnimation.Update(System.nanoTime());
                 } else {
-                    setSpeedX(1);
+                    JumpingBackAnimation.Update(System.nanoTime());
                 }
                 break;
         }
     }
+
 
     @Override
     public void draw(Graphics2D g2) {
-        switch (currentState) {
-            case STATE_INTRO:
-                IntroAnimation.draw((int)(getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2);
-                if (getDirection() == RIGHT) {
-                    ChestBeatBackAnimation.draw((int)(getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2);
-                } else {
-                    ChestBeatFowardAnimation.draw((int)(getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2);
-                }
-                break;
+        int drawX = (int) (getPosX() - getGameState().camera.getPosX());
+        int drawY = (int) (getPosY() - getGameState().camera.getPosY());
 
-            case STATE_BEATING_CHEST:
-                ChestBeatBackAnimation.draw((int)(getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2);
-                break;
+        Animation currentAnimation = getAnimation();
 
-            case STATE_IDLE:
-                 IdleAnimation.draw((int)(getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2);
-                break;
-
-            case STATE_JUMPING:
-                if (getDirection() == RIGHT) {
-                    JumpingBackAnimation.draw((int)(getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2);
-                } else {
-                    JumpingFowardAnimation.draw((int)(getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2);
-                }
-                break;
+        if (getGameState().robotManager.getGameState().megaMan.getPosX() > this.getPosX()) {
+            this.setDirection(WoodMan.RIGHT);
+        } else {
+            this.setDirection(WoodMan.LEFT);
         }
+
+        currentAnimation.draw(drawX, drawY, g2);
     }
+
+    private Animation getAnimation() {
+        Animation currentAnimation;
+        switch (currentState) {
+            case STATE_INTRO -> currentAnimation = IntroAnimation;
+            case STATE_BEATING_CHEST -> currentAnimation =  this.getDirection() == LEFT? ChestBeatAnimation: ChestBeatBackAnimation;
+            case STATE_IDLE -> currentAnimation =  this.getDirection() == LEFT? IdleAnimation: IdleBackAnimation;
+            case STATE_JUMPING -> currentAnimation =  this.getDirection() == LEFT? JumpingAnimation: JumpingBackAnimation;
+            default -> throw new IllegalStateException("Unexpected state: " + currentState);
+        }
+        return currentAnimation;
+    }
+
 }
