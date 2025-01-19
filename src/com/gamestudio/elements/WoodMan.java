@@ -24,7 +24,7 @@ public class WoodMan extends SmartRobot {
     private final Projectile leafShield = new LeafShield(getPosX(), getPosY(), getGameState());
 
     public WoodMan(int x, int y, GameState gameState) {
-        super(x, y, 34, 31, 0.1f, 2, gameState);
+        super(x, y, 34, 31, 0.1f, 32, gameState);
         setCurrentAction(INTRO);
         stateStartTime = System.currentTimeMillis();
         this.setDirection(WoodMan.LEFT);
