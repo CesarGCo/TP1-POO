@@ -1,4 +1,4 @@
-23
+27
 mega_man_idle
 mega_man_idle1 200000000 mega_man_idle2 200000000 mega_man_idle3 200000000
 
@@ -72,7 +72,10 @@ fire_bullet
 fire_bullet1 70000000 fire_bullet2 70000000 fire_bullet3 70000000
 
 eletric_bullet
-eletric_bullet1 70000000 eletric_bullet2 70000000 eletric_bullet3 70000000
+eletric_bullet1 70000000 eletric_bullet2 70000000 
 
 water_bullet
 water_bullet1 70000000 water_bullet2 70000000 water_bullet3 70000000
+
+explosion_effect
+explosion_effect5 70000000 explosion_effect4 70000000 explosion_effect3 70000000 explosion_effect2 70000000 explosion_effect1 70000000
