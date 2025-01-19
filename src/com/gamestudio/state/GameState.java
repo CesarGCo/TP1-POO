@@ -36,6 +36,7 @@ public class GameState extends State {
     public GameState(StateManager stateManager) {
         super(stateManager, new BufferedImage(GameFrame.width, GameFrame.height, BufferedImage.TYPE_INT_ARGB));
         this.levelMusic = DataLoader.getInstance().getSound("Level_soundtrack");
+        this.bossMusic = DataLoader.getInstance().getSound("Boss_soundtrack");
         initState();
     }
 
@@ -147,7 +148,6 @@ public class GameState extends State {
     private void initBossBattle() {
         this.bossFightStarted = true;
         levelMusic.stop();
-        bossMusic = DataLoader.getInstance().getSound("Boss_soundtrack");
         bossMusic.start();
         Robot woodman = new WoodMan(3000, 100, this);
         robotManager.addObject(woodman);
@@ -190,8 +190,8 @@ public class GameState extends State {
         }
 
         if (megaMan.getCurrentState() == SmartRobot.DEATH && !megaMan.getIsExploding()) {
-            if (bossMusic.isRunning()) bossMusic.stop();
-            if (levelMusic.isRunning()) levelMusic.stop();
+            bossMusic.stop();
+            levelMusic.stop();
             getStateManager().setCurrentState(StateManager.GAMEOVER);
             initState();
             bossFightStarted = false;
