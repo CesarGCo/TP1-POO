@@ -131,8 +131,8 @@ public abstract class Robot extends GameElement {
 
     public Rectangle getBoundForCollisionWithMap() { //Essa função
         Rectangle bound = new Rectangle();
-        bound.x = (int) (this.getPosX() - this.getWidth() / 2.0F);
-        bound.y = (int) (this.getPosY() - this.getHeight() / 2.0F);
+        bound.x = (int) (this.getPosX() - this.getWidth() / 2);
+        bound.y = (int) (this.getPosY() - this.getHeight() / 2);
         bound.width = (int) this.getWidth();
         bound.height = (int) this.getHeight();
         return bound;

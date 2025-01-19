@@ -44,14 +44,12 @@ public abstract class SmartRobot extends Robot {
         if(getCurrentState() == ALIVE){
             if(!isLanding) {
                 setPosX(getPosX() + getSpeedX());
-                if(getDirection() == LEFT && 
-                        getGameState().physicalMap.haveCollisionWithLeftWall(getBoundForCollisionWithMap())!=null){
+                if(getGameState().physicalMap.haveCollisionWithLeftWall(getBoundForCollisionWithMap())!=null){
 
                     Rectangle rectLeftWall = getGameState().physicalMap.haveCollisionWithLeftWall(getBoundForCollisionWithMap());
                     setPosX(rectLeftWall.x + rectLeftWall.width + (float) getWidth() /2);
 
-                } else if(getDirection() == RIGHT && 
-                        getGameState().physicalMap.haveCollisionWithRightWall(getBoundForCollisionWithMap())!=null){
+                } else if(getGameState().physicalMap.haveCollisionWithRightWall(getBoundForCollisionWithMap())!=null){
 
                     Rectangle rectRightWall = getGameState().physicalMap.haveCollisionWithRightWall(getBoundForCollisionWithMap());
                     setPosX(rectRightWall.x - (float) getWidth() /2);
