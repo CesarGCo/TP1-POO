@@ -13,7 +13,7 @@ public class WaterMegaManBullet extends Projectile {
     private final Animation backBulletAnim;
 
     public WaterMegaManBullet(float x, float y, GameState gameState) {
-        super(x, y, 8, 8, 1.0f, 5, gameState);
+        super(x, y, 8, 8, 1.0f, 2, gameState);
 
         // Load water-specific animations
         forwardBulletAnim = DataLoader.getInstance().getAnimation("water_bullet");
