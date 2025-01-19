@@ -23,7 +23,7 @@ public class WoodMan extends SmartRobot {
 
 
     public WoodMan(int x, int y, GameState gameState) {
-        super(x, y, 32, 31, 0.1f, 2, gameState);
+        super(x, y, 35, 31, 0.1f, 2, gameState);
         currentState = STATE_INTRO;
         stateStartTime = System.currentTimeMillis();
         this.setDirection(WoodMan.RIGHT);
@@ -55,10 +55,12 @@ public class WoodMan extends SmartRobot {
     public void jump() {
         if (!getIsJumping()) {
             setIsJumping(true);
-            setSpeedY(-3);
-            setSpeedX(-3);
-            JumpingFowardAnimation.reset();
-            JumpingBackAnimation.reset();
+            setSpeedY(-2); // Set upward speed for the jump
+            if (getDirection() == LEFT) {
+                setSpeedX(-2); // Move left
+            } else {
+                setSpeedX(2); // Move right
+            }
         }
     }
 
@@ -119,13 +121,13 @@ public class WoodMan extends SmartRobot {
                 break;
         }
 
-        performCurrentStateAction();
-
-        if (getDirection() == RIGHT && getPosX() <= 50) {
-            setDirection(LEFT);
-        } else if (getDirection() == LEFT && getPosX() >= getGameState().camera.getWidthView() - 50) { // Assume rightq boundary
+        if (getDirection() == LEFT && getGameState().physicalMap.haveCollisionWithLeftWall(getBoundForCollisionWithMap()) != null) {
             setDirection(RIGHT);
+        } else if (getDirection() == RIGHT && getGameState().physicalMap.haveCollisionWithRightWall(getBoundForCollisionWithMap()) != null) {
+            setDirection(LEFT);
         }
+
+        performCurrentStateAction();
 
         if(!getIsJumping()) setSpeedX(0);
 
