@@ -6,6 +6,10 @@ import com.gamestudio.effect.Animation;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+
+import javax.sound.sampled.Clip;
+import javax.swing.Timer;
 
 public abstract class Robot extends GameElement {
     public static final int ALLY_TEAM = 0;
@@ -17,7 +21,8 @@ public abstract class Robot extends GameElement {
     public static final int BEHURT = 2;
     public static final int NOBEHURT = 3;
 
-    private int currentState = 0; //Vivo ou morto
+    private int currentState = 0;//Vivo ou morto
+    private int currentAction; 
     private int width;
     private int height;
     private float mass;
@@ -27,8 +32,10 @@ public abstract class Robot extends GameElement {
     private int damage; //Quantidade de dado que o objeto da
     private int direction; //Direita ou esquerda
     private int teamType;
+    private boolean isExplosion = false;
     private boolean isInvencible = false;
-    protected Animation behurtAnim;
+    private Animation deathAnimation;
+    private Clip deathClip;
 
     public Robot(float x, float y, int width, int height, float mass, int amountLife, GameState gameState) {
         super(x, y, gameState);
@@ -44,6 +51,14 @@ public abstract class Robot extends GameElement {
 
     public void setCurrentState(int currentState) {
         this.currentState = currentState;
+    }
+
+    public void setCurrentAction(int currentAction) {
+        this.currentAction = currentAction;
+    }
+
+    public int getCurrentAction() {
+        return currentAction;
     }
 
     public boolean getIsInvencible() {
@@ -126,6 +141,18 @@ public abstract class Robot extends GameElement {
         this.teamType = teamType;
     }
 
+    public void setDeathAnimation(Animation deathAnimation) {
+        this.deathAnimation = deathAnimation;
+    }
+
+    public boolean getIsExplosion() {
+        return this.isExplosion;
+    }
+
+    public void setIsExplosion(boolean isExplosion) {
+        this.isExplosion = isExplosion;
+    }
+
     public boolean isObjectOutOfCameraView() {
         return this.getPosX() - this.getGameState().camera.getPosX() > this.getGameState().camera.getWidthView() || this.getPosX() - this.getGameState().camera.getPosX() < -50.0F || this.getPosY() - this.getGameState().camera.getPosY() > this.getGameState().camera.getHeightView() || this.getPosY() - this.getGameState().camera.getPosY() < -50.0F;
     }
@@ -142,7 +169,6 @@ public abstract class Robot extends GameElement {
     public void beHurt(int damageEat) {
         this.setAmountLife(this.getAmountLife() - damageEat);
         this.currentState = BEHURT;
-        this.hurtingCallback();
     }
 
     public void update() {
@@ -163,12 +189,18 @@ public abstract class Robot extends GameElement {
             case BEHURT:
                 this.currentState = ALIVE;
                 if (this.getAmountLife() <= 0) {
+                    this.isExplosion = true;
+                    Timer timer = new Timer(1000, (ActionEvent e) -> { 
+                        isExplosion = false;
+                        ((Timer) e.getSource()).stop();
+                    });
+                    timer.setRepeats(false);
+                    timer.start();
                     this.currentState = DEATH;
                 }
                 break;
 
             case DEATH:
-                System.out.println("Mega-Man is Dead.");
                 break;
 
             default:
@@ -192,8 +224,14 @@ public abstract class Robot extends GameElement {
     public abstract Rectangle getBoundForCollisionWithEnemy();
 
     public abstract void draw(Graphics2D var1);
-
-    public void hurtingCallback() {
+    
+    public void drawDeathAnimation(Graphics2D g2d) {
+        deathAnimation.Update(System.nanoTime());
+        deathAnimation.draw(
+            (int)(getPosX() - getGameState().camera.getPosX()), 
+            (int) (getPosY() - getGameState().camera.getPosY()),
+            g2d
+        );
     }
 }
 
