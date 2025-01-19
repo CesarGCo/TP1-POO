@@ -101,6 +101,7 @@ public class GameState extends State {
             levelMusic.stop();
             getStateManager().setCurrentState(StateManager.GAMEOVER);
             initState();
+            bossFightStarted = false;
         }
     }
 
