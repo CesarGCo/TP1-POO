@@ -96,7 +96,6 @@ public class Rabbit extends DumbRobot {
     @Override
     public void update() {
         super.update();
-        System.out.println(getCurrentState());
         long elapsedTime = System.currentTimeMillis() - stateStartTime;
 
         switch (getCurrentState()) {
