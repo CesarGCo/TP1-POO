@@ -21,7 +21,7 @@ mega_man_shooting_jumping
 mega_man_shooting_jumping1 200000000
 
 mega_man_hurt
-mega_man_hurt1 200000000
+mega_man_hurt1 70000000 mega_man_hurt2 70000000
 
 mega_man_invisible
 mega_man_invisible1 200000000

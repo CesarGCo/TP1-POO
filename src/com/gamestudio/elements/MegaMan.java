@@ -140,10 +140,10 @@ public class MegaMan extends SmartRobot {
                     }
                 } else {
                     if (getDirection() == RIGHT) {
+                        behurtForwardAnim.Update(System.nanoTime());
                         behurtForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()),(int) (getPosY() - getGameState().camera.getPosY()), g2d);
-                        //invencibleAnim.draw((int) (getPosX() - getGameState().camera.getPosX()),(int) (getPosY() - getGameState().camera.getPosY()), g2d);
                     } else {
-                        behurtBackAnim.setCurrentFrame(behurtForwardAnim.getCurrentFrame());
+                        behurtBackAnim.Update(System.nanoTime());
                         behurtBackAnim.draw((int)(getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2d);
                     }
                 }
@@ -153,7 +153,7 @@ public class MegaMan extends SmartRobot {
                 hurtingSound.setFramePosition(0); 
                 hurtingSound.start();
                 setIsInvencible(true);
-                Timer timer = new Timer(1500, (ActionEvent e) -> { 
+                Timer timer = new Timer(500, (ActionEvent e) -> { 
                     setIsInvencible(false);
                     ((Timer) e.getSource()).stop();
                 });
