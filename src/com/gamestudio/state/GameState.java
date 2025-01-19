@@ -41,8 +41,6 @@ public class GameState extends State {
        initState();
     }
 
-    
-
     public BufferedImage getMapImage() {
         return mapImage;
     }
@@ -53,11 +51,11 @@ public class GameState extends State {
     
        this.physicalMap = new PhysicalMap(-16, 0, this);
        this.mapImage = DataLoader.getInstance().getFrameImage("new_map_fall").getImage();
-       this.megaMan = new MegaMan(100, 50, this);
+       this.megaMan = new MegaMan(100, 100, this);
        this.camera = new Camera(0, 0, 400, 240, this);
+       initEnemies();
        robotManager.addObject(megaMan);
        megaMan.setCurrentState(SmartRobot.ALIVE);
-       initEnemies();
     }
 
     private void initEnemies(){
@@ -69,7 +67,7 @@ public class GameState extends State {
         Robot robbit1 = new Rabbit(150, 150, this);
         robotManager.addObject(robbit1);
 
-       Robot woodman = new WoodMan(3060, 100, this);
+       Robot woodman = new WoodMan(3000, 100, this);
        robotManager.addObject(woodman);
     }
 
