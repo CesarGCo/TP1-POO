@@ -114,6 +114,8 @@ Assets/Map/
 new_map_fall
 0
 Assets/Miscellaneous/
+life_regen1
+life_regen2
 explosion_effect1
 explosion_effect2
 explosion_effect3
