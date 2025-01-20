@@ -5,11 +5,11 @@ import com.gamestudio.state.GameState;
 import com.gamestudio.effect.Animation;
 
 import javax.sound.sampled.Clip;
-import javax.swing.*;
+import javax.swing.Timer;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.Timer;
 
 public class WaterMegaMan extends MegaMan {
 
@@ -70,14 +70,16 @@ public class WaterMegaMan extends MegaMan {
 
         this.face = DataLoader.getInstance().getFrameImage("water_mega_man_face").getImage();
 
-        lifeBarTimer = new Timer(800, (ActionEvent e) -> {
+        lifeBarTimer = new Timer(850, (ActionEvent e)-> {
             if(this.getAmountLife() < 29) {
                 this.setAmountLife(this.getAmountLife() + 1); // Increase health
-                lifeBar.addFirst(DataLoader.getInstance().getFrameImage("life_bar" + Math.max(this.getAmountLife() -1, 0)).getImage());
+                System.out.println(":: " + this.getAmountLife());
+                lifeBar.addFirst(DataLoader.getInstance().getFrameImage("life_bar1").getImage());
             }
         });
 
         lifeBarTimer.start();
+
     }
 
     @Override
@@ -159,11 +161,11 @@ public class WaterMegaMan extends MegaMan {
         super.update();
         if (isShooting) {
             if (System.nanoTime() - lastShootingTime > 900 * 200000) {
+
                 isShooting = false;
             }
         }
     }
-
 
     void setWaterRunFowardAnimation(Graphics2D g2d, Animation waterrunForwardAnim, Animation waterrunShootingForwarAnim) {
         waterrunForwardAnim.Update(System.nanoTime());
