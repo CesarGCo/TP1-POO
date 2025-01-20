@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import com.gamestudio.elements.Camera;
+import com.gamestudio.elements.Projectile;
 import com.gamestudio.elements.Robot;
 import com.gamestudio.state.GameState;
 
@@ -19,7 +20,7 @@ public class ProjectileManager extends RobotManager {
         synchronized(this.robots){
             for(int id = 0; id < this.robots.size(); id++){
                 Robot object = this.robots.get(id);
-                if(object.isObjectOutOfCameraView() || object.getCurrentState() == Robot.DEATH){
+                if(object.isObjectOutOfCameraView() || object.getCurrentState() == Projectile.COLLIDED){
                     this.robots.remove(id);
                 }
             }
