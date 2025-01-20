@@ -5,8 +5,10 @@ import java.awt.Graphics2D;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import com.gamestudio.elements.Camera;
+import com.gamestudio.elements.LifeRegen;
 import com.gamestudio.elements.Robot;
 import com.gamestudio.state.GameState;
 
@@ -80,6 +82,11 @@ public class RobotManager {
                 if (!object.isObjectOutOfCameraView()) object.update();
 
                 if (object.getCurrentState() == Robot.DEATH && !object.getIsExploding()) {
+                    if(object.getTeamType() == Robot.ENEMY_TEAM) {
+                        Random random = new Random();
+                        if(random.nextInt(3) == 1)
+                            getGameState().itemManager.addObject(new LifeRegen(object.getPosX(), object.getPosY(), getGameState()));
+                    }
                     robots.remove(id);
                 }
             }
