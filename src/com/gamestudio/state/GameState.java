@@ -79,7 +79,7 @@ public class GameState extends State {
         bat3.setTeamType(Robot.ENEMY_TEAM);
         robotManager.addObject(bat3);
 
-        Robot bat4 = new Bat(830, 60, this);
+        Robot bat4 = new Bat(830, 70, this);
         bat4.setDirection(Robot.LEFT);
         bat4.setTeamType(Robot.ENEMY_TEAM);
         robotManager.addObject(bat4);
