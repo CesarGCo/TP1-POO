@@ -7,8 +7,8 @@ import java.awt.Rectangle;
 
 import javax.sound.sampled.Clip;
 
-public abstract class DumbRobot extends Robot {
-    public DumbRobot(float x, float y, int width, int height, float mass, int amountLife, GameState gameWorld) {
+public abstract class DumbGameEntity extends GameEntity {
+    public DumbGameEntity(float x, float y, int width, int height, float mass, int amountLife, GameState gameWorld) {
         super(x, y, width, height, mass, amountLife, gameWorld);
         setDeathSound(DataLoader.getInstance().getSound("enemy_death"));
         setDeathTime(400);

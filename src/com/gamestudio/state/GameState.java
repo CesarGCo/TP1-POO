@@ -11,14 +11,14 @@ import com.gamestudio.interfaces.GameFrame;
 import com.gamestudio.manager.DataLoader;
 import com.gamestudio.manager.ItemManager;
 import com.gamestudio.manager.ProjectileManager;
-import com.gamestudio.manager.RobotManager;
+import com.gamestudio.manager.GameEntityManager;
 import com.gamestudio.manager.StateManager;
 import com.gamestudio.physical.PhysicalMap;
 
 public class GameState extends State {
     public PhysicalMap physicalMap;
     public MegaMan megaMan;
-    public RobotManager robotManager;
+    public GameEntityManager gameEntityManager;
     public ProjectileManager projectileManager;
     public ItemManager itemManager;
     public Camera camera;
@@ -45,7 +45,7 @@ public class GameState extends State {
     }
 
     public void initState() {
-        this.robotManager = new RobotManager(this);
+        this.gameEntityManager = new GameEntityManager(this);
         this.projectileManager = new ProjectileManager(this);
         this.itemManager = new ItemManager(this);
 
@@ -54,8 +54,8 @@ public class GameState extends State {
         this.megaMan = new MegaMan(100, 100, this);
         this.camera = new Camera(0, 0, 400, 240, this);
         initEnemies();
-        robotManager.addObject(megaMan);
-        megaMan.setCurrentState(SmartRobot.ALIVE);
+        gameEntityManager.addObject(megaMan);
+        megaMan.setCurrentState(SmartGameEntity.ALIVE);
 
         transformationStartTime = 0;
         isTransformed = false;
@@ -64,103 +64,103 @@ public class GameState extends State {
     }
 
     private void initEnemies() {
-        Robot bat1 = new Bat(250, 80, this);
-        bat1.setDirection(Robot.LEFT);
-        bat1.setTeamType(Robot.ENEMY_TEAM);
-        robotManager.addObject(bat1);
+        GameEntity bat1 = new Bat(250, 80, this);
+        bat1.setDirection(GameEntity.LEFT);
+        bat1.setTeamType(GameEntity.ENEMY_TEAM);
+        gameEntityManager.addObject(bat1);
 
-        Robot bat2 = new Bat(362, 80, this);
-        bat2.setDirection(Robot.LEFT);
-        bat2.setTeamType(Robot.ENEMY_TEAM);
-        robotManager.addObject(bat2);
+        GameEntity bat2 = new Bat(362, 80, this);
+        bat2.setDirection(GameEntity.LEFT);
+        bat2.setTeamType(GameEntity.ENEMY_TEAM);
+        gameEntityManager.addObject(bat2);
 
-        Robot bat3 = new Bat(630, 60, this);
-        bat3.setDirection(Robot.LEFT);
-        bat3.setTeamType(Robot.ENEMY_TEAM);
-        robotManager.addObject(bat3);
+        GameEntity bat3 = new Bat(630, 60, this);
+        bat3.setDirection(GameEntity.LEFT);
+        bat3.setTeamType(GameEntity.ENEMY_TEAM);
+        gameEntityManager.addObject(bat3);
 
-        Robot bat4 = new Bat(830, 70, this);
-        bat4.setDirection(Robot.LEFT);
-        bat4.setTeamType(Robot.ENEMY_TEAM);
-        robotManager.addObject(bat4);
+        GameEntity bat4 = new Bat(830, 70, this);
+        bat4.setDirection(GameEntity.LEFT);
+        bat4.setTeamType(GameEntity.ENEMY_TEAM);
+        gameEntityManager.addObject(bat4);
 
-        Robot bat5 = new Bat(1000, 40, this);
-        bat5.setDirection(Robot.LEFT);
-        bat5.setTeamType(Robot.ENEMY_TEAM);
-        robotManager.addObject(bat5);
+        GameEntity bat5 = new Bat(1000, 60, this);
+        bat5.setDirection(GameEntity.LEFT);
+        bat5.setTeamType(GameEntity.ENEMY_TEAM);
+        gameEntityManager.addObject(bat5);
 
-        Robot bat6 = new Bat(1310, 20, this);
-        bat6.setDirection(Robot.LEFT);
-        bat6.setTeamType(Robot.ENEMY_TEAM);
-        robotManager.addObject(bat6);
+        GameEntity bat6 = new Bat(1310, 20, this);
+        bat6.setDirection(GameEntity.LEFT);
+        bat6.setTeamType(GameEntity.ENEMY_TEAM);
+        gameEntityManager.addObject(bat6);
 
-        Robot bat7 = new Bat(1462, 20, this);
-        bat7.setDirection(Robot.LEFT);
-        bat7.setTeamType(Robot.ENEMY_TEAM);
-        robotManager.addObject(bat7);
+        GameEntity bat7 = new Bat(1462, 20, this);
+        bat7.setDirection(GameEntity.LEFT);
+        bat7.setTeamType(GameEntity.ENEMY_TEAM);
+        gameEntityManager.addObject(bat7);
 
-        Robot bat8 = new Bat(1664, 12, this);
-        bat8.setDirection(Robot.LEFT);
-        bat8.setTeamType(Robot.ENEMY_TEAM);
-        robotManager.addObject(bat8);
+        GameEntity bat8 = new Bat(1664, 12, this);
+        bat8.setDirection(GameEntity.LEFT);
+        bat8.setTeamType(GameEntity.ENEMY_TEAM);
+        gameEntityManager.addObject(bat8);
 
-        Robot bat9 = new Bat(2062, 50, this);
-        bat9.setDirection(Robot.LEFT);
-        bat9.setTeamType(Robot.ENEMY_TEAM);
-        robotManager.addObject(bat9);
+        GameEntity bat9 = new Bat(2062, 50, this);
+        bat9.setDirection(GameEntity.LEFT);
+        bat9.setTeamType(GameEntity.ENEMY_TEAM);
+        gameEntityManager.addObject(bat9);
 
-        Robot bat10 = new Bat(2168, 30, this);
-        bat10.setDirection(Robot.LEFT);
-        bat10.setTeamType(Robot.ENEMY_TEAM);
-        robotManager.addObject(bat10);
+        GameEntity bat10 = new Bat(2168, 30, this);
+        bat10.setDirection(GameEntity.LEFT);
+        bat10.setTeamType(GameEntity.ENEMY_TEAM);
+        gameEntityManager.addObject(bat10);
 
-        Robot bat11 = new Bat(2308, 50, this);
-        bat11.setDirection(Robot.LEFT);
-        bat11.setTeamType(Robot.ENEMY_TEAM);
-        robotManager.addObject(bat11);
+        GameEntity bat11 = new Bat(2308, 50, this);
+        bat11.setDirection(GameEntity.LEFT);
+        bat11.setTeamType(GameEntity.ENEMY_TEAM);
+        gameEntityManager.addObject(bat11);
 
-        Robot robbit1 = new Rabbit(500, 100, this);
-        robbit1.setDirection(Robot.RIGHT);
-        robbit1.setTeamType(Robot.ENEMY_TEAM);
-        robotManager.addObject(robbit1);
+        GameEntity robbit1 = new Rabbit(500, 100, this);
+        robbit1.setDirection(GameEntity.RIGHT);
+        robbit1.setTeamType(GameEntity.ENEMY_TEAM);
+        gameEntityManager.addObject(robbit1);
 
-        Robot robbit2 = new Rabbit(930, 100, this);
-        robbit2.setDirection(Robot.RIGHT);
-        robbit2.setTeamType(Robot.ENEMY_TEAM);
-        robotManager.addObject(robbit2);
+        GameEntity robbit2 = new Rabbit(930, 100, this);
+        robbit2.setDirection(GameEntity.RIGHT);
+        robbit2.setTeamType(GameEntity.ENEMY_TEAM);
+        gameEntityManager.addObject(robbit2);
 
-        Robot robbit3 = new Rabbit(2030, 100, this);
-        robbit3.setDirection(Robot.RIGHT);
-        robbit3.setTeamType(Robot.ENEMY_TEAM);
-        robotManager.addObject(robbit3);
+        GameEntity robbit3 = new Rabbit(2030, 100, this);
+        robbit3.setDirection(GameEntity.RIGHT);
+        robbit3.setTeamType(GameEntity.ENEMY_TEAM);
+        gameEntityManager.addObject(robbit3);
 
-        Robot robbit4 = new Rabbit(2492, 100, this);
-        robbit4.setDirection(Robot.RIGHT);
-        robbit4.setTeamType(Robot.ENEMY_TEAM);
-        robotManager.addObject(robbit4);
+        GameEntity robbit4 = new Rabbit(2492, 100, this);
+        robbit4.setDirection(GameEntity.RIGHT);
+        robbit4.setTeamType(GameEntity.ENEMY_TEAM);
+        gameEntityManager.addObject(robbit4);
 
-        Robot goomba1 = new Goomba(384, 130, this);
-        goomba1.setDirection(Robot.RIGHT);
-        goomba1.setTeamType(Robot.ENEMY_TEAM);
-        robotManager.addObject(goomba1);
+        GameEntity goomba1 = new Goomba(384, 130, this);
+        goomba1.setDirection(GameEntity.RIGHT);
+        goomba1.setTeamType(GameEntity.ENEMY_TEAM);
+        gameEntityManager.addObject(goomba1);
 
-        Robot goomba2 = new Goomba(2244, 100, this);
-        goomba2.setDirection(Robot.RIGHT);
-        goomba2.setTeamType(Robot.ENEMY_TEAM);
-        robotManager.addObject(goomba2);
+        GameEntity goomba2 = new Goomba(2244, 100, this);
+        goomba2.setDirection(GameEntity.RIGHT);
+        goomba2.setTeamType(GameEntity.ENEMY_TEAM);
+        gameEntityManager.addObject(goomba2);
     }
 
     private void initBossBattle() {
         this.bossFightStarted = true;
         levelMusic.stop();
         bossMusic.start();
-        Robot woodman = new WoodMan(3000, 100, this);
-        robotManager.addObject(woodman);
+        GameEntity woodman = new WoodMan(3000, 100, this);
+        gameEntityManager.addObject(woodman);
     }
 
     public void update() {
         camera.update();
-        robotManager.updateObjects();
+        gameEntityManager.updateObjects();
         projectileManager.updateObjects();
         itemManager.updateObjects();
 
@@ -194,7 +194,7 @@ public class GameState extends State {
             levelMusic.start();
         }
 
-        if (megaMan.getCurrentState() == SmartRobot.DEATH && !megaMan.getIsExploding()) {
+        if (megaMan.getCurrentState() == SmartGameEntity.DEATH && !megaMan.getIsExploding()) {
             bossMusic.stop();
             levelMusic.stop();
             getStateManager().setCurrentState(StateManager.GAMEOVER);
@@ -208,7 +208,7 @@ public class GameState extends State {
         Graphics2D g2 = (Graphics2D) g;
         drawMap(g2);
         projectileManager.draw(g2);
-        robotManager.draw(g2);
+        gameEntityManager.draw(g2);
         itemManager.draw(g2);
         if (drawHiboxes) {
             drawAllHitBox(g2);
@@ -285,9 +285,9 @@ public class GameState extends State {
         fireMegaMan.setAmountLife(megaMan.getAmountLife());
         fireMegaMan.setCurrentState(megaMan.getCurrentState());
         fireMegaMan.setDirection(megaMan.getDirection());
-        robotManager.RemoveObject(megaMan);
+        gameEntityManager.RemoveObject(megaMan);
         megaMan = fireMegaMan;
-        robotManager.addObject(megaMan);
+        gameEntityManager.addObject(megaMan);
     }
 
     private void switchToWaterMegaMan() {
@@ -299,9 +299,9 @@ public class GameState extends State {
         waterMegaMan.setAmountLife(megaMan.getAmountLife());
         waterMegaMan.setCurrentState(megaMan.getCurrentState());
         waterMegaMan.setDirection(megaMan.getDirection());
-        robotManager.RemoveObject(megaMan);
+        gameEntityManager.RemoveObject(megaMan);
         megaMan = waterMegaMan;
-        robotManager.addObject(megaMan);
+        gameEntityManager.addObject(megaMan);
     }
 
     private void switchToEletricMegaMan() {
@@ -313,9 +313,9 @@ public class GameState extends State {
         eletricMegaMan.setAmountLife(megaMan.getAmountLife());
         eletricMegaMan.setCurrentState(megaMan.getCurrentState());
         eletricMegaMan.setDirection(megaMan.getDirection());
-        robotManager.RemoveObject(megaMan);
+        gameEntityManager.RemoveObject(megaMan);
         megaMan = eletricMegaMan;
-        robotManager.addObject(megaMan);
+        gameEntityManager.addObject(megaMan);
     }
 
     private void switchToNormalMegaMan() {
@@ -327,9 +327,9 @@ public class GameState extends State {
         normalMegaMan.setAmountLife(megaMan.getAmountLife());
         normalMegaMan.setCurrentState(megaMan.getCurrentState());
         normalMegaMan.setDirection(megaMan.getDirection());
-        robotManager.RemoveObject(megaMan);
+        gameEntityManager.RemoveObject(megaMan);
         megaMan = normalMegaMan;
-        robotManager.addObject(megaMan);
+        gameEntityManager.addObject(megaMan);
     }
 
     public void setReleasedButton(int code) {
@@ -348,7 +348,7 @@ public class GameState extends State {
 
     private void drawAllHitBox(Graphics2D g2d) {
         projectileManager.drawAllHitBox(g2d);
-        robotManager.drawAllHitBox(g2d);
+        gameEntityManager.drawAllHitBox(g2d);
         itemManager.drawAllHitBox(g2d);
         physicalMap.draw(g2d);
     }

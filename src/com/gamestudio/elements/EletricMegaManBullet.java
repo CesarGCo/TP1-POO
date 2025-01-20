@@ -20,7 +20,7 @@ public class EletricMegaManBullet extends Projectile {
         backBulletAnim = DataLoader.getInstance().getAnimation("eletric_bullet");
         backBulletAnim.flipAllImage();
 
-        setTeamType(Robot.ALLY_TEAM);
+        setTeamType(GameEntity.ALLY_TEAM);
     }
 
     @Override

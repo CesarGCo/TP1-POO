@@ -20,7 +20,7 @@ public class FireMegaManBullet extends Projectile {
         backBulletAnim = DataLoader.getInstance().getAnimation("fire_bullet");
         backBulletAnim.flipAllImage();
 
-        setTeamType(Robot.ALLY_TEAM);
+        setTeamType(GameEntity.ALLY_TEAM);
     }
 
     @Override

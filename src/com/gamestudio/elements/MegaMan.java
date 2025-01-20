@@ -14,7 +14,7 @@ import javax.swing.Timer;
 
 import javax.sound.sampled.*;
 
-public class MegaMan extends SmartRobot {
+public class MegaMan extends SmartGameEntity {
     private final Animation runForwardAnim, runBackAnim, runShootingForwarAnim, runShootingBackAnim;
     private final Animation idleForwardAnim, idleBackAnim, idleShootingForwardAnim, idleShootingBackAnim;
     private final Animation flyForwardAnim, flyBackAnim, flyShootingForwardAnim, flyShootingBackAnim;

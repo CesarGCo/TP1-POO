@@ -18,7 +18,7 @@ public class LifeRegen extends Item {
     @Override
     public void update() {
         super.update();
-        Robot object = getGameState().robotManager.getCollisionWidthItem(this);
+        GameEntity object = getGameState().gameEntityManager.getCollisionWidthItem(this);
         if(object != null) {
             object.regen(life);
             this.setCurrentState(DEATH);

@@ -4,11 +4,11 @@ import java.awt.Rectangle;
 
 import com.gamestudio.state.GameState;
 
-public abstract class SmartRobot extends Robot {
+public abstract class SmartGameEntity extends GameEntity {
     private boolean isJumping;
     private boolean isLanding;
 
-    public SmartRobot(int x, int y, int width, int height, float mass, int amountLife, GameState gameState) {
+    public SmartGameEntity(int x, int y, int width, int height, float mass, int amountLife, GameState gameState) {
         super(x, y, width, height, mass, amountLife, gameState);
         setCurrentState(ALIVE);
     }

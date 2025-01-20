@@ -8,7 +8,7 @@ import com.gamestudio.physical.PhysicalMap;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-public class Rabbit extends DumbRobot {
+public class Rabbit extends DumbGameEntity {
 
     private static final int IDLE = 0;
     private static final int JUMPING = 1;
@@ -40,7 +40,7 @@ public class Rabbit extends DumbRobot {
         Rectangle currentBound = getBoundForCollisionWithMap();
         PhysicalMap physicalMap = getGameState().physicalMap;
 
-        Rectangle groundCollision = physicalMap.haveCollisionWithLandForDumbRobot(currentBound, this);
+        Rectangle groundCollision = physicalMap.haveCollisionWithLandForDumbGameEntity(currentBound, this);
         if (groundCollision != null) {
             setPosY(groundCollision.y - getHeight() / 2.0f);
             speedY = 0;

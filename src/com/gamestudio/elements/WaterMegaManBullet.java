@@ -20,7 +20,7 @@ public class WaterMegaManBullet extends Projectile {
         backBulletAnim = DataLoader.getInstance().getAnimation("water_bullet");
         backBulletAnim.flipAllImage();
 
-        setTeamType(Robot.ALLY_TEAM);
+        setTeamType(GameEntity.ALLY_TEAM);
     }
 
     @Override

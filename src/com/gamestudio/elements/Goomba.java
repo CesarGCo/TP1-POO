@@ -8,7 +8,7 @@ import com.gamestudio.physical.PhysicalMap;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-public class Goomba extends DumbRobot {
+public class Goomba extends DumbGameEntity {
 
     private Animation walkingAnim;
     private float speedX;
@@ -30,7 +30,7 @@ public class Goomba extends DumbRobot {
         Rectangle currentBound = getBoundForCollisionWithMap();
         PhysicalMap physicalMap = getGameState().physicalMap;
 
-        Rectangle groundCollision = physicalMap.haveCollisionWithLandForDumbRobot(currentBound, this);
+        Rectangle groundCollision = physicalMap.haveCollisionWithLandForDumbGameEntity(currentBound, this);
         if (groundCollision != null) {
             setPosY(groundCollision.y - getHeight() / 2.0f);
             speedY = 0;

@@ -4,10 +4,10 @@ import com.gamestudio.state.GameState;
 import java.awt.Graphics2D;
 
 /**
- * TODO separar robot em robot e GameObject. Robot será superclass de SmartRobot e DumbRobot,
+ * TODO separar gameEntity em gameEntity e GameObject. GameEntity será superclass de SmartGameEntity e DumbGameEntity,
  * enquanto projectile herda de GameObject (ou outro nome mais descritivo)
  */
-public abstract class Projectile extends Robot {
+public abstract class Projectile extends GameEntity {
     public static final int COLLIDED = 4;
 
     public Projectile(float x, float y, int width, int height, float mass, int damage, GameState gameState) {
@@ -21,7 +21,7 @@ public abstract class Projectile extends Robot {
         super.update();
         setPosX(getPosX() + getSpeedX());
         setPosY(getPosY() + getSpeedY());
-        Robot object = getGameState().robotManager.getCollisionWidthEnemyObject(this);
+        GameEntity object = getGameState().gameEntityManager.getCollisionWidthEnemyObject(this);
         if(object!=null && !object.getIsInvencible()) {
             object.beHurt(getDamage());
             this.setCurrentState(COLLIDED);

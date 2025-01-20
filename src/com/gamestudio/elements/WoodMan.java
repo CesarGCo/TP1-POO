@@ -8,7 +8,7 @@ import java.awt.*;
 
 import javax.xml.crypto.Data;
 
-public class WoodMan extends SmartRobot {
+public class WoodMan extends SmartGameEntity {
     private static final int INTRO = 0;
     private static final int BEATING_CHEST = 1;
     private static final int IDLE = 2;
@@ -200,7 +200,7 @@ public class WoodMan extends SmartRobot {
 
         Animation currentAnimation = getAnimation();
 
-        if (getGameState().robotManager.getGameState().megaMan.getPosX() > this.getPosX()) {
+        if (getGameState().gameEntityManager.getGameState().megaMan.getPosX() > this.getPosX()) {
             this.setDirection(WoodMan.RIGHT);
         } else {
             this.setDirection(WoodMan.LEFT);

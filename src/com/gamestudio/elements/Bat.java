@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Desktop.Action;
 
-public class Bat extends DumbRobot {
+public class Bat extends DumbGameEntity {
     private static final int ACTIVE = 0;
     private static final int ACTIVANTING = 2;
     private static final int NOACTIVE = 3;

@@ -7,7 +7,7 @@ import com.gamestudio.effect.Animation;
 import com.gamestudio.physical.PhysicalMap;
 import com.gamestudio.state.GameState;
 
-public abstract class Item extends Robot {
+public abstract class Item extends GameEntity {
     private Animation itemaAnim;
 
     public Item(float x, float y, int width, int height, GameState gameState) {

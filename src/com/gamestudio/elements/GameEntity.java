@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 import javax.sound.sampled.Clip;
 import javax.swing.Timer;
 
-public abstract class Robot extends GameElement {
+public abstract class GameEntity extends GameElement {
     public static final int ALLY_TEAM = 0;
     public static final int ENEMY_TEAM = 1;
     public static final int ITEM_TEAM = 2;
@@ -40,7 +40,7 @@ public abstract class Robot extends GameElement {
     private Animation deathAnimation;
     private Clip deathSound;
 
-    public Robot(float x, float y, int width, int height, float mass, int amountLife, GameState gameState) {
+    public GameEntity(float x, float y, int width, int height, float mass, int amountLife, GameState gameState) {
         super(x, y, gameState);
         this.setWidth(width);
         this.setHeight(height);
@@ -198,7 +198,7 @@ public abstract class Robot extends GameElement {
         switch (this.currentState) {
             case ALIVE:
                 // verifica se colidiu com projetiu de inimigo ou não
-                Robot object1 = this.getGameState().robotManager.getCollisionWidthEnemyObject(this);
+                GameEntity object1 = this.getGameState().gameEntityManager.getCollisionWidthEnemyObject(this);
                 if (object1 != null && object1.getDamage() > 0 && !isInvencible) {
                     beHurt(object1.getDamage());
                 }

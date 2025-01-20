@@ -8,8 +8,8 @@ import java.awt.Robot;
 import com.gamestudio.state.GameState;
 import com.gamestudio.elements.Camera;
 import com.gamestudio.elements.GameElement;
-import com.gamestudio.elements.SmartRobot;
-import com.gamestudio.elements.DumbRobot;
+import com.gamestudio.elements.SmartGameEntity;
+import com.gamestudio.elements.DumbGameEntity;
 import com.gamestudio.manager.DataLoader;
 
 /**
@@ -64,7 +64,7 @@ public class PhysicalMap extends GameElement {
     }
     
     
-    public Rectangle haveCollisionWithLand(Rectangle rect, SmartRobot smartRobot){
+    public Rectangle haveCollisionWithLand(Rectangle rect, SmartGameEntity smartGameEntity){
 
         int posX1 = rect.x/tileSize;
         posX1 -= 2;
@@ -84,14 +84,14 @@ public class PhysicalMap extends GameElement {
                         return r;
                 } else if(phys_map[y][x] == 2) {
                     if(rect.intersects(r))
-                        smartRobot.setCurrentState(SmartRobot.DEATH);
+                        smartGameEntity.setCurrentState(SmartGameEntity.DEATH);
                 }
             }
         }
         return null;
     }
 
-    public Rectangle haveCollisionWithLandForDumbRobot(Rectangle rect, DumbRobot dumbRobot) {
+    public Rectangle haveCollisionWithLandForDumbGameEntity(Rectangle rect, DumbGameEntity dumbGameEntity) {
         int posX1 = rect.x / tileSize - 2;
         int posX2 = (rect.x + rect.width) / tileSize + 2;
 

@@ -9,17 +9,17 @@ import java.util.Random;
 
 import com.gamestudio.elements.Camera;
 import com.gamestudio.elements.LifeRegen;
-import com.gamestudio.elements.Robot;
+import com.gamestudio.elements.GameEntity;
 import com.gamestudio.state.GameState;
 
-public class RobotManager {
+public class GameEntityManager {
 
-    protected final List<Robot> robots;
+    protected final List<GameEntity> gameEntities;
 
     private final GameState gameState;
 
-    public RobotManager(GameState gameState) {
-        robots = Collections.synchronizedList(new LinkedList<>());
+    public GameEntityManager(GameState gameState) {
+        gameEntities = Collections.synchronizedList(new LinkedList<>());
         this.gameState = gameState;
     }
 
@@ -27,32 +27,32 @@ public class RobotManager {
         return gameState;
     }
 
-    public void addObject(Robot robot) {
+    public void addObject(GameEntity gameEntity) {
 
-        synchronized (robots) {
-            robots.add(robot);
+        synchronized (gameEntities) {
+            gameEntities.add(gameEntity);
         }
 
     }
 
-    public void RemoveObject(Robot robot) {
-        synchronized (robots) {
+    public void RemoveObject(GameEntity gameEntity) {
+        synchronized (gameEntities) {
 
-            for (int id = 0; id < robots.size(); id++) {
+            for (int id = 0; id < gameEntities.size(); id++) {
 
-                Robot object = robots.get(id);
-                if (object == robot)
-                    robots.remove(id);
+                GameEntity object = gameEntities.get(id);
+                if (object == gameEntity)
+                    gameEntities.remove(id);
 
             }
         }
     }
 
-    public Robot getCollisionWidthEnemyObject(Robot object) {
-        synchronized (robots) {
-            for (Robot objectInList : robots) {
+    public GameEntity getCollisionWidthEnemyObject(GameEntity object) {
+        synchronized (gameEntities) {
+            for (GameEntity objectInList : gameEntities) {
 
-                if (object.getTeamType() != objectInList.getTeamType() && object.getTeamType() != Robot.ITEM_TEAM &&
+                if (object.getTeamType() != objectInList.getTeamType() && object.getTeamType() != GameEntity.ITEM_TEAM &&
                         object.getBoundForCollisionWithEnemy().intersects(objectInList.getBoundForCollisionWithEnemy())) {
                     return objectInList;
                 }
@@ -61,10 +61,10 @@ public class RobotManager {
         return null;
     }
 
-    public Robot getCollisionWidthItem(Robot object) {
-        synchronized (robots) {
-            for (Robot objectInList : robots) {
-                if (objectInList.getTeamType() == Robot.ALLY_TEAM &&
+    public GameEntity getCollisionWidthItem(GameEntity object) {
+        synchronized (gameEntities) {
+            for (GameEntity objectInList : gameEntities) {
+                if (objectInList.getTeamType() == GameEntity.ALLY_TEAM &&
                         object.getBoundForCollisionWithEnemy().intersects(objectInList.getBoundForCollisionWithEnemy())) {
                     return objectInList;
                 }
@@ -75,19 +75,19 @@ public class RobotManager {
 
     public void updateObjects() {
 
-        synchronized (robots) {
-            for (int id = 0; id < robots.size(); id++) {
-                Robot object = robots.get(id);
+        synchronized (gameEntities) {
+            for (int id = 0; id < gameEntities.size(); id++) {
+                GameEntity object = gameEntities.get(id);
 
                 if (!object.isObjectOutOfCameraView()) object.update();
 
-                if (object.getCurrentState() == Robot.DEATH && !object.getIsExploding()) {
-                    if(object.getTeamType() == Robot.ENEMY_TEAM) {
+                if (object.getCurrentState() == GameEntity.DEATH && !object.getIsExploding()) {
+                    if(object.getTeamType() == GameEntity.ENEMY_TEAM) {
                         Random random = new Random();
                         if(random.nextInt(3) == 1)
                             getGameState().itemManager.addObject(new LifeRegen(object.getPosX(), object.getPosY(), getGameState()));
                     }
-                    robots.remove(id);
+                    gameEntities.remove(id);
                 }
             }
         }
@@ -95,17 +95,17 @@ public class RobotManager {
     }
 
     public void draw(Graphics2D g2) {
-        synchronized (robots) {
-            for (Robot object : robots)
+        synchronized (gameEntities) {
+            for (GameEntity object : gameEntities)
                 if (!object.isObjectOutOfCameraView()) object.draw(g2);
         }
     }
 
     public void drawAllHitBox(Graphics2D g2d) {
         Camera camera = getGameState().camera;
-        synchronized(this.robots){
-            synchronized (robots) {
-                for (Robot object : robots){
+        synchronized(this.gameEntities){
+            synchronized (gameEntities) {
+                for (GameEntity object : gameEntities){
                     g2d.setColor(Color.blue);
                     g2d.drawRect(
                         (int)(object.getPosX() - camera.getPosX() - object.getWidth() / 2), 

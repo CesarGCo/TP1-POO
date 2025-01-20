@@ -17,7 +17,7 @@ public class MegaManBullet extends Projectile {
         forwardBulletAnim = DataLoader.getInstance().getAnimation("plasma_bullet");
         backBulletAnim = DataLoader.getInstance().getAnimation("plasma_bullet");
         backBulletAnim.flipAllImage();
-        setTeamType(Robot.ALLY_TEAM);
+        setTeamType(GameEntity.ALLY_TEAM);
     }
 
     @Override
