@@ -6,8 +6,6 @@ import com.gamestudio.state.GameState;
 
 import java.awt.*;
 
-import javax.xml.crypto.Data;
-
 public class WoodMan extends SmartGameEntity {
     private static final int INTRO = 0;
     private static final int BEATING_CHEST = 1;
@@ -127,15 +125,15 @@ public class WoodMan extends SmartGameEntity {
                 break;
 
             case LEAF_SHIELD_THROW:
-                if (elapsedTime > 1000) { // Adjust duration for throw animation
-                    attack(); // Perform the attack (set projectile speed/direction)
+                if (elapsedTime > 1000) {
+                    attack();
                     setCurrentAction(IDLE);
                     stateStartTime = System.currentTimeMillis();
                 }
                 break;
 
             case IDLE:
-                if (elapsedTime > 2000) { // Adjust idle duration
+                if (elapsedTime > 2000) {
                     setCurrentAction(JUMPING);
                     stateStartTime = System.currentTimeMillis();
                 }
@@ -151,7 +149,6 @@ public class WoodMan extends SmartGameEntity {
 
         performCurrentStateAction();
 
-        // Stop horizontal movement if not jumping
         if (!getIsJumping()) setSpeedX(0);
     }
 
