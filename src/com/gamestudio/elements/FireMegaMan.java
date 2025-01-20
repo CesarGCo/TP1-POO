@@ -19,7 +19,7 @@ public class FireMegaMan extends MegaMan {
     private final Animation fireBehurtForwardAnim, fireBehurtBackAnim;
     private boolean isShooting = false;
     private final Image face;
-    private ArrayList<Image> lifeBar;
+    private final ArrayList<Image> lifeBar;
     private final Clip hurtingSound;
     private final Clip shooting1;
     private long lastShootingTime;
@@ -28,7 +28,6 @@ public class FireMegaMan extends MegaMan {
         super(x, y, gameState);
         this.lifeBar = new ArrayList<>();
 
-        // Load fire animations
         shooting1 = DataLoader.getInstance().getSound("Fire_shoot");
         hurtingSound = DataLoader.getInstance().getSound("Mega_man_hit");
         fireRunForwardAnim = DataLoader.getInstance().getAnimation("fire_mega_man_running");

@@ -20,7 +20,6 @@ public abstract class GameEntity extends GameElement {
     public static final int ALIVE = 0;
     public static final int DEATH = 1;
     public static final int BEHURT = 2;
-    public static final int NOBEHURT = 3;
 
     private int currentState = 0;//Vivo ou morto
     private int currentAction; 
@@ -30,7 +29,7 @@ public abstract class GameEntity extends GameElement {
     private float speedX;
     private float speedY;
     private int amountLife; 
-    private int maxLife;
+    private final int maxLife;
     private int damage; //Quantidade de dado que o objeto da
     private int direction; //Direita ou esquerda
     private int teamType;
@@ -176,7 +175,7 @@ public abstract class GameEntity extends GameElement {
         return this.getPosX() - this.getGameState().camera.getPosX() > this.getGameState().camera.getWidthView() || this.getPosX() - this.getGameState().camera.getPosX() < -50.0F || this.getPosY() - this.getGameState().camera.getPosY() > this.getGameState().camera.getHeightView() || this.getPosY() - this.getGameState().camera.getPosY() < -50.0F;
     }
 
-    public Rectangle getBoundForCollisionWithMap() { //Essa função
+    public Rectangle getBoundForCollisionWithMap() {
         Rectangle bound = new Rectangle();
         bound.x = (int) (this.getPosX() - this.getWidth() / 2);
         bound.y = (int) (this.getPosY() - this.getHeight() / 2);
