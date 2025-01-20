@@ -9,6 +9,7 @@ import javax.sound.sampled.Clip;
 import com.gamestudio.elements.*;
 import com.gamestudio.interfaces.GameFrame;
 import com.gamestudio.manager.DataLoader;
+import com.gamestudio.manager.ItemManager;
 import com.gamestudio.manager.ProjectileManager;
 import com.gamestudio.manager.RobotManager;
 import com.gamestudio.manager.StateManager;
@@ -19,6 +20,7 @@ public class GameState extends State {
     public MegaMan megaMan;
     public RobotManager robotManager;
     public ProjectileManager projectileManager;
+    public ItemManager itemManager;
     public Camera camera;
     private BufferedImage mapImage;
     private boolean drawHiboxes = false;
@@ -34,6 +36,7 @@ public class GameState extends State {
     public GameState(StateManager stateManager) {
         super(stateManager, new BufferedImage(GameFrame.width, GameFrame.height, BufferedImage.TYPE_INT_ARGB));
         this.levelMusic = DataLoader.getInstance().getSound("Level_soundtrack");
+        this.bossMusic = DataLoader.getInstance().getSound("Boss_soundtrack");
         initState();
     }
 
@@ -44,6 +47,7 @@ public class GameState extends State {
     public void initState() {
         this.robotManager = new RobotManager(this);
         this.projectileManager = new ProjectileManager(this);
+        this.itemManager = new ItemManager(this);
 
         this.physicalMap = new PhysicalMap(-16, 0, this);
         this.mapImage = DataLoader.getInstance().getFrameImage("new_map_fall").getImage();
@@ -144,7 +148,6 @@ public class GameState extends State {
     private void initBossBattle() {
         this.bossFightStarted = true;
         levelMusic.stop();
-        bossMusic = DataLoader.getInstance().getSound("Boss_soundtrack");
         bossMusic.start();
         Robot woodman = new WoodMan(3000, 100, this);
         robotManager.addObject(woodman);
@@ -154,6 +157,7 @@ public class GameState extends State {
         camera.update();
         robotManager.updateObjects();
         projectileManager.updateObjects();
+        itemManager.updateObjects();
 
         if (isTransformed) {
             if (System.currentTimeMillis() - transformationStartTime >= 4000) {
@@ -186,8 +190,8 @@ public class GameState extends State {
         }
 
         if (megaMan.getCurrentState() == SmartRobot.DEATH && !megaMan.getIsExploding()) {
-            if (bossMusic.isRunning()) bossMusic.stop();
-            if (levelMusic.isRunning()) levelMusic.stop();
+            bossMusic.stop();
+            levelMusic.stop();
             getStateManager().setCurrentState(StateManager.GAMEOVER);
             initState();
             bossFightStarted = false;
@@ -200,6 +204,7 @@ public class GameState extends State {
         drawMap(g2);
         projectileManager.draw(g2);
         robotManager.draw(g2);
+        itemManager.draw(g2);
         if (drawHiboxes) {
             drawAllHitBox(g2);
         }
@@ -339,6 +344,7 @@ public class GameState extends State {
     private void drawAllHitBox(Graphics2D g2d) {
         projectileManager.drawAllHitBox(g2d);
         robotManager.drawAllHitBox(g2d);
+        itemManager.drawAllHitBox(g2d);
         physicalMap.draw(g2d);
     }
 }

@@ -5,7 +5,10 @@ import com.gamestudio.state.GameState;
 import com.gamestudio.effect.Animation;
 
 import javax.sound.sampled.Clip;
+import javax.swing.Timer;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 public class FireMegaMan extends MegaMan {
@@ -73,48 +76,63 @@ public class FireMegaMan extends MegaMan {
             drawDeathAnimation(g2d);
             return;
         }
-        if (getCurrentState() == ALIVE) {
-            if (!getIsInvencible()) {
-                if (getIsJumping()) {
-                    if (getDirection() == RIGHT) {
-                        fireFlyForwardAnim.Update(System.nanoTime());
-                        if (isShooting) {
-                            fireFlyShootingForwardAnim.setCurrentFrame(fireFlyForwardAnim.getCurrentFrame());
-                            fireFlyShootingForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()) + 10, (int) (getPosY() - getGameState().camera.getPosY()), g2d);
-                        } else {
-                            fireFlyForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2d);
-                        }
-                    } else {
-                        fireFlyBackAnim.Update(System.nanoTime());
-                        if (isShooting) {
-                            fireFlyShootingBackAnim.setCurrentFrame(fireFlyBackAnim.getCurrentFrame());
-                            fireFlyShootingBackAnim.draw((int) (getPosX() - getGameState().camera.getPosX()) - 10, (int) (getPosY() - getGameState().camera.getPosY()), g2d);
-                        } else {
-                            fireFlyBackAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2d);
-                        }
-                    }
-                } else {
-                    if (getSpeedX() > 0) {
-                        setFireRunFowardAnimation(g2d, fireRunForwardAnim, fireRunShootingForwardAnim);
-                    } else if (getSpeedX() < 0) {
-                        setFireRunFowardAnimation(g2d, fireRunBackAnim, fireRunShootingBackAnim);
-                    } else {
+        switch (getCurrentState()) {
+            case ALIVE:
+                if (!getIsInvencible()) {
+                    if (getIsJumping()) {
                         if (getDirection() == RIGHT) {
-                            setFireIdleShootingAnimation(g2d, fireIdleShootingForwardAnim, fireIdleForwardAnim);
+                            fireFlyForwardAnim.Update(System.nanoTime());
+                            if (isShooting) {
+                                fireFlyShootingForwardAnim.setCurrentFrame(fireFlyForwardAnim.getCurrentFrame());
+                                fireFlyShootingForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()) + 10, (int) (getPosY() - getGameState().camera.getPosY()), g2d);
+                            } else {
+                                fireFlyForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2d);
+                            }
                         } else {
-                            setFireIdleShootingAnimation(g2d, fireIdleShootingBackAnim, fireIdleBackAnim);
+                            fireFlyBackAnim.Update(System.nanoTime());
+                            if (isShooting) {
+                                fireFlyShootingBackAnim.setCurrentFrame(fireFlyBackAnim.getCurrentFrame());
+                                fireFlyShootingBackAnim.draw((int) (getPosX() - getGameState().camera.getPosX()) - 10, (int) (getPosY() - getGameState().camera.getPosY()), g2d);
+                            } else {
+                                fireFlyBackAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2d);
+                            }
+                        }
+                    } else {
+                        if (getSpeedX() > 0) {
+                            setFireRunFowardAnimation(g2d, fireRunForwardAnim, fireRunShootingForwardAnim);
+                        } else if (getSpeedX() < 0) {
+                            setFireRunFowardAnimation(g2d, fireRunBackAnim, fireRunShootingBackAnim);
+                        } else {
+                            if (getDirection() == RIGHT) {
+                                setFireIdleShootingAnimation(g2d, fireIdleShootingForwardAnim, fireIdleForwardAnim);
+                            } else {
+                                setFireIdleShootingAnimation(g2d, fireIdleShootingBackAnim, fireIdleBackAnim);
+                            }
                         }
                     }
-                }
-            } else {
-                if (getDirection() == RIGHT) {
-                    fireBehurtForwardAnim.Update(System.nanoTime());
-                    fireBehurtForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2d);
                 } else {
-                    fireBehurtBackAnim.Update(System.nanoTime());
-                    fireBehurtBackAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2d);
+                    if (getDirection() == RIGHT) {
+                        fireBehurtForwardAnim.Update(System.nanoTime());
+                        fireBehurtForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2d);
+                    } else {
+                        fireBehurtBackAnim.Update(System.nanoTime());
+                        fireBehurtBackAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2d);
+                    }
                 }
-            }
+                break;
+            case BEHURT:
+                hurtingSound.setFramePosition(0); 
+                hurtingSound.start();
+                setIsInvencible(true);
+                Timer timer = new Timer(500, (ActionEvent e) -> { 
+                    setIsInvencible(false);
+                    ((Timer) e.getSource()).stop();
+                });
+                timer.setRepeats(false);
+                timer.start();
+                break;
+            default:
+                break;
         }
         drawFireLifeBar(g2d);
     }

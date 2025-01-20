@@ -5,7 +5,10 @@ import com.gamestudio.state.GameState;
 import com.gamestudio.effect.Animation;
 
 import javax.sound.sampled.Clip;
+import javax.swing.Timer;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 public class EletricMegaMan extends MegaMan {
@@ -73,48 +76,63 @@ public class EletricMegaMan extends MegaMan {
             drawDeathAnimation(g2d);
             return;
         }
-        if (getCurrentState() == ALIVE) {
-            if (!getIsInvencible()) {
-                if (getIsJumping()) {
-                    if (getDirection() == RIGHT) {
-                        eletricFlyForwardAnim.Update(System.nanoTime());
-                        if (isShooting) {
-                            eletricFlyShootingForwardAnim.setCurrentFrame(eletricFlyForwardAnim.getCurrentFrame());
-                            eletricFlyShootingForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()) + 10, (int) (getPosY() - getGameState().camera.getPosY()), g2d);
-                        } else {
-                            eletricFlyForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2d);
-                        }
-                    } else {
-                        eletricFlyBackAnim.Update(System.nanoTime());
-                        if (isShooting) {
-                            eletricFlyShootingBackAnim.setCurrentFrame(eletricFlyBackAnim.getCurrentFrame());
-                            eletricFlyShootingBackAnim.draw((int) (getPosX() - getGameState().camera.getPosX()) - 10, (int) (getPosY() - getGameState().camera.getPosY()), g2d);
-                        } else {
-                            eletricFlyBackAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2d);
-                        }
-                    }
-                } else {
-                    if (getSpeedX() > 0) {
-                        setEletricRunFowardAnimation(g2d, eletricRunForwardAnim, eletricRunShootingForwardAnim);
-                    } else if (getSpeedX() < 0) {
-                        setEletricRunFowardAnimation(g2d, eletricRunBackAnim, eletricRunShootingBackAnim);
-                    } else {
+        switch (getCurrentState()) {
+            case ALIVE:
+                if (!getIsInvencible()) {
+                    if (getIsJumping()) {
                         if (getDirection() == RIGHT) {
-                            setEletricIdleShootingAnimation(g2d, eletricIdleShootingForwardAnim, eletricIdleForwardAnim);
+                            eletricFlyForwardAnim.Update(System.nanoTime());
+                            if (isShooting) {
+                                eletricFlyShootingForwardAnim.setCurrentFrame(eletricFlyForwardAnim.getCurrentFrame());
+                                eletricFlyShootingForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()) + 10, (int) (getPosY() - getGameState().camera.getPosY()), g2d);
+                            } else {
+                                eletricFlyForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2d);
+                            }
                         } else {
-                            setEletricIdleShootingAnimation(g2d, eletricIdleShootingBackAnim, eletricIdleBackAnim);
+                            eletricFlyBackAnim.Update(System.nanoTime());
+                            if (isShooting) {
+                                eletricFlyShootingBackAnim.setCurrentFrame(eletricFlyBackAnim.getCurrentFrame());
+                                eletricFlyShootingBackAnim.draw((int) (getPosX() - getGameState().camera.getPosX()) - 10, (int) (getPosY() - getGameState().camera.getPosY()), g2d);
+                            } else {
+                                eletricFlyBackAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2d);
+                            }
+                        }
+                    } else {
+                        if (getSpeedX() > 0) {
+                            setEletricRunFowardAnimation(g2d, eletricRunForwardAnim, eletricRunShootingForwardAnim);
+                        } else if (getSpeedX() < 0) {
+                            setEletricRunFowardAnimation(g2d, eletricRunBackAnim, eletricRunShootingBackAnim);
+                        } else {
+                            if (getDirection() == RIGHT) {
+                                setEletricIdleShootingAnimation(g2d, eletricIdleShootingForwardAnim, eletricIdleForwardAnim);
+                            } else {
+                                setEletricIdleShootingAnimation(g2d, eletricIdleShootingBackAnim, eletricIdleBackAnim);
+                            }
                         }
                     }
-                }
-            } else {
-                if (getDirection() == RIGHT) {
-                    eletricBehurtForwardAnim.Update(System.nanoTime());
-                    eletricBehurtForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2d);
                 } else {
-                    eletricBehurtBackAnim.Update(System.nanoTime());
-                    eletricBehurtBackAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2d);
+                    if (getDirection() == RIGHT) {
+                        eletricBehurtForwardAnim.Update(System.nanoTime());
+                        eletricBehurtForwardAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2d);
+                    } else {
+                        eletricBehurtBackAnim.Update(System.nanoTime());
+                        eletricBehurtBackAnim.draw((int) (getPosX() - getGameState().camera.getPosX()), (int) (getPosY() - getGameState().camera.getPosY()), g2d);
+                    }
                 }
-            }
+        break;
+            case BEHURT:
+                hurtingSound.setFramePosition(0); 
+                hurtingSound.start();
+                setIsInvencible(true);
+                Timer timer = new Timer(500, (ActionEvent e) -> { 
+                    setIsInvencible(false);
+                    ((Timer) e.getSource()).stop();
+                });
+                timer.setRepeats(false);
+                timer.start();
+                break;
+            default:
+                break;
         }
         drawEletricLifeBar(g2d);
     }

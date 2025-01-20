@@ -152,7 +152,6 @@ public class MegaMan extends SmartRobot {
                 break;
 
             case BEHURT:
-                System.out.println("Estado Mega: " + getCurrentState());
                 hurtingSound.setFramePosition(0); 
                 hurtingSound.start();
                 setIsInvencible(true);
