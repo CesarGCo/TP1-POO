@@ -23,6 +23,7 @@ public class WaterMegaMan extends MegaMan {
     private final Clip hurtingSound;
     private final Clip shooting1;
     private long lastShootingTime;
+    private final Timer lifeBarTimer;
 
     public WaterMegaMan(int x, int y, GameState gameState) {
         super(x, y, gameState);
@@ -68,6 +69,17 @@ public class WaterMegaMan extends MegaMan {
         }
 
         this.face = DataLoader.getInstance().getFrameImage("water_mega_man_face").getImage();
+
+        lifeBarTimer = new Timer(850, (ActionEvent e)-> {
+            if(this.getAmountLife() < 29) {
+                this.setAmountLife(this.getAmountLife() + 1); // Increase health
+                System.out.println(":: " + this.getAmountLife());
+                lifeBar.addFirst(DataLoader.getInstance().getFrameImage("life_bar1").getImage());
+            }
+        });
+
+        lifeBarTimer.start();
+
     }
 
     @Override
@@ -123,10 +135,10 @@ public class WaterMegaMan extends MegaMan {
                 }
                 break;
             case BEHURT:
-                hurtingSound.setFramePosition(0); 
+                hurtingSound.setFramePosition(0);
                 hurtingSound.start();
                 setIsInvencible(true);
-                Timer timer = new Timer(500, (ActionEvent e) -> { 
+                Timer timer = new Timer(500, (ActionEvent e) -> {
                     setIsInvencible(false);
                     ((Timer) e.getSource()).stop();
                 });

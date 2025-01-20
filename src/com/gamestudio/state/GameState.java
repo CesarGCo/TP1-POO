@@ -28,10 +28,10 @@ public class GameState extends State {
     private Clip bossMusic;
     private boolean bossFightStarted = false;
 
-    private long transformationStartTime; // Tracks transformation start time
-    private boolean isTransformed = false; // Indicates if transformed
-    private boolean isOnCooldown = false; // Indicates if on cooldown
-    private long cooldownStartTime; // Tracks cooldown start time
+    private long transformationStartTime;
+    private boolean isTransformed = false;
+    private boolean isOnCooldown = false;
+    private long cooldownStartTime;
 
     public GameState(StateManager stateManager) {
         super(stateManager, new BufferedImage(GameFrame.width, GameFrame.height, BufferedImage.TYPE_INT_ARGB));
@@ -56,6 +56,11 @@ public class GameState extends State {
         initEnemies();
         robotManager.addObject(megaMan);
         megaMan.setCurrentState(SmartRobot.ALIVE);
+
+        transformationStartTime = 0;
+        isTransformed = false;
+        isOnCooldown = false;
+        cooldownStartTime = 0;
     }
 
     private void initEnemies() {
