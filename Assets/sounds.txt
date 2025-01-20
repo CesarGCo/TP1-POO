@@ -5,7 +5,6 @@ Level_soundtrack
 Mega_man_hit
 enemy_death
 Menu
-Music-1
 Game-over
 Water_shoot
 Eletric_shoot
