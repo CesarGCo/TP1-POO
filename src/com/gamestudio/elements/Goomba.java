@@ -12,18 +12,14 @@ import java.awt.Rectangle;
 public class Goomba extends DumbGameEntity {
 
     private Animation walkingAnim;
-    private float speedX;
-    private float speedY;
-    private float gravity;
 
     public Goomba(float x, float y, GameState gameWorld) {
-        super(x, y, 18, 18, 0.1f, 2, gameWorld);
+        super(x, y, 18, 18, 0.12f, 2, gameWorld);
         walkingAnim = DataLoader.getInstance().getAnimation("goomba_walking");
         setDeathAnimation(DataLoader.getInstance().getAnimation("explosion_effect"));
         walkingAnim.flipAllImage();
-        speedX = -0.5f;
-        speedY = 0.0f;
-        gravity = 0.12f;
+        setSpeedX(-0.5f);
+        setSpeedY(0.0f);
         setDamage(1);
     }
 
@@ -35,9 +31,9 @@ public class Goomba extends DumbGameEntity {
         Rectangle groundCollision = physicalMap.haveCollisionWithLandForDumbGameEntity(currentBound, this);
         if (groundCollision != null) {
             setPosY(groundCollision.y - getHeight() / 2.0f);
-            speedY = 0;
+            setSpeedY(0);
         } else {
-            speedY += gravity;
+            setSpeedY(getPosY() + getMass());
         }
     }
 
@@ -50,14 +46,14 @@ public class Goomba extends DumbGameEntity {
         Rectangle rectLeftWall = physicalMap.haveCollisionWithLeftWall(currentBound);
         if (rectLeftWall != null) {
             setPosX(rectLeftWall.x + rectLeftWall.width + getWidth() / 2);
-            speedX = Math.abs(speedX);
+            setSpeedX(Math.abs(getSpeedX()));
             walkingAnim.flipAllImage();
         }
 
         Rectangle rectRightWall = physicalMap.haveCollisionWithRightWall(currentBound);
         if (rectRightWall != null) {
             setPosX(rectRightWall.x - getWidth() / 2);
-            speedX = -Math.abs(speedX);
+            setSpeedX(-Math.abs(getSpeedX()));
             walkingAnim.flipAllImage();
         }
     }
@@ -65,8 +61,8 @@ public class Goomba extends DumbGameEntity {
     // Move o Goomba e verifica colisões com o mapa
     @Override
     public void move() {
-        setPosX(getPosX() + speedX);
-        setPosY(getPosY() + speedY);
+        setPosX(getPosX() + getSpeedX());
+        setPosY(getPosY() + getSpeedY());
         checkCollisionWithGround();
         checkCollisionWithWall();
     }
