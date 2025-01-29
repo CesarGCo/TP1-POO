@@ -12,6 +12,8 @@ import com.gamestudio.elements.LifeRegen;
 import com.gamestudio.elements.GameEntity;
 import com.gamestudio.state.GameState;
 
+// A classe GameEntityManager tem a função de gerenciar todas as entidades presentes no estado que foi instanciada
+// como por exemplo atualizar, desenhar ou remover entidades, além de verificar colisões entre entidades 
 public class GameEntityManager {
 
     protected final List<GameEntity> gameEntities;
@@ -48,6 +50,7 @@ public class GameEntityManager {
         }
     }
 
+    // Verifica se alguma entidade da lista colidiu com alguma entidade inimiga
     public GameEntity getCollisionWidthEnemyObject(GameEntity object) {
         synchronized (gameEntities) {
             for (GameEntity objectInList : gameEntities) {
@@ -61,6 +64,7 @@ public class GameEntityManager {
         return null;
     }
 
+    // Verifica se alguma entidade colidiu com algum item
     public GameEntity getCollisionWidthItem(GameEntity object) {
         synchronized (gameEntities) {
             for (GameEntity objectInList : gameEntities) {
@@ -73,8 +77,8 @@ public class GameEntityManager {
         return null;
     }
 
+    // Atualiza todas as entidades:
     public void updateObjects() {
-
         synchronized (gameEntities) {
             for (int id = 0; id < gameEntities.size(); id++) {
                 GameEntity object = gameEntities.get(id);
@@ -94,6 +98,7 @@ public class GameEntityManager {
 
     }
 
+    // Desenha todas as entidades na tela
     public void draw(Graphics2D g2) {
         synchronized (gameEntities) {
             for (GameEntity object : gameEntities)
@@ -101,6 +106,7 @@ public class GameEntityManager {
         }
     }
 
+    // Desenha a hitbox de todas as entidades
     public void drawAllHitBox(Graphics2D g2d) {
         Camera camera = getGameState().camera;
         synchronized(this.gameEntities){

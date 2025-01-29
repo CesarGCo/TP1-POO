@@ -13,6 +13,8 @@ import javax.sound.sampled.*;
 import com.gamestudio.effect.Animation;
 import com.gamestudio.effect.FrameImage;;
 
+// A classe DataLoader tem a função de carregar todos os assets do projeto
+// armazenando todos eles em tabelas Hash para facilitar o acesso
 public class DataLoader {
     private static DataLoader instance = null;
 
@@ -53,13 +55,15 @@ public class DataLoader {
         return instance.phys_map;
     }
     
+    // Carrega todos os Assets do jogo
     public void LoadData()throws IOException {
         LoadPhysMap();
         LoadSounds();
         LoadFrame();
         LoadAnimation();
     }
-    
+
+    // Realiza o carregamento dos sons com auxílio de um arquivo de entrada    
     public void LoadSounds() throws IOException {
         this.sounds = new Hashtable<String, Clip>();
         
@@ -83,6 +87,8 @@ public class DataLoader {
         br.close();
     }
     
+
+    // Realiza o carregamento da matriz de colisão presente no arquivo phys_map.txt
     public void LoadPhysMap() throws IOException {
         
         FileReader fr = new FileReader("Assets/phys_map.txt");
@@ -105,19 +111,11 @@ public class DataLoader {
                 instance.phys_map[i][j] = Integer.parseInt(str[j]);
         }
         
-        /*
-        for(int i = 0;i < numberOfRows;i++){
-            
-            for(int j = 0;j<numberOfColumns;j++)
-                System.out.print(" "+instance.phys_map[i][j]);
-            
-            System.out.println();
-        }*/
-        
         br.close();
         
     }
     
+    // Realiza o carregamento das animações com auxílio de um arquivo de entrada    
     public void LoadAnimation() throws IOException {
         
         animations = new Hashtable<String, Animation>();
@@ -160,7 +158,8 @@ public class DataLoader {
         
         br.close();
     }
-    
+
+    // Realiza o carregamento das imagens com auxílio de um arquivo de entrada   
     public void LoadFrame() throws IOException{
         
         this.frames = new Hashtable<String, FrameImage>();

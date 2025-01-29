@@ -7,11 +7,14 @@ import com.gamestudio.elements.Camera;
 import com.gamestudio.elements.GameEntity;
 import com.gamestudio.state.GameState;
 
+// A classe itemManager tem a função de gerenciar todas os itens presentes no estado que foi instanciada
+// como por exemplo atualizar, desenhar ou remover itens, além de verificar colisões com entidades
 public class ItemManager extends GameEntityManager{
     public ItemManager(GameState gameState) {
         super(gameState);
     }
 
+    // Atualiza todos os itens
     @Override
     public void updateObjects() {
         super.updateObjects();
@@ -25,6 +28,7 @@ public class ItemManager extends GameEntityManager{
         }
     }
     
+    // Desenha a hitbox de todos os itens
     public void drawAllHitBox(Graphics2D g2d) {
         Camera camera = getGameState().camera;
         synchronized(this.gameEntities){

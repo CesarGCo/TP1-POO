@@ -8,12 +8,15 @@ import com.gamestudio.elements.Projectile;
 import com.gamestudio.elements.GameEntity;
 import com.gamestudio.state.GameState;
 
+// A classe itemManager tem a função de gerenciar todos os projéteis presentes no estado que foi instanciada
+// como por exemplo atualizar, desenhar ou remover projéteis, além de verificar colisões com entidades
 public class ProjectileManager extends GameEntityManager {
 
     public ProjectileManager(GameState gameWorld) {
         super(gameWorld);
     }
 
+    // Atualiza todos os projéteis 
     @Override
     public void updateObjects() {
         super.updateObjects();
@@ -27,6 +30,7 @@ public class ProjectileManager extends GameEntityManager {
         }
     }
 
+    // Desenha a hitbox de todos os itens
     public void drawAllHitBox(Graphics2D g2d) {
         Camera camera = getGameState().camera;
         synchronized(this.gameEntities){

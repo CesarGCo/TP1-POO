@@ -5,6 +5,7 @@ import com.gamestudio.state.GameOverState;
 import com.gamestudio.state.GameState;
 import com.gamestudio.state.MenuState;
 
+// A classe StateManager tem a função de agrupar todos os estados do jogo, e gerenciar a mudança de estados de forma fluída e eficiente
 public class StateManager {
     public static final int MENU = 0;
     public static final int GAME = 1;
@@ -15,6 +16,8 @@ public class StateManager {
     private GameOverState gameOverState;
     private int currentState;
 
+    // Inicializa todos os estados presentes no jogo e a classe Scren
+    // Além disso seta qual estado o jogo vai iniciar
     public StateManager() {
         this.gameState = new GameState(this);
         this.menuState = new MenuState(this);
@@ -40,6 +43,7 @@ public class StateManager {
         return currentState;
     }
 
+    // Seta qual será o novo estado atual do jogo:
     public void setCurrentState(int currentState) {
         switch (currentState) {
             case MENU:
