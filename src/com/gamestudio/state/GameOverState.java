@@ -13,11 +13,14 @@ import com.gamestudio.interfaces.GameFrame;
 import com.gamestudio.manager.DataLoader;
 import com.gamestudio.manager.StateManager;
 
+
+// A calsse Game Over representa a tela de Game Over do Jogo
+// cujo qual possui apenas botões e um BackGround
 public class GameOverState extends State {
-    private FrameImage backgroundImage;
-    private ButtonGameOver[] buttons;
-    private Clip gameOverMusic;
-    private Clip arrowSound;
+    private FrameImage backgroundImage; // Background
+    private ButtonGameOver[] buttons; // Botões
+    private Clip gameOverMusic; // Música de Game Over
+    private Clip arrowSound; // Efeito sonoro de troca de opções
     private boolean soundPlayed;
     
     public GameOverState(StateManager stateManager) {
@@ -35,6 +38,8 @@ public class GameOverState extends State {
        this.soundPlayed = false;
     }
 
+    // Atualiza todos os elemetos do estado
+    @Override
     public void update() {
         if(!soundPlayed) {  
             gameOverMusic.setFramePosition(0); 
@@ -43,6 +48,8 @@ public class GameOverState extends State {
         }
     }
 
+    // Renseriza todos os elemtos do estado
+    @Override
     public void render() {
         Graphics g = getBufferedImage().getGraphics();
         g.setColor(Color.black);
@@ -54,6 +61,7 @@ public class GameOverState extends State {
         }
     }
     
+    @Override
     public void setPressedButton(int code) {
         switch (code) {
             case KeyEvent.VK_ENTER:
@@ -103,5 +111,6 @@ public class GameOverState extends State {
         }
     }
     
+    @Override
     public void setReleasedButton(int code) {}
 }

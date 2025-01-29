@@ -15,6 +15,9 @@ import com.gamestudio.manager.GameEntityManager;
 import com.gamestudio.manager.StateManager;
 import com.gamestudio.physical.PhysicalMap;
 
+// A classe GameState representa o estado da gameplay
+// Dessa forma, esta classe irá renderizar o mapa, personagem principa, inimigos, itens etc;
+// 
 public class GameState extends State {
     public PhysicalMap physicalMap;
     public MegaMan megaMan;
@@ -44,6 +47,8 @@ public class GameState extends State {
         return mapImage;
     }
 
+    // Inicializa a gameplay, definindo a posição do personagem e da camera, além de 
+    // reiniciar variáveis utilizadas na lógica do estado
     public void initState() {
         this.gameEntityManager = new GameEntityManager(this);
         this.projectileManager = new ProjectileManager(this);
@@ -63,6 +68,7 @@ public class GameState extends State {
         cooldownStartTime = 0;
     }
 
+    // Inicializa todos os inimigos da fase:
     private void initEnemies() {
         GameEntity bat1 = new Bat(250, 80, this);
         bat1.setDirection(GameEntity.LEFT);
@@ -150,6 +156,7 @@ public class GameState extends State {
         gameEntityManager.addObject(goomba2);
     }
 
+    // Inicializa a Boss Fight contra o Wood Man
     private void initBossBattle() {
         this.bossFightStarted = true;
         levelMusic.stop();
@@ -158,12 +165,16 @@ public class GameState extends State {
         gameEntityManager.addObject(woodman);
     }
 
+    // Atualiza todos os elementos presentes na gameplay
+    // tais como a câmera  e entidades
+    @Override
     public void update() {
         camera.update();
         gameEntityManager.updateObjects();
         projectileManager.updateObjects();
         itemManager.updateObjects();
 
+        // Verifica se o Mega Man se transformou em outra variação
         if (isTransformed) {
             if (System.currentTimeMillis() - transformationStartTime >= 4000) {
                 switchToNormalMegaMan();
@@ -173,27 +184,32 @@ public class GameState extends State {
             }
         }
 
+        // Verifica o tempo de uso do poder do Mega Man
         if (isOnCooldown) {
             if (System.currentTimeMillis() - cooldownStartTime >= 10000) {
                 isOnCooldown = false;
             }
         }
 
+        // Verifica se o Mega Man chegou na área da boss fight
         if (this.megaMan.getPosX() == 2850 && !this.bossFightStarted) {
             initBossBattle();
         }
 
+        // Inicia a música da boss fight, caso tenha se iniciado
         if (bossFightStarted && !bossMusic.isRunning()) {
             levelMusic.stop();
             bossMusic.setFramePosition(0);
             bossMusic.start();
         }
 
+        // Toca a música da fase, caso a boss fight não tenha se iniciado
         if (!levelMusic.isRunning() && !this.bossFightStarted) {
             levelMusic.setFramePosition(0);
             levelMusic.start();
         }
 
+        // Realiza a troca para o estado de Game Over caso o Mega Man morra
         if (megaMan.getCurrentState() == SmartGameEntity.DEATH && !megaMan.getIsExploding()) {
             bossMusic.stop();
             levelMusic.stop();
@@ -203,6 +219,8 @@ public class GameState extends State {
         }
     }
 
+    // Renderiza todos os elementos da gameplay
+    @Override
     public void render() {
         Graphics g = getBufferedImage().getGraphics();
         Graphics2D g2 = (Graphics2D) g;
@@ -210,11 +228,13 @@ public class GameState extends State {
         projectileManager.draw(g2);
         gameEntityManager.draw(g2);
         itemManager.draw(g2);
-        if (drawHiboxes) {
+        if (drawHiboxes) { // Caso a opção de visualizar colisões esteja ativada
             drawAllHitBox(g2);
         }
     }
 
+    // O método abaixo renderiza o mapa,
+    // Onde a tela de exibição será escalada para o tamanho da câmera do jogo
     private void drawMap(Graphics2D g2d) {
         float scaleX = (float) GameFrame.width / camera.getWidthView();
         float scaleY = (float) GameFrame.height / camera.getHeightView();
@@ -230,43 +250,43 @@ public class GameState extends State {
 
     public void setPressedButton(int code) {
         switch (code) {
-            case KeyEvent.VK_D:
+            case KeyEvent.VK_D: // Andar para direita
                 megaMan.setDirection(MegaMan.RIGHT);
                 megaMan.run();
                 break;
 
-            case KeyEvent.VK_A:
+            case KeyEvent.VK_A: // Andar para esquerda
                 megaMan.setDirection(MegaMan.LEFT);
                 megaMan.run();
                 break;
 
-            case KeyEvent.VK_SPACE:
+            case KeyEvent.VK_SPACE: // Pulo 
                 megaMan.jump();
                 break;
 
-            case KeyEvent.VK_H:
+            case KeyEvent.VK_H: // Ataque
                 megaMan.attack();
                 break;
 
-            case KeyEvent.VK_F1:
+            case KeyEvent.VK_F1: // Visualizar hiboxes
                 drawHiboxes = !drawHiboxes;
                 break;
 
-            case KeyEvent.VK_F: // Transform to Fire Mega Man
+            case KeyEvent.VK_F: // Transformação para Fire Mega Man
                 if (!isOnCooldown && !isTransformed) {
                     switchToFireMegaMan();
                     isTransformed = true;
                     transformationStartTime = System.currentTimeMillis();
                 }
                 break;
-            case KeyEvent.VK_B: // Transform to Water Mega Man
+            case KeyEvent.VK_B: // Transformação para Water Mega Man
                 if (!isOnCooldown && !isTransformed) {
                     switchToWaterMegaMan();
                     isTransformed = true;
                     transformationStartTime = System.currentTimeMillis();
                 }
                 break;
-            case KeyEvent.VK_E: // Transform to Water Mega Man
+            case KeyEvent.VK_E: // Transformação para Eletric Mega Man
                 if (!isOnCooldown && !isTransformed) {
                     switchToEletricMegaMan();
                     isTransformed = true;
@@ -276,6 +296,7 @@ public class GameState extends State {
         }
     }
 
+    // Troca o personagem para o Fire Mega Man
     private void switchToFireMegaMan() {
         FireMegaMan fireMegaMan = new FireMegaMan(
                 (int) megaMan.getPosX(),
@@ -290,6 +311,7 @@ public class GameState extends State {
         gameEntityManager.addObject(megaMan);
     }
 
+    // Troca o personagem para o Water Mega Man
     private void switchToWaterMegaMan() {
         WaterMegaMan waterMegaMan = new WaterMegaMan(
                 (int) megaMan.getPosX(),
@@ -304,6 +326,7 @@ public class GameState extends State {
         gameEntityManager.addObject(megaMan);
     }
 
+    // Troca o personagem para o Eletric Mega Man
     private void switchToEletricMegaMan() {
         EletricMegaMan eletricMegaMan = new EletricMegaMan(
                 (int) megaMan.getPosX(),
@@ -318,6 +341,7 @@ public class GameState extends State {
         gameEntityManager.addObject(megaMan);
     }
 
+    // Troca o personagem para o Mega Man padrão
     private void switchToNormalMegaMan() {
         MegaMan normalMegaMan = new MegaMan(
                 (int) megaMan.getPosX(),
@@ -332,20 +356,23 @@ public class GameState extends State {
         gameEntityManager.addObject(megaMan);
     }
 
+    // Caso alguma tecla seja solta:
+    @Override
     public void setReleasedButton(int code) {
         switch (code) {
-            case KeyEvent.VK_D:
+            case KeyEvent.VK_D: // Caso pare de andar para a direita
                 if (megaMan.getSpeedX() > 0)
                     megaMan.stopRun();
                 break;
 
-            case KeyEvent.VK_A:
+            case KeyEvent.VK_A: // Caso pare de andar para esquerda
                 if (megaMan.getSpeedX() < 0)
                     megaMan.stopRun();
                 break;
         }
     }
 
+    // Desenha todas as HitBoxes presentes na gameplay
     private void drawAllHitBox(Graphics2D g2d) {
         projectileManager.drawAllHitBox(g2d);
         gameEntityManager.drawAllHitBox(g2d);
