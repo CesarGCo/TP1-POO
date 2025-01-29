@@ -1,21 +1,21 @@
 package com.gamestudio.effect;
 
-
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+// Representa uma animação dentro do jogo
 public class Animation {
-    private String name;
-    private int currentFrame;
-    private long beginTime;
+    private String name; // nome
+    private int currentFrame; // iamgem atual
+    private long beginTime; // Tempo
     private boolean isRepeated;
     private boolean drawRectFrame;
-    private final ArrayList<FrameImage> frameImages;
+    private final ArrayList<FrameImage> frameImages; // Imagens
     private final ArrayList<Boolean> ignoreFrames;
-    private final ArrayList<Double> delayFrames;
+    private final ArrayList<Double> delayFrames; // Tempo de delay para animações
 
     public Animation(){
         delayFrames = new ArrayList<>();

@@ -3,10 +3,11 @@ package com.gamestudio.effect;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+// Representa um Frame de animação no jogo
 public class FrameImage{
 
-    private String name;
-    private BufferedImage image;
+    private String name; // Nome do frame
+    private BufferedImage image; // Imagem
 
     public FrameImage(String name, BufferedImage image){
         this.name = name;
