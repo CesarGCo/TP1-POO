@@ -18,21 +18,17 @@ public class Rabbit extends DumbGameEntity {
     private Animation jumpingAnim;
     private Animation idleAnim;
 
-    private float speedX;
-    private float speedY;
     private boolean isJumping; // caso esteja pulando
-    private float gravity;
     private long stateStartTime;// Tempo de espera entre os pulos (1 segundo)
 
 
     public Rabbit(float x, float y, GameState gameWorld) {
-        super(x, y, 30, 30, 0.1f, 2, gameWorld);
+        super(x, y, 30, 30, 0.12f, 2, gameWorld);
         jumpingAnim = DataLoader.getInstance().getAnimation("robbit_jumping");
         idleAnim = DataLoader.getInstance().getAnimation("robbit_idle");
         setDeathAnimation(DataLoader.getInstance().getAnimation("explosion_effect"));
-        speedX = -0.5f;
-        speedY = 0.0f;
-        gravity = 0.12f;
+        setSpeedX(-0.5f);
+        setSpeedY(0.0f);
         isJumping = false;
         stateStartTime = System.currentTimeMillis();
         setCurrentAction(IDLE);
@@ -47,13 +43,13 @@ public class Rabbit extends DumbGameEntity {
         Rectangle groundCollision = physicalMap.haveCollisionWithLandForDumbGameEntity(currentBound, this);
         if (groundCollision != null) {
             setPosY(groundCollision.y - getHeight() / 2.0f);
-            speedY = 0;
+            setSpeedY(0);
 
             if (isJumping) {
                 isJumping = false;
             }
         } else {
-            speedY += gravity;
+            setSpeedY(getSpeedY() + getMass());
         }
     }
 
@@ -65,7 +61,7 @@ public class Rabbit extends DumbGameEntity {
         Rectangle rectLeftWall = physicalMap.haveCollisionWithLeftWall(currentBound);
         if (rectLeftWall != null) {
             setPosX(rectLeftWall.x + rectLeftWall.width + getWidth() / 2);
-            speedX = Math.abs(speedX);
+            setSpeedX(Math.abs(getSpeedX()));
             jumpingAnim.flipAllImage();
             idleAnim.flipAllImage();
         }
@@ -73,7 +69,7 @@ public class Rabbit extends DumbGameEntity {
         Rectangle rectRightWall = physicalMap.haveCollisionWithRightWall(currentBound);
         if (rectRightWall != null) {
             setPosX(rectRightWall.x - getWidth() / 2);
-            speedX = -Math.abs(speedX);
+            setSpeedX(-Math.abs(getSpeedX()));
             jumpingAnim.flipAllImage();
             idleAnim.flipAllImage();
         }
@@ -83,7 +79,7 @@ public class Rabbit extends DumbGameEntity {
     private void jump() {
         if (!isJumping) {
             isJumping = true;
-            speedY = -6.5f;
+            setSpeedY(-6.5f);
         }
     }
 
@@ -92,10 +88,10 @@ public class Rabbit extends DumbGameEntity {
     @Override
     public void move() {
         if(getCurrentAction() == JUMPING) {
-            setPosX(getPosX() + speedX);
+            setPosX(getPosX() + getSpeedX());
         }
-        setPosY(getPosY() + speedY);
-        speedY += gravity;
+        setPosY(getPosY() + getSpeedY());
+        setSpeedY(getSpeedY() + getMass());
         checkCollisionWithGround();
         checkCollisionWithWall();
     }
