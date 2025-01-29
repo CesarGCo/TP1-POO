@@ -22,11 +22,12 @@ public class ButtonMenu {
 		return enabled;
 	}
 
+	// Atualiza o estado do botão
 	public void update() {
 		this.enabled = !enabled;
 	}
 
-
+	// Desenha o Botão na tela
 	public void draw(Graphics g) {
 		if(enabled) {
 			g.drawImage(frameImage.getImage(), x, y, null);
