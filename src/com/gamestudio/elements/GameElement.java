@@ -1,11 +1,14 @@
 package com.gamestudio.elements;
 import com.gamestudio.state.GameState;
 
+// A classe GameElement representa qualquer elemento do jogo
+// isso inclui a câmera, personagem, inimigos, mapa, colisão etc
 public abstract class GameElement {
+	// Posição do elemento:
     private float posX;
 	private float posY;
 	
-	private GameState gameState;
+	private GameState gameState; // Estado no qual o elemento está presente
 	
 	public GameElement(float x, float y, GameState gameState){
 		this.posX = x;

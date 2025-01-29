@@ -8,6 +8,7 @@ import com.gamestudio.physical.PhysicalMap;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
+// Representa o inimigo Goomba do jogo do Mario
 public class Goomba extends DumbGameEntity {
 
     private Animation walkingAnim;
@@ -26,6 +27,7 @@ public class Goomba extends DumbGameEntity {
         setDamage(1);
     }
 
+    // Muda a velocidade vertical se houver colisão com o mapa
     private void checkCollisionWithGround() {
         Rectangle currentBound = getBoundForCollisionWithMap();
         PhysicalMap physicalMap = getGameState().physicalMap;
@@ -39,6 +41,8 @@ public class Goomba extends DumbGameEntity {
         }
     }
 
+    // Verifica se o Goomba colidiu com a parede
+    // Se ele colidir irá mudar de direção
     private void checkCollisionWithWall() {
         Rectangle currentBound = getBoundForCollisionWithMap();
         PhysicalMap physicalMap = getGameState().physicalMap;
@@ -58,6 +62,7 @@ public class Goomba extends DumbGameEntity {
         }
     }
 
+    // Move o Goomba e verifica colisões com o mapa
     @Override
     public void move() {
         setPosX(getPosX() + speedX);
@@ -66,6 +71,7 @@ public class Goomba extends DumbGameEntity {
         checkCollisionWithWall();
     }
 
+    // Atualiza toda a lógica de funcionamento do inimigo
     @Override
     public void update() {
         super.update();
@@ -73,6 +79,7 @@ public class Goomba extends DumbGameEntity {
         move();
     }
 
+    // Retorna parâmetros que serão utilizados para verificar a colisão com inimigos
     @Override
     public Rectangle getBoundForCollisionWithEnemy() {
         return new Rectangle((int) (getPosX() - getWidth() / 2),
@@ -80,6 +87,7 @@ public class Goomba extends DumbGameEntity {
                 (int) getWidth(), (int) getHeight());
     }
 
+    // Desnha o Goomba na tela
     @Override
     public void draw(Graphics2D g2) {
         if (!isObjectOutOfCameraView()) {

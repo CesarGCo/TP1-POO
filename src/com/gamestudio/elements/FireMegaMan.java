@@ -11,6 +11,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
+// A classe abaixo represena o poder de fogo do Mega man
+// Logo,todas os métodos e atributos são idênticos à classe MegaMan
 public class FireMegaMan extends MegaMan {
 
     private final Animation fireRunForwardAnim, fireRunBackAnim, fireRunShootingForwardAnim, fireRunShootingBackAnim;

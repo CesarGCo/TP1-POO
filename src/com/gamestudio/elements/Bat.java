@@ -5,16 +5,20 @@ import com.gamestudio.effect.Animation;
 import com.gamestudio.manager.DataLoader;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.Desktop.Action;
 
+// Classe que represenat um inimifo da fase Wood man, caracterizado por ser um morcego
 public class Bat extends DumbGameEntity {
+    // Ações que o morcego possui
     private static final int ACTIVE = 0;
     private static final int ACTIVANTING = 2;
     private static final int NOACTIVE = 3;
 
+    // Animações
     private Animation idleAnim;
     private Animation openingWingsAnim;
     private Animation flyingAnim;
+
+    // Velocidade
     private float speed;
 
     public Bat(int x, int y, GameState gameWorld) {
@@ -28,6 +32,7 @@ public class Bat extends DumbGameEntity {
         setCurrentAction(NOACTIVE);
     }
 
+    // Verifica a ditância que o morcego está do mega man, para tomar alguma ação
     private boolean isMegaManInRange() {
         float deltaX = getGameState().megaMan.getPosX() - getPosX();
         float deltaY = getGameState().megaMan.getPosY() - getPosY();
@@ -35,10 +40,12 @@ public class Bat extends DumbGameEntity {
         return distance <= 100; // Distância de ativação do morcego
     }
 
+    // Verifica se a animação de abrir asas já foi completa
     private boolean hasOpeningWingsFinished() {
         return openingWingsAnim.isLastFrame();
     }
 
+    // Movimenta o morcego com base na sua ação atual
     @Override
     public void move() {
         if (getCurrentAction() == ACTIVE && !getIsExploding()) {
@@ -59,25 +66,32 @@ public class Bat extends DumbGameEntity {
         }
     }
 
+    // Atualiza as ações do
     @Override
-public void update() {
-    super.update();
-    if (getCurrentAction() == NOACTIVE && isMegaManInRange()) {
-        setCurrentAction(ACTIVANTING);
-        openingWingsAnim.reset();
+    public void update() {
+        super.update();
+        if (getCurrentAction() == NOACTIVE && isMegaManInRange()) {
+            setCurrentAction(ACTIVANTING);
+            openingWingsAnim.reset();
+        }
+
+        if (getCurrentAction() == ACTIVANTING && hasOpeningWingsFinished()) {
+            setCurrentAction(ACTIVE);
+        }
+        move();
     }
 
-    if (getCurrentAction() == ACTIVANTING && hasOpeningWingsFinished()) {
-        setCurrentAction(ACTIVE);
-    }
-    move();
-}
-
+    // Verifica se houve colisão com alguma entidade inimiga
     @Override
     public Rectangle getBoundForCollisionWithEnemy() {
-        return new Rectangle((int) (getPosX() - getWidth() / 2), (int) (getPosY() - getHeight() / 2), (int) getWidth(), (int) getHeight());
+        return new Rectangle(
+            (int) (getPosX() - getWidth() / 2), 
+            (int) (getPosY() - getHeight() / 2), 
+            (int) getWidth(), 
+            (int) getHeight());
     }
 
+    // Desenha o morcego na tela com base na ação atual
     @Override
     public void draw(Graphics2D g2) {
         if (!isObjectOutOfCameraView()) {

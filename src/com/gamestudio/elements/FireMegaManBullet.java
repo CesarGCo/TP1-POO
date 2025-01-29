@@ -7,6 +7,7 @@ import com.gamestudio.state.GameState;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
+// Classe que representa uma bala do poder de fogo do Mega Man
 public class FireMegaManBullet extends Projectile {
 
     private final Animation forwardBulletAnim;
@@ -15,7 +16,6 @@ public class FireMegaManBullet extends Projectile {
     public FireMegaManBullet(float x, float y, GameState gameState) {
         super(x, y, 8, 8, 1.0f, 5, gameState);
 
-        // Load fire-specific animations
         forwardBulletAnim = DataLoader.getInstance().getAnimation("fire_bullet");
         backBulletAnim = DataLoader.getInstance().getAnimation("fire_bullet");
         backBulletAnim.flipAllImage();
@@ -28,6 +28,7 @@ public class FireMegaManBullet extends Projectile {
         return getBoundForCollisionWithMap();
     }
 
+    // Desenha projétil nana tela
     @Override
     public void draw(Graphics2D g2) {
         if (getSpeedX() > 0) {
@@ -37,12 +38,14 @@ public class FireMegaManBullet extends Projectile {
         }
     }
 
+    // Atualiza a animação e à desenha
     private void drawBulletAnimation(Graphics2D g2, Animation bulletAnim) {
         bulletAnim.Update(System.nanoTime());
         bulletAnim.draw((int) (getPosX() - getGameState().camera.getPosX()),
                 (int) (getPosY() - getGameState().camera.getPosY()), g2);
     }
 
+    // Atualiza o projétil
     @Override
     public void update() {
         super.update();

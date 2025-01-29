@@ -1,19 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.gamestudio.elements;
-
-import java.awt.Graphics;
 
 import com.gamestudio.state.GameState;
 
 public class Camera extends GameElement {
-
+    //Dimensões da câmera:
     private int widthView;
     private int heightView;   
-
 
     public Camera(int x, int y, int widthView, int heightView, GameState gameState) {
         super(x, y, gameState);
@@ -21,6 +13,7 @@ public class Camera extends GameElement {
         this.heightView = heightView;
     }
 
+    // Atualiza a posição da câmera com base na posição do Mega Man
     @Override
     public void update() {
         MegaMan mainCharacter = getGameState().megaMan;

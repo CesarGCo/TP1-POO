@@ -1,12 +1,23 @@
 package com.gamestudio.elements;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Rectangle;
+
 import com.gamestudio.effect.Animation;
 import com.gamestudio.manager.DataLoader;
 import com.gamestudio.state.GameState;
 
-import java.awt.*;
-
+/*
+    Esta classe representa o boss final do jogo
+    Sua função basicamente é administrar as ações do boss, tais como:
+        1. Ativar as animações corretas para cada ação requerida
+        2. Tocar os sons do boss
+        3. Definir as funcionalidade básicas do boss, como atacar e pular com base na sua ação atual
+*/
 public class WoodMan extends SmartGameEntity {
+    // Ações que o boss pode executar
     private static final int INTRO = 0;
     private static final int BEATING_CHEST = 1;
     private static final int IDLE = 2;
@@ -15,14 +26,17 @@ public class WoodMan extends SmartGameEntity {
 
     private long stateStartTime;
 
+    // Animações
     private final Animation IntroAnimation;
     private final Animation ChestBeatAnimation, ChestBeatBackAnimation;
     private final Animation IdleAnimation, IdleBackAnimation;
     private final Animation JumpingAnimation, JumpingBackAnimation;
     private final Animation LeafShieldThrowAnimation, LeafShieldThrowBackAnimation;
+    // Imagem da face do boss
     private final Image face;
+    // Imagem da barra de vida do boss
     private final Image lifeBar;
-
+    // Projétil disparado pelo boss
     private Projectile leafShield;
 
     public WoodMan(int x, int y, GameState gameState) {
@@ -33,7 +47,7 @@ public class WoodMan extends SmartGameEntity {
         setTeamType(ENEMY_TEAM);
         setDamage(10);
 
-        // Initialize animations
+        // inicializando animações do boss
         IntroAnimation = DataLoader.getInstance().getAnimation("wood_man_intro");
         ChestBeatAnimation = DataLoader.getInstance().getAnimation("wood_man_beat");
         IdleAnimation = DataLoader.getInstance().getAnimation("wood_man_idle");
@@ -56,10 +70,11 @@ public class WoodMan extends SmartGameEntity {
         setDeathTime(400);
     }
 
+    // O boss não possui a ação de correr
     @Override
-    public void run() {
-    }
+    public void run() {}
 
+    // Executa a ação do pular do boss alterando a velocidade vertical
     @Override
     public void jump() {
         if (!getIsJumping()) {
@@ -69,12 +84,12 @@ public class WoodMan extends SmartGameEntity {
         }
     }
 
+    // O boss não possui a ação de correr
     @Override
-    public void stopRun() {
-    }
+    public void stopRun() {}
 
+    // Cria um novo projétil para o boss iniciar o ataque
     public void setUpAttack() {
-        System.out.println("Wood-Man setup up attack");
         this.leafShield = new LeafShield(getPosX(), getPosY(), getGameState());
         this.leafShield.setSpeedX(0);
         this.leafShield.setPosY(this.getPosY());
@@ -83,14 +98,15 @@ public class WoodMan extends SmartGameEntity {
         getGameState().projectileManager.addObject(this.leafShield);
     }
 
+    // Define uma velocidade para o projétil do bos
     @Override
     public void attack() {
-        System.out.println("Wood-Man attack!");
         this.leafShield.setSpeedX(this.getDirection() == LEFT ? -1 : 1);
         this.leafShield.setPosX(this.getPosX());
         this.leafShield.setPosY(this.getPosY());
     }
 
+    // Verifica se houve colisão com alguma entidade inimiga
     @Override
     public Rectangle getBoundForCollisionWithEnemy() {
         Rectangle rect = getBoundForCollisionWithMap();
@@ -102,29 +118,29 @@ public class WoodMan extends SmartGameEntity {
         return rect;
     }
 
+    // Atualiza os parâmetros necessários do boss com base na sua ação atual
     @Override
     public void update() {
         super.update();
         long elapsedTime = System.currentTimeMillis() - stateStartTime;
 
         switch (getCurrentAction()) {
-            case INTRO:
+            case INTRO: // Ação do boss no início da batalha
                 if (elapsedTime > 2000) {
                     setCurrentAction(BEATING_CHEST);
                     stateStartTime = System.currentTimeMillis();
                 }
                 break;
 
-            case BEATING_CHEST:
+            case BEATING_CHEST: // Boss realiza batida no peito (gorila)
                 if (elapsedTime > 3000) {
-                    // Setup attack after chest beating
                     setUpAttack();
                     setCurrentAction(LEAF_SHIELD_THROW);
                     stateStartTime = System.currentTimeMillis();
                 }
                 break;
 
-            case LEAF_SHIELD_THROW:
+            case LEAF_SHIELD_THROW: // Boss lança projétil
                 if (elapsedTime > 1000) {
                     attack();
                     setCurrentAction(IDLE);
@@ -132,14 +148,14 @@ public class WoodMan extends SmartGameEntity {
                 }
                 break;
 
-            case IDLE:
+            case IDLE: // Boss parado
                 if (elapsedTime > 2000) {
                     setCurrentAction(JUMPING);
                     stateStartTime = System.currentTimeMillis();
                 }
                 break;
 
-            case JUMPING:
+            case JUMPING: // Boss pula
                 if (!getIsJumping()) {
                     setCurrentAction(BEATING_CHEST);
                     stateStartTime = System.currentTimeMillis();
@@ -152,7 +168,7 @@ public class WoodMan extends SmartGameEntity {
         if (!getIsJumping()) setSpeedX(0);
     }
 
-
+    // Atualiza todas as animações com base na ação atual
     private void performCurrentStateAction() {
         switch (getCurrentAction()) {
             case INTRO:
@@ -190,6 +206,7 @@ public class WoodMan extends SmartGameEntity {
         }
     }
 
+    // Desenha o boss na tela
     @Override
     public void draw(Graphics2D g2) {
         int drawX = (int) (getPosX() - getGameState().camera.getPosX());
@@ -211,6 +228,7 @@ public class WoodMan extends SmartGameEntity {
         drawLifeBar(g2);
     }
 
+    // Desenha a barra de vida do boss
     public void drawLifeBar(Graphics2D g2d) {
         int life = Math.max(getAmountLife(), 0);
         g2d.setColor(Color.green);
@@ -219,6 +237,7 @@ public class WoodMan extends SmartGameEntity {
         g2d.drawImage(face, 360, 10, null);
     }
 
+    // Retorna uma animação dependendo da ação no qual o boss se encontra
     private Animation getAnimation() {
         Animation currentAnimation;
         switch (getCurrentAction()) {

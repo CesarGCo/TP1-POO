@@ -8,16 +8,19 @@ import com.gamestudio.physical.PhysicalMap;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
+// Representa um inimigo da fase Wood man, caracterizado como um coelho robô
 public class Rabbit extends DumbGameEntity {
-
+    // Ações que o coelho pode assumir:
     private static final int IDLE = 0;
     private static final int JUMPING = 1;
 
+    // Animações:
     private Animation jumpingAnim;
     private Animation idleAnim;
+
     private float speedX;
     private float speedY;
-    private boolean isJumping;
+    private boolean isJumping; // caso esteja pulando
     private float gravity;
     private long stateStartTime;// Tempo de espera entre os pulos (1 segundo)
 
@@ -36,6 +39,7 @@ public class Rabbit extends DumbGameEntity {
         setDamage(3);
     }
 
+    // Altera a velocidaed vertical do coelho caso possua colisão com o mapa ou não
     private void checkCollisionWithGround() {
         Rectangle currentBound = getBoundForCollisionWithMap();
         PhysicalMap physicalMap = getGameState().physicalMap;
@@ -53,6 +57,7 @@ public class Rabbit extends DumbGameEntity {
         }
     }
 
+    // Verifica colisão com paredes
     private void checkCollisionWithWall() {
         Rectangle currentBound = getBoundForCollisionWithMap();
         PhysicalMap physicalMap = getGameState().physicalMap;
@@ -74,6 +79,7 @@ public class Rabbit extends DumbGameEntity {
         }
     }
 
+    // Execura a açãoi de pulo do coelho
     private void jump() {
         if (!isJumping) {
             isJumping = true;
@@ -82,6 +88,7 @@ public class Rabbit extends DumbGameEntity {
     }
 
 
+    // movimenta o coelho com base na direção e massa
     @Override
     public void move() {
         if(getCurrentAction() == JUMPING) {
@@ -93,6 +100,7 @@ public class Rabbit extends DumbGameEntity {
         checkCollisionWithWall();
     }
 
+    // Atualiza todos os parâmetros necessários do coelho
     @Override
     public void update() {
         super.update();
@@ -122,6 +130,7 @@ public class Rabbit extends DumbGameEntity {
         move();
     }
 
+    // Verifica se houve colisão com alguma entidade inimiga
     @Override
     public Rectangle getBoundForCollisionWithEnemy() {
         return new Rectangle((int) (getPosX() - getWidth() / 2),
@@ -129,6 +138,7 @@ public class Rabbit extends DumbGameEntity {
                 (int) getWidth(), (int) getHeight());
     }
 
+    // Desenha o coelho na tela
     @Override
     public void draw(Graphics2D g2) {
         if (!isObjectOutOfCameraView()) {

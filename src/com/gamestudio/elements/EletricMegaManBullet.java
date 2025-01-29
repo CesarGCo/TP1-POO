@@ -7,6 +7,7 @@ import com.gamestudio.state.GameState;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
+// Classe que representa uma bala do poder de eletricidade do Mega Man
 public class EletricMegaManBullet extends Projectile {
 
     private final Animation forwardBulletAnim;
@@ -28,6 +29,7 @@ public class EletricMegaManBullet extends Projectile {
         return getBoundForCollisionWithMap();
     }
 
+    // Desenha a bala na tela
     @Override
     public void draw(Graphics2D g2) {
         if (getSpeedX() > 0) {
@@ -37,12 +39,14 @@ public class EletricMegaManBullet extends Projectile {
         }
     }
 
+    // Atualiza a animação e à desenha
     private void drawBulletAnimation(Graphics2D g2, Animation bulletAnim) {
         bulletAnim.Update(System.nanoTime());
         bulletAnim.draw((int) (getPosX() - getGameState().camera.getPosX()),
                 (int) (getPosY() - getGameState().camera.getPosY()), g2);
     }
 
+    // Atualiza o projétil
     @Override
     public void update() {
         super.update();

@@ -7,6 +7,7 @@ import com.gamestudio.effect.Animation;
 import com.gamestudio.physical.PhysicalMap;
 import com.gamestudio.state.GameState;
 
+// Representa um item coletável dentro do jogo
 public abstract class Item extends GameEntity {
     private Animation itemaAnim;
 
@@ -25,6 +26,7 @@ public abstract class Item extends GameEntity {
         this.itemaAnim = itemaAnim;
     }
 
+    // Atualiza a posição do item no jogo
     @Override
     public void update() {
         super.update();
@@ -34,6 +36,7 @@ public abstract class Item extends GameEntity {
         }
     }
 
+    // Verifica se o item colidiu com o mapa
     private boolean isCollisionWithLand() {
         PhysicalMap physicalMap = getGameState().physicalMap;
         Rectangle rect = this.getBoundForCollisionWithMap();

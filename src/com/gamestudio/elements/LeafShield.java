@@ -1,11 +1,13 @@
 package com.gamestudio.elements;
 
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+
 import com.gamestudio.effect.Animation;
 import com.gamestudio.manager.DataLoader;
 import com.gamestudio.state.GameState;
 
-import java.awt.*;
-
+// A classe LeafShield representa um projétil disparado pelo Boss Final do jogo
 public class LeafShield extends Projectile {
     private final Animation forwardAnimation;
     private final Animation backAnimation;
@@ -18,11 +20,13 @@ public class LeafShield extends Projectile {
         backAnimation.flipAllImage();
     }
 
+    // Retorna parâmetros que serão utilizados para verificar a colisão com inimigos
     @Override
     public Rectangle getBoundForCollisionWithEnemy() {
         return getBoundForCollisionWithMap();
     }
 
+    // Desenha o projétil na tela
     @Override
     public void draw(Graphics2D g2) {
         if(this.getDirection() == LEFT) {

@@ -4,20 +4,23 @@ import java.awt.Rectangle;
 
 import com.gamestudio.state.GameState;
 
+// Essa Classe representa alguma entidade inteligente no jogo
+// isto é, entidades que possuem lógica mais avançada, como disparar, maior número de animações e ações diferentes
+// Exemplo: Mega Man e Wood Man
 public abstract class SmartGameEntity extends GameEntity {
-    private boolean isJumping;
-    private boolean isLanding;
+    private boolean isJumping; // Caso esteja pulando
+    private boolean isLanding; // Caso esteja caindo
 
     public SmartGameEntity(int x, int y, int width, int height, float mass, int amountLife, GameState gameState) {
         super(x, y, width, height, mass, amountLife, gameState);
         setCurrentState(ALIVE);
     }
 
-    public abstract void run();
+    public abstract void run(); // Movimento a entidade de uma forma específica
     
-    public abstract void jump();
+    public abstract void jump(); // Executa a ação de pular da entidade de forma específica
     
-    public abstract void stopRun();
+    public abstract void stopRun(); // Zera a velocidade horizontal da entidade
 
     public boolean getIsJumping() {
         return isJumping;
@@ -35,8 +38,9 @@ public abstract class SmartGameEntity extends GameEntity {
         this.isJumping = isJumping;
     }
 
-    public abstract void attack();
+    public abstract void attack(); // Realiza a ação de ataque da entidade
     
+    // Atualiza todos os parâmetros da entidade com base no seu estado atual
     @Override
     public void update(){
         super.update();

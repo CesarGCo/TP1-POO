@@ -11,6 +11,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
+// A classe abaixo represena o poder de eletricidade do Mega man
+// Logo,todas os métodos e atributos são idênticos à classe MegaMan
 public class WaterMegaMan extends MegaMan {
 
     private final Animation waterRunForwardAnim, waterRunBackAnim, waterRunShootingForwardAnim, waterRunShootingBackAnim;
