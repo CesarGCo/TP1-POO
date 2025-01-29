@@ -3,7 +3,6 @@ package com.gamestudio.physical;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.Robot;
 
 import com.gamestudio.state.GameState;
 import com.gamestudio.elements.Camera;
@@ -12,14 +11,10 @@ import com.gamestudio.elements.SmartGameEntity;
 import com.gamestudio.elements.DumbGameEntity;
 import com.gamestudio.manager.DataLoader;
 
-/**
- *
- * @author phamn
- */
 public class PhysicalMap extends GameElement {
 
-    public int[][] phys_map;
-    private int tileSize;
+    public int[][] phys_map; // Matriz de colisão
+    private int tileSize; // Tamanho de cada ladrilho no jogo
     
     public PhysicalMap(int x, int y, GameState gameState) {
         super(x, y, gameState);
@@ -35,7 +30,7 @@ public class PhysicalMap extends GameElement {
     @Override
     public void update() {}
 
-    
+    // Verifica se o objeto passado por parâmetro teve colisão no topo com o mapa
     public Rectangle haveCollisionWithTop(Rectangle rect){
 
         int posX1 = rect.x/tileSize;
@@ -43,7 +38,6 @@ public class PhysicalMap extends GameElement {
         int posX2 = (rect.x + rect.width)/tileSize;
         posX2 += 2;
 
-        //int posY = (rect.y + rect.height)/tileSize;
         int posY = rect.y/tileSize;
 
         if(posX1 < 0) posX1 = 0;
@@ -63,7 +57,7 @@ public class PhysicalMap extends GameElement {
         return null;
     }
     
-    
+    // Verifica se o objeto passado por parâmetro teve colisão na parte inferior com o mapa
     public Rectangle haveCollisionWithLand(Rectangle rect, SmartGameEntity smartGameEntity){
 
         int posX1 = rect.x/tileSize;
@@ -91,6 +85,7 @@ public class PhysicalMap extends GameElement {
         return null;
     }
 
+    //////////////////
     public Rectangle haveCollisionWithLandForDumbGameEntity(Rectangle rect, DumbGameEntity dumbGameEntity) {
         int posX1 = rect.x / tileSize - 2;
         int posX2 = (rect.x + rect.width) / tileSize + 2;
@@ -119,8 +114,8 @@ public class PhysicalMap extends GameElement {
         return null;
     }
     
+    // Verifica se o objeto passado por parâmetro teve colisão na direita com o mapa
     public Rectangle haveCollisionWithRightWall(Rectangle rect){
-   
         
         int posY1 = rect.y/tileSize;
         posY1-=2;
@@ -148,10 +143,8 @@ public class PhysicalMap extends GameElement {
         
     }
     
+    // Verifica se o objeto passado por parâmetro teve colisão na esquerda com o mapa
     public Rectangle haveCollisionWithLeftWall(Rectangle rect){
-        
-   
-        
         int posY1 = rect.y/tileSize;
         posY1-=2;
         int posY2 = (rect.y + rect.height)/tileSize;
@@ -178,6 +171,8 @@ public class PhysicalMap extends GameElement {
         
     }
     
+
+    // Desenha a física do mapa na tela, onde se houve colisão será exibido como um quadrado cinza
     public void draw(Graphics g2){
         
         Camera camera = getGameState().camera;
