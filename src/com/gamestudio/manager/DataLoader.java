@@ -139,18 +139,21 @@ public class DataLoader {
             int n = Integer.parseInt(line);
             
             for(int i = 0;i < n; i ++){
-                
-                Animation animation = new Animation();
-                
-                while((line = br.readLine()).equals(""));
-                animation.setName(line);
-                while((line = br.readLine()).equals(""));
-                String[] str = line.split(" ");
-                
-                for(int j = 0;j<str.length;j+=2)
-                    animation.add(getFrameImage(str[j]), Double.parseDouble(str[j+1]));
-                
-                instance.animations.put(animation.getName(), animation);
+                try {
+                    Animation animation = new Animation();
+                    
+                    while((line = br.readLine()).equals(""));
+                    animation.setName(line);
+                    while((line = br.readLine()).equals(""));
+                    String[] str = line.split(" ");
+                    
+                    for(int j = 0;j<str.length;j+=2)
+                        animation.add(getFrameImage(str[j]), Double.parseDouble(str[j+1]));
+                    
+                    instance.animations.put(animation.getName(), animation);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 
             }
             
@@ -172,10 +175,14 @@ public class DataLoader {
         while ((line = br.readLine()) != null) {
             imageName = br.readLine();
             while(!imageName.equals("0")) {
-                image = ImageIO.read(new File(line + imageName + ".png"));
-                FrameImage frame = new FrameImage(imageName, image);
-                instance.frames.put(frame.getName(), frame);
-                imageName = br.readLine();
+                try {
+                    image = ImageIO.read(new File(line + imageName + ".png"));
+                    FrameImage frame = new FrameImage(imageName, image);
+                    instance.frames.put(frame.getName(), frame);
+                    imageName = br.readLine();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
         br.close();
